@@ -16,7 +16,7 @@ import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import de.shop.artikelverwaltung.domain.Artikel;
-import de.shop.bestellverwaltung.domain.Bestellposition;
+//import de.shop.bestellverwaltung.domain.Bestellposition;
 import de.shop.bestellverwaltung.domain.Bestellung;
 //import de.shop.kundenverwaltung.service.KundeService;
 import de.shop.kundenverwaltung.service.KundeService.FetchType;

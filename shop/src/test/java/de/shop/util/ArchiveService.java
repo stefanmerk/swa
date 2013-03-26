@@ -12,8 +12,7 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.importer.ExplodedImporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
-import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
+
 
 public enum ArchiveService {
 	INSTANCE;
@@ -51,9 +50,7 @@ public enum ArchiveService {
 	private ArchiveService() {
 		addKlassen();
 		
-		addSolder();
-		addSeam();
-		addRichFaces();
+		
 		
 		addWebInf();
 
@@ -134,183 +131,8 @@ public enum ArchiveService {
 		}
 	}
 	
-	private void addSolder() {
-		archive.addAsLibraries(DependencyResolvers.use(MavenDependencyResolver.class)
-                                                  .goOffline()
-                                                  .artifact("org.jboss.solder:solder-api:" + SOLDER_VERSION)
-                                                  .resolveAs(JavaArchive.class)
-                                                  .iterator()
-                                                  .next())
-               .addAsLibraries(DependencyResolvers.use(MavenDependencyResolver.class)
-                                                  .goOffline()
-                                                  .artifact("org.jboss.solder:solder-impl:" + SOLDER_VERSION)
-                                                  .resolveAs(JavaArchive.class)
-                                                  .iterator()
-                                                  .next())
-               .addAsLibraries(DependencyResolvers.use(MavenDependencyResolver.class)
-                                                  .goOffline()
-                                                  .artifact("org.jboss.solder:solder-logging:" + SOLDER_VERSION)
-                                                  .resolveAs(JavaArchive.class)
-                                                  .iterator()
-                                                  .next());
-	}
 	
-	private void addSeam() {
-		final MavenDependencyResolver pomResolver = DependencyResolvers.use(MavenDependencyResolver.class)
-                                                                       .goOffline()
-                                                                       .loadMetadataFromPom("pom.xml");
-
-		archive.addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-                                                .goOffline()
-                                                .artifact("org.jboss.seam.persistence:seam-persistence-api:"
-                                                          + SEAM_VERSION)
-                                                .resolveAs(JavaArchive.class)
-                                                .iterator()
-                                                .next())
-               .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-            		                            .goOffline()
-            		                            .artifact("org.jboss.seam.persistence:seam-persistence:"
-            		                                      + SEAM_VERSION)
-            		                            .resolveAs(JavaArchive.class)
-            		                            .iterator()
-            		                            .next())
-               .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-            	                          		.goOffline()
-            	                          		.artifact("org.jboss.seam.transaction:seam-transaction-api:"
-            	                          		          + SEAM_VERSION)
-            	                          		.resolveAs(JavaArchive.class)
-            	                          		.iterator()
-            	                          		.next())
-               .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-                                                .goOffline()
-                                                .artifact("org.jboss.seam.transaction:seam-transaction:"
-                                                          + SEAM_VERSION)
-                                                .resolveAs(JavaArchive.class)
-                                                .iterator()
-                                                .next())
-               .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-                                                .goOffline()
-                                                .artifact("org.jboss.seam.faces:seam-faces-api:"
-                                                          + SEAM_VERSION)
-                                                .resolveAs(JavaArchive.class)
-                                                .iterator()
-                                                .next())
-               .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-                                                .goOffline()
-                                                .artifact("org.jboss.seam.faces:seam-faces:" + SEAM_VERSION)
-                                                .resolveAs(JavaArchive.class)
-                                                .iterator()
-                                                .next())
-               .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-                                                .goOffline()
-                                                .artifact("org.jboss.seam.international:seam-international-api:"
-                                                          + SEAM_VERSION)
-                                                .resolveAs(JavaArchive.class)
-                                                .iterator()
-                                                .next())
-               .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-                                                .goOffline()
-                                                .artifact("org.jboss.seam.international:seam-international:"
-                                                          + SEAM_VERSION)
-                                                .resolveAs(JavaArchive.class)
-                                                .iterator()
-                                                .next())
-               .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-                                           		.goOffline()
-                                           		.artifact("org.jboss.seam.security:seam-security-api:"
-                                           		          + SEAM_VERSION)
-                                           		.resolveAs(JavaArchive.class)
-                                           		.iterator()
-                                           		.next())
-               .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-                                                .goOffline()
-                                                .artifact("org.jboss.seam.security:seam-security:"
-                                                          + SEAM_VERSION)
-                                                .resolveAs(JavaArchive.class)
-                                                .iterator()
-                                                .next())
-               .addAsLibrary(pomResolver.artifact("com.ocpsoft:prettyfaces-jsf2")
-                                        .resolveAs(JavaArchive.class)
-                                        .iterator()
-                                        .next())
-               .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-                                                .goOffline()
-                                                .artifact("org.picketlink.idm:picketlink-idm-core:"
-                                                          + PICKETLINK_VERSION)
-                                                .resolveAs(JavaArchive.class)
-                                                .iterator()
-                                                .next())
-               .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-            		                            .goOffline()
-            		                            .artifact("org.picketlink.idm:picketlink-idm-common:"
-            		                                      + PICKETLINK_VERSION)
-            		                            .resolveAs(JavaArchive.class)
-                                                .iterator()
-                                                .next())
-               .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-                                                .goOffline()
-                                                .artifact("org.picketlink.idm:picketlink-idm-spi:"
-                                                          + PICKETLINK_VERSION)
-                                                .resolveAs(JavaArchive.class)
-                                                .iterator()
-                                                .next())
-               .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-                                                .goOffline()
-                                                .artifact("org.picketlink.idm:picketlink-idm-api:"
-                                                          + PICKETLINK_VERSION)
-                                                .resolveAs(JavaArchive.class)
-                                                .iterator()
-                                                .next())
-               .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-                                                .goOffline()
-                                                .artifact("org.drools:drools-api:" + DROOLS_VERSION)
-                                                .resolveAs(JavaArchive.class)
-                                                .iterator()
-                                                .next());
-	}
-
-	private void addRichFaces() {
-		archive.addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-			                                    .goOffline()
-			                                    .artifact("org.richfaces.ui:richfaces-components-ui:"
-			                                              + RICHFACES_VERSION)
-			                                    .resolveAs(JavaArchive.class)
-			                                    .iterator()
-			                                    .next())
-		       .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-		                                        .goOffline()
-		                                        .artifact("org.richfaces.ui:richfaces-components-api:"
-		                                                  + RICHFACES_VERSION)
-		                                        .resolveAs(JavaArchive.class)
-		                                        .iterator()
-		                                        .next())
-		       .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-		                                        .goOffline()
-		                                        .artifact("org.richfaces.core:richfaces-core-impl:"
-		                                                  + RICHFACES_VERSION)
-		                                        .resolveAs(JavaArchive.class)
-		                                        .iterator()
-		                                        .next())
-		       .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-		                                        .goOffline()
-		                                        .artifact("org.richfaces.core:richfaces-core-api:"
-		                                                  + RICHFACES_VERSION)
-		                                        .resolveAs(JavaArchive.class)
-		                                        .iterator()
-		                                        .next())
-		       .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-		                                        .goOffline()
-		                                        .artifact("net.sourceforge.cssparser:cssparser:" + CSSPARSER_VERSION)
-		                                        .resolveAs(JavaArchive.class)
-		                                        .iterator()
-		                                        .next())
-			   .addAsLibrary(DependencyResolvers.use(MavenDependencyResolver.class)
-			                                    .goOffline()
-			                                    .artifact("org.w3c.css:sac:" + SAC_VERSION)
-			                                    .resolveAs(JavaArchive.class)
-			                                    .iterator()
-			                                    .next());
-	}
+	
 
 	private void addTestklassen() {
 		archive.addClass(AbstractTest.class);
