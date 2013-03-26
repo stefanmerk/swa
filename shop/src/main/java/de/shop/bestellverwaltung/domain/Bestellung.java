@@ -37,11 +37,8 @@ import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import de.shop.kundenverwaltung.domain.Kunde;
 import de.shop.util.IdGroup;
@@ -74,7 +71,6 @@ import de.shop.util.PreExistingGroup;
   			            + " WHERE  b.id = :" + Bestellung.PARAM_ID)	
 })
 
-@XmlRootElement
 public class Bestellung implements Serializable {
 
 	private static final long serialVersionUID = 3702664996107446300L;
@@ -97,36 +93,34 @@ public class Bestellung implements Serializable {
 	@GeneratedValue
 	@Column(name = "b_id", unique = true, nullable = false, updatable = false, precision = LONG_ANZ_ZIFFERN)
 	@Min(value = MIN_ID, message = "{bestellverwaltung.bestellung.id.min}", groups = IdGroup.class)
-	@XmlAttribute
 	private Long bId = KEINE_ID;
 
 	@Column(nullable = false)
 	@Temporal(TIMESTAMP)
-	@XmlTransient
+	@JsonIgnore
 	private Date aktualisiert;
 
 	@Column(nullable = false)
 	@Temporal(TIMESTAMP)
-	@XmlTransient
+	@JsonIgnore
 	private Date erzeugt;
 	
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "kunde_fk", nullable = false, insertable = true, updatable = false)
 	@NotNull(message = "{bestellverwaltung.bestellung.kunde.notNull}", groups = PreExistingGroup.class)
-	@XmlTransient
+	@JsonIgnore
 	private Kunde kunde;
 
 
 	@OneToMany(fetch = EAGER, cascade = { PERSIST, REMOVE })
 	@JoinColumn(name = "bestellung_fk", nullable = false)
 	@OrderColumn(name = "idx", nullable = false) 
-	@XmlElementWrapper(name = "bestellpositionen", required = true)
-	@XmlElement(name = "bestellposition", required = true)
+//	@XmlElementWrapper(name = "bestellpositionen", required = true)
+//	@XmlElement(name = "bestellposition", required = true)
 	private List<Bestellposition> bestellpositionen;
 	
 	@Transient
-	@XmlElement(name = "kunde", required = true)
 	private URI kundeUri;
 
 	

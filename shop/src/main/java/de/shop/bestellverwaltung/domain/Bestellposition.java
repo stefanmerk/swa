@@ -21,10 +21,8 @@ import javax.persistence.PostPersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Min;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import de.shop.artikelverwaltung.domain.Artikel;
 import de.shop.util.IdGroup;
@@ -36,7 +34,6 @@ import de.shop.util.IdGroup;
  */
 @Entity
 @Table(name = "bestellposition")
-@XmlRootElement
 public class Bestellposition implements Serializable {
 	private static final long serialVersionUID = 2341718863103646289L;
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
@@ -46,23 +43,20 @@ public class Bestellposition implements Serializable {
 	@GeneratedValue
 	@Column(name = "bp_id", unique = true, nullable = false, updatable = false, precision = LONG_ANZ_ZIFFERN)
 	@Min(value = MIN_ID, message = "{bestelverwaltung.bestellposition.id.min}", groups = IdGroup.class)
-	@XmlAttribute
 	private Long bpId = KEINE_ID;
 
 	@Column(nullable = false)
-	@XmlElement
 	private short anzahl;
  
 	@OneToOne(optional = false)
 	@JoinColumn(name = "artikel_fk")
-	@XmlTransient
+	@JsonIgnore
 	private Artikel artikel;
 	
 	@Transient
-	@XmlElement(name = "artikel", required = true)
 	private URI artikelUri;
 	
-	@XmlTransient 
+	@JsonIgnore 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "bestellung_fk", nullable = false,
 	insertable = false, updatable = false)

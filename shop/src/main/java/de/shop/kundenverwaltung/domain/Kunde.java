@@ -37,10 +37,8 @@ import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.util.IdGroup;
@@ -102,7 +100,7 @@ import de.shop.util.IdGroup;
    			            + " FROM   Kunde k"
    			            + " WHERE  k.email = :" + Kunde.PARAM_KUNDE_EMAIL),	
 })
-@XmlRootElement
+
 public  class  Kunde implements Serializable {
 	private static final long serialVersionUID = -9023615284991323369L;
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
@@ -139,13 +137,13 @@ public  class  Kunde implements Serializable {
 		@GeneratedValue
 		@Column(name = "k_id", unique = true, nullable = false, updatable = false, precision = LONG_ANZ_ZIFFERN)
 		@Min(value = MIN_ID, message = "{kundenverwaltung.kunde.id.min}", groups = IdGroup.class)
-		@XmlAttribute
+		 
 		private Long kid = KEINE_ID;
 
 
 	@Column(nullable = false)
 	@Temporal(TIMESTAMP)
-	@XmlTransient
+	@JsonIgnore
 	private Date aktualisiert;
 
 	@Column(nullable = false)
@@ -154,7 +152,7 @@ public  class  Kunde implements Serializable {
 
 	@Column(nullable = false)
 	@Temporal(TIMESTAMP)
-	@XmlTransient
+	@JsonIgnore
 	private Date erzeugt;
 
 	
@@ -162,27 +160,25 @@ public  class  Kunde implements Serializable {
 	private String geschlecht;
 
 	@Column(nullable = false)
-	@XmlElement(required = true)
 	private String nachname;
 
 	private String password;
 
-	@XmlElement
+	 
 	private String vorname;
 	
 	@OneToOne(cascade = { PERSIST, REMOVE }, mappedBy = "kunden") 
 	@Valid
-	@XmlElement(required = true)
 	private Adresse adresse;
 
 	@OneToMany
 	@JoinColumn(name = "kunde_fk", nullable = true)
 	@OrderColumn(name = "idx")
-	@XmlTransient
+	@JsonIgnore
 	private List<Bestellung> bestellungen;
 	
 	@Transient
-	@XmlElement//(name = "bestellungen")
+	
 	private URI bestellungenUri;
 	
 	

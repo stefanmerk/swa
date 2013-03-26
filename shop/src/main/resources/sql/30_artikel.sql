@@ -1,0 +1,3 @@
+INSERT INTO artikel (a_id, version, bezeichnung, preis, verfuegbarkeit, erzeugt, aktualisiert) VALUES (301,0,'Hemd ''Esprit''','59.99','j','01.01.2007 01:00:00','01.01.2007 01:00:00');
+INSERT INTO artikel (a_id, version, bezeichnung, preis, verfuegbarkeit, erzeugt, aktualisiert) VALUES (302,0,'Brille ''RayBan''','109.99','j','01.01.2007 01:00:00','01.01.2007 01:00:00');
+INSERT INTO artikel (a_id, version, bezeichnung, preis, verfuegbarkeit, erzeugt, aktualisiert) VALUES (303,0,'T-Shirt ''G-Star''','39.99','j','01.01.2007 01:00:00','01.01.2007 01:00:00');

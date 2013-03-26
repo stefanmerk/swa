@@ -11,7 +11,6 @@ import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.util.Date;
 import java.util.logging.Logger;
-import static javax.xml.bind.annotation.XmlAccessType.FIELD;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,10 +27,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlTransient;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import de.shop.util.IdGroup;
 
@@ -43,7 +40,7 @@ import de.shop.util.IdGroup;
 
 @Entity
 @Table(name = "adresse")
-@XmlAccessorType(FIELD)
+//@XmlAccessorType(FIELD)
 public class Adresse implements Serializable {
 	private static final long serialVersionUID = 435756438025198742L;
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
@@ -53,45 +50,45 @@ public class Adresse implements Serializable {
 	@GeneratedValue
 	@Column(name = "a_id", unique = true, nullable = false, updatable = false, precision = LONG_ANZ_ZIFFERN)
 	@Min(value = MIN_ID, message = "{kundenverwaltung.adresse.id.min}", groups = IdGroup.class)
-	@XmlAttribute
+	 
 	private Long aid = KEINE_ID;
 	
 	@Column(nullable = false)
 	@Temporal(TIMESTAMP)
-	@XmlTransient
+	@JsonIgnore
 	private Date aktualisiert;
 
 	@Column(nullable = false)
 	@Temporal(TIMESTAMP)
-	@XmlTransient
+	@JsonIgnore
 	private Date erzeugt;
 
-	@XmlElement(required = true)
+	 
 	private String hausnr;
   
 	@OneToOne
 	@JoinColumn(name = "kunde_fk", nullable = false)
 	//@OrderColumn(name = "idx", nullable = false)
 	@NotNull(message = "{kundeverwaltung.adresse.kunde.notNull}")
-	@XmlTransient
+	@JsonIgnore
 	private Kunde kunden;
 
 	@Column(nullable = false)
 	@NotNull(message = "{kundenverwaltung.adresse.ort.notNull} ")
-	@XmlElement(required = true)
+	 
 	private String ort;
 	
 	@Column(nullable = false)
 	@NotNull(message = "{kundenverwaltung.adresse.plz.notNull}")
 	@Digits(integer = 7, fraction = 0)
-	@XmlElement(required = true)
+	 
 	private String plz;
 	
-	@XmlElement(required = true)
+	 
 	private String strasse;
 	
 	@Transient
-	@XmlElement
+	 
 	private URI kundeUri;
 	
 	public Adresse() {

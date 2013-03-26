@@ -10,6 +10,7 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.util.Date;
+import java.util.logging.Logger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,11 +24,9 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.Min;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import java.util.logging.Logger;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import de.shop.util.IdGroup;
 
 
@@ -59,7 +58,8 @@ import de.shop.util.IdGroup;
 						+ " WHERE    a.preis < :" + Artikel.PARAM_PREIS
 			 	        + " ORDER BY a.id DESC")
 })
-@XmlRootElement
+
+
 public class Artikel implements Serializable {
 	private static final long serialVersionUID = -7366119792815686533L;
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
@@ -80,28 +80,24 @@ public class Artikel implements Serializable {
 	@GeneratedValue
 	@Column(name = "a_id", unique = true, nullable = false, updatable = false, precision = LONG_ANZ_ZIFFERN)
 	@Min(value = MIN_ID, message = "{artikelverwaltung.artikel.id.min}", groups = IdGroup.class)
-	@XmlAttribute
 	private Long aid = KEINE_ID;
 
 	@Column(nullable = false)
 	@Temporal(TIMESTAMP)
-	@XmlTransient
+	@JsonIgnore
 	private Date aktualisiert;
 
 	@Column(nullable = false)
-	@XmlElement(required = true)
 	private String bezeichnung;
 
 	@Column(nullable = false)
 	@Temporal(TIMESTAMP)
-	@XmlTransient
+	@JsonIgnore
 	private Date erzeugt;
-	
-	@XmlElement
+
 	private double preis;
 
 	@Column(nullable = false)
-	@XmlElement
 	private char verfuegbarkeit;
 
 	public Artikel() {
