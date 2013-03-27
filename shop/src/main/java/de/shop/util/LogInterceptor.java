@@ -1,14 +1,13 @@
 package de.shop.util;
 
-import static java.util.logging.Level.FINER;
-
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.logging.Logger;
 
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
+
+import org.jboss.logging.Logger;
 
 
 /**
@@ -34,7 +33,7 @@ public class LogInterceptor implements Serializable {
 		final String classname = clazz.getName();
 		final Logger logger = Logger.getLogger(classname);
 
-		if (!logger.isLoggable(FINER)) {
+		if (!logger.isDebugEnabled()) {
 			return ctx.proceed();
 		}
 
@@ -72,7 +71,7 @@ public class LogInterceptor implements Serializable {
 			final int laenge = sb.length();
 			sb.delete(laenge - 2, laenge - 1);
 		}
-		logger.log(FINER, methodName + " BEGINN" + sb);
+		logger.debug(methodName + " BEGINN" + sb);
 		
 		Object result = null;
 //		try {
@@ -94,11 +93,11 @@ public class LogInterceptor implements Serializable {
 
 		if (result == null) {
 			// Methode vom Typ void oder Rueckgabewert null
-			logger.log(FINER, methodName + " ENDE");
+			logger.debug(methodName + " ENDE");
 		}
 		else {
 			final String resultStr = toString(result);
-			logger.log(FINER, methodName + " ENDE: " + resultStr);
+			logger.debug(methodName + " ENDE: " + resultStr);
 		}
 		
 		return result;

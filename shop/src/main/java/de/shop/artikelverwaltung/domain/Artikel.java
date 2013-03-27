@@ -4,13 +4,11 @@ package de.shop.artikelverwaltung.domain;
 import static de.shop.util.Constants.KEINE_ID;
 import static de.shop.util.Constants.LONG_ANZ_ZIFFERN;
 import static de.shop.util.Constants.MIN_ID;
-import static java.util.logging.Level.FINER;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.util.Date;
-import java.util.logging.Logger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,6 +24,7 @@ import javax.persistence.Temporal;
 import javax.validation.constraints.Min;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.jboss.logging.Logger;
 
 import de.shop.util.IdGroup;
 
@@ -121,7 +120,7 @@ public class Artikel implements Serializable {
 
 	@PostPersist
 	private void postPersist() {
-		LOGGER.log(FINER, "Neuer Artikel mit ID={0}", aid);
+		LOGGER.debugf("Neuer Artikel mit ID=%d", aid);
 	}
 	
 	@PreUpdate

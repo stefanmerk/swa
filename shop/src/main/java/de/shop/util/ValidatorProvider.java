@@ -1,12 +1,9 @@
 package de.shop.util;
 
-import static java.util.logging.Level.INFO;
-
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -14,6 +11,8 @@ import javax.validation.MessageInterpolator;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+
+import org.jboss.logging.Logger;
 
 import com.google.common.base.Strings;
 
@@ -39,7 +38,8 @@ public class ValidatorProvider implements Serializable {
 		validators = new HashMap<>();
 		
 		if (locales == null || locales.length == 0) {
-			LOGGER.severe("In META-INF/seam-beans.xml sind keine Sprachen eingetragen");
+			// TODO - severe mit info ersetzt
+			LOGGER.info("In META-INF/seam-beans.xml sind keine Sprachen eingetragen");
 			return;
 		}
 		
@@ -67,9 +67,10 @@ public class ValidatorProvider implements Serializable {
 		}
 
 		if (validators.keySet() == null || validators.keySet().isEmpty()) {
-			LOGGER.severe("In META-INF/seam-beans.xml sind keine Sprachen eingetragen");
+			// TODO severe mit info ersetzt
+			LOGGER.info("In META-INF/seam-beans.xml sind keine Sprachen eingetragen");
 		}
-		LOGGER.log(INFO, "Locales fuer die Fehlermeldungen bei Bean Validation: {0}", validators.keySet());
+		LOGGER.infof("Locales fuer die Fehlermeldungen bei Bean Validation: %s", validators.keySet());
 	}
 	
 	/*

@@ -1,13 +1,11 @@
 package de.shop.artikelverwaltung.service;
 
 import static de.shop.util.Constants.KEINE_ID;
-import static java.util.logging.Level.FINER;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -20,7 +18,10 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Predicate;
 
+import org.jboss.logging.Logger;
+
 import com.google.common.base.Strings;
+
 
 
 import de.shop.artikelverwaltung.domain.Artikel;
@@ -40,7 +41,7 @@ public class ArtikelService implements Serializable {
 	
 	@PostConstruct
 	private void postConstruct() {
-		LOGGER.log(FINER, "CDI-faehiges Bean {0} wurde erzeugt", this);
+		LOGGER.debugf("CDI-faehiges Bean %s wurde erzeugt", this);
 		
 	
 		

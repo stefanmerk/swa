@@ -3,7 +3,6 @@ package de.shop.kundenverwaltung.domain;
 import static de.shop.util.Constants.KEINE_ID;
 import static de.shop.util.Constants.LONG_ANZ_ZIFFERN;
 import static de.shop.util.Constants.MIN_ID;
-import static java.util.logging.Level.FINER;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.TemporalType.TIMESTAMP;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,6 +37,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.jboss.logging.Logger;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.util.IdGroup;
@@ -216,7 +215,7 @@ public  class  Kunde implements Serializable {
 	
 	@PostPersist
 	private void postPersist() {
-		LOGGER.log(FINER, "Neue Adresse mit ID={0}", kid);
+		LOGGER.debugf("Neue Adresse mit ID=%d", kid);
 	}
 	
 	@PreUpdate

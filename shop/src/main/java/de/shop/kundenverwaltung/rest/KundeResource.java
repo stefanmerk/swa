@@ -1,7 +1,5 @@
 package de.shop.kundenverwaltung.rest;
 
-import static java.util.logging.Level.FINER;
-import static java.util.logging.Level.FINEST;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
@@ -13,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -32,6 +29,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
+import org.jboss.logging.Logger;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.bestellverwaltung.rest.UriHelperBestellung;
@@ -69,12 +68,12 @@ public class KundeResource {
 	
 	@PostConstruct
 	private void postConstruct() {
-		LOGGER.log(FINER, "CDI-faehiges Bean {0} wurde erzeugt", this);
+		LOGGER.debugf("CDI-faehiges Bean %s wurde erzeugt", this);
 	}
 	
 	@PreDestroy
 	private void preDestroy() {
-		LOGGER.log(FINER, "CDI-faehiges Bean {0} wird geloescht", this);
+		LOGGER.debugf("CDI-faehiges Bean %s wird geloescht", this);
 	}
 	//KLAUSURVORBEREITUNG
 	@GET
@@ -232,7 +231,7 @@ return test;
 		}
 
 		kunde = ks.createKunde(kunde, adresse);
-		LOGGER.log(FINEST, "Kunde: {0}", kunde);
+		LOGGER.debugf("Kunde: %s", kunde);
 		
 		final URI kundeUri = uriHelperKunde.getUriKunde(kunde, uriInfo);
 		return Response.created(kundeUri).build();
@@ -256,10 +255,10 @@ return test;
 			final String msg = "Kein Kunde gefunden mit der ID " + kunde.getKId();
 			throw new NotFoundException(msg);
 		}
-		LOGGER.log(FINEST, "Kunde vorher: %s", origKunde);
+		LOGGER.debugf("Kunde vorher: %s", origKunde);
 	
 		origKunde.setValues(kunde);
-		LOGGER.log(FINEST, "Kunde nachher: %s", origKunde);
+		LOGGER.debugf("Kunde nachher: %s", origKunde);
 		
 		kunde = ks.updateKunde(origKunde);
 		if (kunde == null) {
