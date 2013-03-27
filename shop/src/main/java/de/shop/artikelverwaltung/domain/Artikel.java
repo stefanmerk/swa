@@ -29,7 +29,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import de.shop.util.IdGroup;
 
-
+ 
 
 @Entity
 @Table(name = "artikel")
