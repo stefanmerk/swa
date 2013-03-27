@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
 import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.kundenverwaltung.domain.Kunde;
 import de.shop.util.Log;
-import de.shop.util.ValidationService;
+import de.shop.util.ValidatorProvider;
 
 @Log
 public class BestellService implements Serializable {
@@ -29,7 +29,7 @@ public class BestellService implements Serializable {
 private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
 	
 	@Inject
-	private ValidationService validationService;
+	private ValidatorProvider validationService;
 	
 	@PersistenceContext
 	private transient EntityManager em;

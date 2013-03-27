@@ -25,7 +25,7 @@ import com.google.common.base.Strings;
 
 import de.shop.artikelverwaltung.domain.Artikel;
 import de.shop.util.Log;
-import de.shop.util.ValidationService;
+import de.shop.util.ValidatorProvider;
 
 @Log
 public class ArtikelService implements Serializable {
@@ -33,7 +33,7 @@ public class ArtikelService implements Serializable {
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
 	
 	@Inject
-	private ValidationService validationService;
+	private ValidatorProvider validationService;
 	
 	@PersistenceContext
 	private transient EntityManager em;

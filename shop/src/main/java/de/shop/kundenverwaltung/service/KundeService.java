@@ -20,7 +20,7 @@ import javax.validation.groups.Default;
 import de.shop.kundenverwaltung.domain.Adresse;
 import de.shop.kundenverwaltung.domain.Kunde;
 import de.shop.util.Log;
-import de.shop.util.ValidationService;
+import de.shop.util.ValidatorProvider;
 
 @Log
 public class KundeService implements Serializable {
@@ -29,7 +29,7 @@ public class KundeService implements Serializable {
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
 	
 	@Inject
-	private ValidationService validationService;
+	private ValidatorProvider validationService;
 	
 	@PersistenceContext
 	private transient EntityManager em;
