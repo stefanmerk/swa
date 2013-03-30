@@ -1,5 +1,6 @@
 package de.shop.kundenverwaltung.domain;
 
+import static de.shop.util.Constants.ERSTE_VERSION;
 import static de.shop.util.Constants.KEINE_ID;
 import static de.shop.util.Constants.LONG_ANZ_ZIFFERN;
 import static de.shop.util.Constants.MIN_ID;
@@ -17,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,6 +36,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
@@ -182,7 +185,9 @@ public  class  Kunde implements Serializable {
 	private URI bestellungenUri;
 	
 	
-	
+	@Version
+	@Basic(optional = false)
+	private int version = ERSTE_VERSION;
 
 	
 	public Kunde() {
@@ -240,6 +245,14 @@ public  class  Kunde implements Serializable {
 		this.kid = kId;
 	}
 
+	public int getVersion() {
+		return this.version;
+	}
+	
+	public void setVersion(int version)
+	{
+		this.version = version;	
+	}
 	public Date getErzeugt() {
 		return erzeugt == null ? null : (Date) erzeugt.clone();
 	}
