@@ -5,11 +5,13 @@ import static de.shop.util.Constants.KEINE_ID;
 import static de.shop.util.Constants.LONG_ANZ_ZIFFERN;
 import static de.shop.util.Constants.MIN_ID;
 import static javax.persistence.TemporalType.TIMESTAMP;
+import static de.shop.util.Constants.ERSTE_VERSION;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.util.Date;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +23,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.Version;
 import javax.validation.constraints.Min;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -93,9 +96,14 @@ public class Artikel implements Serializable {
 	@Temporal(TIMESTAMP)
 	@JsonIgnore
 	private Date erzeugt;
-
+	
+	@Column(nullable = false)
 	private double preis;
-
+	
+	@Version
+	@Basic(optional = false)
+	private int version = ERSTE_VERSION;
+	
 	@Column(nullable = false)
 	private char verfuegbarkeit;
 
@@ -126,6 +134,15 @@ public class Artikel implements Serializable {
 	@PreUpdate
 	private void preUpdate() {
 		aktualisiert = new Date();
+	}
+	
+	public int getVersion() {
+		return this.version;
+	}
+	
+	public void setVersion(int version)
+	{
+		this.version = version;	
 	}
 	
 	public long getAId() {

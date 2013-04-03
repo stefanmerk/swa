@@ -1,6 +1,7 @@
 package de.shop.bestellverwaltung.domain;
 
 
+import static de.shop.util.Constants.ERSTE_VERSION;
 import static de.shop.util.Constants.KEINE_ID;
 import static de.shop.util.Constants.LONG_ANZ_ZIFFERN;
 import static de.shop.util.Constants.MIN_ID;
@@ -17,6 +18,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,6 +35,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -119,6 +122,10 @@ public class Bestellung implements Serializable {
 //	@XmlElement(name = "bestellposition", required = true)
 	private List<Bestellposition> bestellpositionen;
 	
+	@Version
+	@Basic(optional = false)
+	private int version = ERSTE_VERSION;
+	
 	@Transient
 	private URI kundeUri;
 
@@ -149,7 +156,15 @@ public class Bestellung implements Serializable {
 		this.bId = b;
 	}
 
-
+	public int getVersion() {
+		return this.version;
+	}
+	
+	public void setVersion(int version)
+	{
+		this.version = version;	
+	}
+	
 	public Date getErzeugt() {
 		return erzeugt == null ? null : (Date) erzeugt.clone();
 	}

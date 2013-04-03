@@ -1,5 +1,6 @@
 package de.shop.bestellverwaltung.domain;
 
+import static de.shop.util.Constants.ERSTE_VERSION;
 import static de.shop.util.Constants.KEINE_ID;
 import static de.shop.util.Constants.LONG_ANZ_ZIFFERN;
 import static de.shop.util.Constants.MIN_ID;
@@ -8,6 +9,7 @@ import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +20,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PostPersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 import javax.validation.constraints.Min;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -64,6 +67,9 @@ public class Bestellposition implements Serializable {
 	@Column(nullable = true ,insertable = false, updatable = false)
 	private short idx;*/
 
+	@Version
+	@Basic(optional = false)
+	private int version = ERSTE_VERSION;
 	
 	@PostPersist
 	private void postPersist() {
@@ -78,6 +84,15 @@ public class Bestellposition implements Serializable {
 		this.bpId = bpId;
 	}
 
+	public int getVersion() {
+		return this.version;
+	}
+	
+	public void setVersion(int version)
+	{
+		this.version = version;	
+	}
+	
 	public short getAnzahl() {
 		return this.anzahl;
 	}

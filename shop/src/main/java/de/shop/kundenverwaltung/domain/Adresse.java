@@ -1,5 +1,6 @@
 package de.shop.kundenverwaltung.domain;
 
+import static de.shop.util.Constants.ERSTE_VERSION;
 import static de.shop.util.Constants.KEINE_ID;
 import static de.shop.util.Constants.LONG_ANZ_ZIFFERN;
 import static de.shop.util.Constants.MIN_ID;
@@ -10,6 +11,7 @@ import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.util.Date;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +24,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -89,6 +92,10 @@ public class Adresse implements Serializable {
 	@Transient
 	 
 	private URI kundeUri;
+	
+	@Version
+	@Basic(optional = false)
+	private int version = ERSTE_VERSION;
 	
 	public Adresse() {
 		super();
@@ -181,7 +188,14 @@ public class Adresse implements Serializable {
 		return this;
 	}
 		
-		
+	public int getVersion() {
+		return this.version;
+	}
+	
+	public void setVersion(int version)
+	{
+		this.version = version;	
+	}	
 
 	public String getOrt() {
 		return this.ort;
