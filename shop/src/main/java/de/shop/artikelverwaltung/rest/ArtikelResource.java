@@ -79,7 +79,4 @@ public class ArtikelResource {
 		return Response.created(artikelUri).build();
 	}
 	
-	
-	
-	
 }
