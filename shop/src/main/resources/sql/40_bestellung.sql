@@ -1,6 +1,6 @@
 -- ===============================================================================
 -- Jede SQL-Anweisung muss in genau 1 Zeile
--- Kommentare durch -- am Zeilenanfang
+-- Kommentare durch -- am Zeilenanfang...
 -- ===============================================================================
 
 
