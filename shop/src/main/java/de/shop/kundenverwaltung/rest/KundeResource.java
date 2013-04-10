@@ -46,7 +46,7 @@ import de.shop.util.RestStringWrapper;
 
 
 @Path("/kunden")
-@Produces({ APPLICATION_XML, TEXT_XML, APPLICATION_JSON })
+@Produces({APPLICATION_JSON})
 @Consumes
 @RequestScoped
 @Log
@@ -222,7 +222,7 @@ return test;
 	 * @return Response-Objekt mit URL des neuen Privatkunden
 	 */
 	@POST
-	@Consumes({ APPLICATION_XML, TEXT_XML })
+	@Consumes({APPLICATION_JSON})
 	@Produces
 	public Response createKunde(Kunde kunde, @Context UriInfo uriInfo, @Context HttpHeaders headers) {
 		final Adresse adresse = kunde.getAdresse();
@@ -243,7 +243,7 @@ return test;
 	 * @param kunde zu aktualisierende Daten des Kunden
 	 */
 	@PUT
-	@Consumes({ APPLICATION_XML, TEXT_XML })
+	@Consumes({APPLICATION_JSON})
 	@Produces
 	public void updateKunde(Kunde kunde, @Context UriInfo uriInfo, @Context HttpHeaders headers) {
 		// Vorhandenen Kunden ermitteln

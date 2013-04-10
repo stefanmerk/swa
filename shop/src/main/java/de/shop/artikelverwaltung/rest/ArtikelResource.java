@@ -31,7 +31,7 @@ import de.shop.util.NotFoundException;
 
 
 @Path("/artikel")
-@Produces({ APPLICATION_XML, TEXT_XML, APPLICATION_JSON })
+@Produces({APPLICATION_JSON })
 @Consumes
 @RequestScoped
 @Log
@@ -67,7 +67,7 @@ public class ArtikelResource {
 	}
 	
 	@POST
-	@Consumes({ APPLICATION_XML, TEXT_XML })
+	@Consumes({APPLICATION_JSON })
 	@Produces
 	public Response createArtikel(Artikel artikel, @Context UriInfo uriInfo, @Context HttpHeaders headers) {
 		
