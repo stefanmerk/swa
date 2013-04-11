@@ -27,7 +27,7 @@ version="2.0">
          <property name="hibernate.hbm2ddl.auto" value="create-drop" />
         <!-- <property name="hibernate.show_sql" value="false" /> -->
 	   	 <property name="hibernate.hbm2ddl.import_files"
-		 value="sql/10_kunde.sql,sql/20_adresse.sql,sql/30_artikel.sql,sql/40_bestellung.sql,sql/50_bestellposition.sql"/>	
+		 value="sql/03_hibernate_sequence.sql,sql/10_kunde.sql,sql/20_adresse.sql,sql/30_artikel.sql,sql/40_bestellung.sql,sql/50_bestellposition.sql"/>	
 		
       </properties>
    </persistence-unit>

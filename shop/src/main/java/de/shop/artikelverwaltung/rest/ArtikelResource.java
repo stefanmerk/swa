@@ -30,7 +30,7 @@ import de.shop.util.Transactional;
 
 
 @Path("/artikel")
-@Produces({APPLICATION_JSON })
+@Produces(APPLICATION_JSON)
 @Consumes
 @RequestScoped
 @Transactional
@@ -67,7 +67,7 @@ public class ArtikelResource {
 	}
 	
 	@POST
-	@Consumes({APPLICATION_JSON })
+	@Consumes(APPLICATION_JSON)
 	@Produces
 	public Response createArtikel(Artikel artikel, @Context UriInfo uriInfo, @Context HttpHeaders headers) {
 		
