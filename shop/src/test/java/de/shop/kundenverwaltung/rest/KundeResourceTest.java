@@ -93,12 +93,14 @@ private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().loo
 		final String username = USERNAME;
 		final String password = PASSWORD;
 		final String geschlecht = GESCHLECHT;
+		final String password1 = "hi";
 		
 		final JsonObject jsonObject = getJsonBuilderFactory().createObjectBuilder()	             		          
 		             		          .add("nachname", nachname)
 		             		          .add("vorname", vorname)
 		             		          .add("email", email)
 		             		          .add("geschlecht",geschlecht)
+		             		          .add("password", password1)
 		             		          .add("adresse", getJsonBuilderFactory().createObjectBuilder()
 		                    		                  .add("plz", plz)
 		                    		                  .add("ort", ort)
@@ -111,7 +113,7 @@ private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().loo
 		final Response response = given().contentType(APPLICATION_JSON)
 				                         .body(jsonObject.toString())
                                          .auth()
-                                         .basic(username, password)
+                                         .basic(username, password1)
                                          .post(KUNDEN_PATH);
 		
 		// Then
