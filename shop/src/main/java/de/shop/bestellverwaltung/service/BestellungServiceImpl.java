@@ -27,9 +27,11 @@ import de.shop.kundenverwaltung.domain.Kunde;
 import de.shop.kundenverwaltung.service.KundeService;
 import de.shop.kundenverwaltung.service.KundeService.FetchType;
 import de.shop.util.Log;
+import de.shop.util.Transactional;
 import de.shop.util.ValidatorProvider;
 
 @Log
+@Transactional
 public class BestellungServiceImpl implements Serializable, BestellungService {
 	private static final long serialVersionUID = -9145947650157430928L;
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
@@ -41,7 +43,7 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 	private KundeService ks;
 	
 	@Inject
-	private ValidatorProvider validationService;
+	private ValidatorProvider validationProvider;
 	
 	@Inject
 	@NeueBestellung
@@ -124,7 +126,7 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 	}
 	
 	private void validateBestellung(Bestellung bestellung, Locale locale, Class<?>... groups) {
-		final Validator validator = validationService.getValidator(locale);
+		final Validator validator = validationProvider.getValidator(locale);
 		
 		final Set<ConstraintViolation<Bestellung>> violations = validator.validate(bestellung);
 		if (violations != null && !violations.isEmpty()) {

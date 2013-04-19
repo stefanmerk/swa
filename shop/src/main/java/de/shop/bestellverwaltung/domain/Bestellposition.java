@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.jboss.logging.Logger;
@@ -50,8 +51,9 @@ public class Bestellposition implements Serializable {
 	@Column(nullable = false)
 	private short anzahl;
  
-	@OneToOne(optional = false)
-	@JoinColumn(name = "artikel_fk")
+	@OneToOne
+	@JoinColumn(name = "artikel_fk", nullable = false)
+	@NotNull
 	@JsonIgnore
 	private Artikel artikel;
 	

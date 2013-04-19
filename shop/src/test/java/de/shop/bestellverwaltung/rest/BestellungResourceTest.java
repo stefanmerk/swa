@@ -112,14 +112,14 @@ public class BestellungResourceTest extends AbstractResourceTest {
 				                      .add("kundeUri", KUNDEN_URI + "/" + kundeId)
 				                      .add("bestellpositionen", getJsonBuilderFactory().createArrayBuilder()
 				            		                            .add(getJsonBuilderFactory().createObjectBuilder()
-				            		                                 .add("artikelUri", ARTIKEL_URI + "/" + artikelId1)
-				            		                                 .add("anzahl", 1))
-				            		                            .add(getJsonBuilderFactory().createObjectBuilder()
-				            		                                 .add("artikelUri", ARTIKEL_URI + "/" + artikelId2)
-				            		                                 .add("anzahl", 2)))
+				            		                                 .add("artikelUri",  ARTIKEL_URI + "/" + artikelId1)
+				            		                                 .add("anzahl", 1)))
+//				            		                            .add(getJsonBuilderFactory().createObjectBuilder()
+//				            		                                 .add("artikelUri", ARTIKEL_URI + "/" + artikelId2)
+//				            		                                 .add("anzahl", 2)))
 				                      .build();
 		
-		assertThat(jsonObject.toString(), is("1"));
+		System.out.println("!!!" + jsonObject.toString());
 		// When
 		final Response response = given().contentType(APPLICATION_JSON)
 				                         .body(jsonObject.toString())
