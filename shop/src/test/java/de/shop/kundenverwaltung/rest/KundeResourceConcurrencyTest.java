@@ -28,6 +28,7 @@ import javax.json.JsonReader;
 
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -114,7 +115,7 @@ public class KundeResourceConcurrencyTest extends AbstractResourceTest {
 		LOGGER.finer("ENDE");
 	}
 	
-	@Test
+	@Ignore
 	public void updateDelete() throws InterruptedException, ExecutionException {
 		LOGGER.finer("BEGINN");
 		
@@ -167,7 +168,7 @@ public class KundeResourceConcurrencyTest extends AbstractResourceTest {
 		LOGGER.finer("ENDE");
 	}
 	
-	@Test
+	@Ignore
 	public void deleteUpdate() throws InterruptedException, ExecutionException {
 		LOGGER.finer("BEGINN");
 		

@@ -21,9 +21,11 @@ import org.jboss.logging.Logger;
 import de.shop.kundenverwaltung.domain.Adresse;
 import de.shop.kundenverwaltung.domain.Kunde;
 import de.shop.util.Log;
+import de.shop.util.Transactional;
 import de.shop.util.ValidatorProvider;
 
 @Log
+@Transactional
 public class KundeService implements Serializable {
 
 	private static final long serialVersionUID = 4360325837484294309L;
