@@ -209,6 +209,7 @@ public  class  Kunde implements Serializable {
 		this.nachname = kopie.nachname;
 		this.password = kopie.password;
 		this.email = kopie.email;
+		this.version = kopie.version;
 		
 	}
 
@@ -367,7 +368,7 @@ public  class  Kunde implements Serializable {
 				+ ", email=" + email + ", erzeugt=" + erzeugt
 				+ ", geschlecht="
 				+ geschlecht + ", nachname=" + nachname + ", password="
-				+ password + ", vorname=" + vorname + "]";
+				+ password + ", vorname=" + vorname + ", version: "+ version+"]";
 	}
 
 	@Override

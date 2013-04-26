@@ -148,7 +148,8 @@ public class KundeService implements Serializable {
 		
 		if (kunde == null)
 			return null;
-		
+		em.detach(kunde);
+		//Kunde eKunde = findKundenByNachname(nachname, fetch, locale)
 		em.merge(kunde);
 		return kunde;
 	}
