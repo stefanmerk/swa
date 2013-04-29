@@ -12,7 +12,6 @@ import static de.shop.util.TestConstants.LOCATION;
 import static java.net.HttpURLConnection.HTTP_CREATED;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -43,7 +42,6 @@ public class BestellungResourceTest extends AbstractResourceTest {
 	private static final Long BESTELLUNG_ID_VORHANDEN = Long.valueOf(401);
 	private static final Long KUNDE_ID_VORHANDEN = Long.valueOf(101);
 	private static final Long ARTIKEL_ID_VORHANDEN_1 = Long.valueOf(301);
-	private static final Long ARTIKEL_ID_VORHANDEN_2 = Long.valueOf(302);
 
 	
 	@Test
@@ -103,7 +101,6 @@ public class BestellungResourceTest extends AbstractResourceTest {
 		// Given
 		final Long kundeId = KUNDE_ID_VORHANDEN;
 		final Long artikelId1 = ARTIKEL_ID_VORHANDEN_1;
-		final Long artikelId2 = ARTIKEL_ID_VORHANDEN_2;
 		final String username = USERNAME_ADMIN;
 		final String password = PASSWORD_ADMIN;
 		

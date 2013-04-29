@@ -4,8 +4,6 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
-import java.util.List;
-import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -27,8 +25,6 @@ import org.jboss.logging.Logger;
 
 import de.shop.artikelverwaltung.domain.Artikel;
 import de.shop.artikelverwaltung.service.ArtikelService;
-import de.shop.kundenverwaltung.domain.Kunde;
-import de.shop.kundenverwaltung.service.KundeService.FetchType;
 import de.shop.util.Log;
 import de.shop.util.NotFoundException;
 import de.shop.util.Transactional;
