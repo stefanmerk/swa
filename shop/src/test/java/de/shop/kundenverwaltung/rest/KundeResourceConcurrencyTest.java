@@ -115,8 +115,4 @@ public class KundeResourceConcurrencyTest extends AbstractResourceTest {
 		
 		LOGGER.finer("ENDE"); 
 	}
-	
-	
-	
-
 }

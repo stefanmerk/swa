@@ -116,7 +116,7 @@ public class BestellungResourceTest extends AbstractResourceTest {
 //				            		                                 .add("anzahl", 2)))
 				                      .build();
 		
-		System.out.println("!!!" + jsonObject.toString());
+		
 		// When
 		final Response response = given().contentType(APPLICATION_JSON)
 				                         .body(jsonObject.toString())
