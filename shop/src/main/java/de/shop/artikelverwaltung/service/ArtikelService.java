@@ -79,6 +79,7 @@ public class ArtikelService implements Serializable {
 		if (neuerArtikel == null)
 			return null;
 		
+		em.detach(neuerArtikel);
 		em.merge(neuerArtikel);
 		return neuerArtikel;
 	}

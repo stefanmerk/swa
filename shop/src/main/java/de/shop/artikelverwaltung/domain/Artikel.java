@@ -1,11 +1,11 @@
 package de.shop.artikelverwaltung.domain;
 
 
+import static de.shop.util.Constants.ERSTE_VERSION;
 import static de.shop.util.Constants.KEINE_ID;
 import static de.shop.util.Constants.LONG_ANZ_ZIFFERN;
 import static de.shop.util.Constants.MIN_ID;
 import static javax.persistence.TemporalType.TIMESTAMP;
-import static de.shop.util.Constants.ERSTE_VERSION;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
@@ -233,6 +233,13 @@ public class Artikel implements Serializable {
 		else if (!aid.equals(other.aid))
 			return false;
 		return true;
+	}
+
+	public void setValues(Artikel kopie) {
+		this.bezeichnung = kopie.bezeichnung;
+		this.preis = kopie.preis;
+		this.verfuegbarkeit = kopie.verfuegbarkeit;
+		this.version = kopie.version;	
 	}
 }
 	
