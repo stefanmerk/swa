@@ -125,7 +125,7 @@ public class ArtikelService implements Serializable {
 		final List<Artikel> artikel = query.getResultList();
 		return artikel;
 	}
-	public List<Artikel>findAllArtikel() {
+	public List<Artikel> findAllArtikel() {
 		final List<Artikel> result = em.createNamedQuery(Artikel.FIND_ARTIKEL, Artikel.class)
                 .getResultList();
 		return result;

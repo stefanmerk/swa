@@ -57,9 +57,9 @@ public class KundeService implements Serializable {
 		return kunde;
 
 	}
-	public Kunde testtest (Long id)
-	{
-		final Kunde k = em.createNamedQuery(Kunde.FIND_KUNDE_BY_ID_FETCH_BESTELLUNGEN, Kunde.class).setParameter(Kunde.PARAM_KUNDE_ID,id).getSingleResult();
+	public Kunde testtest(Long id) {
+		final Kunde k = em.createNamedQuery(Kunde.FIND_KUNDE_BY_ID_FETCH_BESTELLUNGEN, Kunde.class)
+						.setParameter(Kunde.PARAM_KUNDE_ID, id).getSingleResult();
 		
 		return k;
 		
@@ -89,7 +89,7 @@ public class KundeService implements Serializable {
 		return nachnamen;
 	}
 	
-	public List<Kunde>findAllKunde(FetchType fetch, Locale local) {
+	public List<Kunde> findAllKunde(FetchType fetch, Locale local) {
 		final List<Kunde> result = em.createNamedQuery(Kunde.FIND_KUNDEN, Kunde.class)
                 .getResultList();
 		return result;
@@ -152,7 +152,5 @@ public class KundeService implements Serializable {
 		//Kunde eKunde = findKundenByNachname(nachname, fetch, locale)
 		em.merge(kunde);
 		return kunde;
-	}
-
-	
+	}	
 }

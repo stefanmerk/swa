@@ -44,7 +44,7 @@ import de.shop.util.RestStringWrapper;
 
 
 @Path("/kunden")
-@Produces({APPLICATION_JSON})
+@Produces(APPLICATION_JSON)
 @Consumes
 @RequestScoped
 @Log
@@ -73,29 +73,7 @@ public class KundeResource {
 	private void preDestroy() {
 		LOGGER.debugf("CDI-faehiges Bean %s wird geloescht", this);
 	}
-	//KLAUSURVORBEREITUNG
-	@GET
-	@Path("{id:[1-9][0-9][0-9]}")
-	public Kunde Juliastest(
-		@PathParam("id") Long id,
-        @Context UriInfo uriInfo,
-        @Context HttpHeaders headers) {
-final List<Locale> locales = headers.getAcceptableLanguages();
-final Locale locale = locales.isEmpty() ? Locale.getDefault() : locales.get(0);
-Kunde test = ks.testtest(id);
-final Kunde kunde = ks.findKundebyID(id, FetchType.NUR_KUNDE, locale);
-if (kunde == null) {
-final String msg = "Kein Kunde gefunden mit der ID " + id;
-throw new NotFoundException(msg);
-}
 
-
-uriHelperKunde.updateUriKunde(kunde, uriInfo);
-
-return test;
-		
-		
-	}
 	
 	
 	@GET
@@ -241,13 +219,13 @@ return test;
 	 * @param kunde zu aktualisierende Daten des Kunden
 	 */
 	@PUT
-	@Consumes({APPLICATION_JSON})
+	@Consumes(APPLICATION_JSON)
 	@Produces
 	public void updateKunde(Kunde kunde, @Context UriInfo uriInfo, @Context HttpHeaders headers) {
 		// Vorhandenen Kunden ermitteln
 		final List<Locale> locales = headers.getAcceptableLanguages();
 		final Locale locale = locales.isEmpty() ? Locale.getDefault() : locales.get(0);
-		Kunde origKunde = ks.findKundebyID(kunde.getKId(), FetchType.NUR_KUNDE, locale);
+		final Kunde origKunde = ks.findKundebyID(kunde.getKId(), FetchType.NUR_KUNDE, locale);
 		if (origKunde == null) {
 
 			final String msg = "Kein Kunde gefunden mit der ID " + kunde.getKId();
@@ -264,8 +242,5 @@ return test;
 			final String msg = "Kein Kunde gefunden mit der ID " + origKunde.getKId();
 			throw new NotFoundException(msg);
 		}
-	}
-	
-	
-	
+	}	
 }

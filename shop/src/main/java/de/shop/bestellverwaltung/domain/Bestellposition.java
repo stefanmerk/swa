@@ -90,8 +90,7 @@ public class Bestellposition implements Serializable {
 		return this.version;
 	}
 	
-	public void setVersion(int version)
-	{
+	public void setVersion(int version) {
 		this.version = version;	
 	}
 	
@@ -144,7 +143,7 @@ public class Bestellposition implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Bestellposition other = (Bestellposition) obj;
+		final Bestellposition other = (Bestellposition) obj;
 		if (bpId == null) {
 			if (other.bpId != null)
 				return false;

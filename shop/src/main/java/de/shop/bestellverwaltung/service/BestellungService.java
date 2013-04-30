@@ -20,5 +20,4 @@ public interface BestellungService {
 	/**
 	 */
 	List<Bestellung> findBestellungenByKundeId(Long kundeId);
-
-	}
+}

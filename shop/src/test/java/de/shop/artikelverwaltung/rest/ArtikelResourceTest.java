@@ -1,4 +1,4 @@
-package artikelverwaltung.rest;
+package de.shop.artikelverwaltung.rest;
 
 import static com.jayway.restassured.RestAssured.given;
 import static de.shop.util.TestConstants.ACCEPT;
@@ -61,7 +61,7 @@ public void findArtikelById() {
 	final Long artikelId = ARTIKEL_ID_VORHANDEN;
 	
 	//When
-	Response response = given().header(ACCEPT, APPLICATION_JSON)
+	final Response response = given().header(ACCEPT, APPLICATION_JSON)
 								.pathParameter(ARTIKEL_ID_PATH_PARAM, artikelId)
 								.get(ARTIKEL_ID_PATH);
 	//Then
@@ -84,7 +84,7 @@ public void createArtikel() {
 	
 	final String bezeichnung = BEZEICHNUNG_NEU;
 	final Double preis = PREIS_NEU;
-	final String verfuegbarkeit= VERFUEGBARKEIT_NEU;
+	final String verfuegbarkeit = VERFUEGBARKEIT_NEU;
 	final String username = USERNAME_ADMIN;
 	final String password = PASSWORD_ADMIN;
 	
@@ -103,7 +103,7 @@ public void createArtikel() {
 }
 
 @Test
-public void updateArtikel(){
+public void updateArtikel() {
 	LOGGER.finer("BEGINN");
 	
 	//Given

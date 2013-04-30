@@ -249,8 +249,7 @@ public  class  Kunde implements Serializable {
 		return this.version;
 	}
 	
-	public void setVersion(int version)
-	{
+	public void setVersion(int version) {
 		this.version = version;	
 	}
 	public Date getErzeugt() {
@@ -368,7 +367,7 @@ public  class  Kunde implements Serializable {
 				+ ", email=" + email + ", erzeugt=" + erzeugt
 				+ ", geschlecht="
 				+ geschlecht + ", nachname=" + nachname + ", password="
-				+ password + ", vorname=" + vorname + ", version: "+ version+"]";
+				+ password + ", vorname=" + vorname + ", version: " + version + "]";
 	}
 
 	@Override
@@ -387,7 +386,7 @@ public  class  Kunde implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Kunde other = (Kunde) obj;
+		final Kunde other = (Kunde) obj;
 		if (kid == null) {
 			if (other.kid != null)
 				return false;

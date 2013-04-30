@@ -40,7 +40,7 @@ import de.shop.util.NotFoundException;
 
 
 @Path("/bestellungen")
-@Produces({APPLICATION_JSON })
+@Produces(APPLICATION_JSON)
 @Consumes
 @RequestScoped
 @Log
@@ -116,7 +116,7 @@ public class BestellungResource {
 	 * @return Objekt mit Bestelldaten, falls die ID vorhanden ist
 	 */
 	@POST
-	@Consumes({APPLICATION_JSON})
+	@Consumes(APPLICATION_JSON)
 	@Produces
 	public Response createBestellung(Bestellung bestellung, @Context UriInfo uriInfo, @Context HttpHeaders headers) {
 		// Schluessel des Kunden extrahieren
@@ -141,8 +141,8 @@ public class BestellungResource {
 		}
 		
 	
-		Collection<Bestellposition> bestellpositionen = bestellung.getBestellpositionen();
-		List<Long> artikelIds = new ArrayList<>(bestellpositionen.size());
+		final Collection<Bestellposition> bestellpositionen = bestellung.getBestellpositionen();
+		final List<Long> artikelIds = new ArrayList<>(bestellpositionen.size());
 		
 		for (Bestellposition bp : bestellpositionen) {
 			final String artikelUriStr = bp.getArtikelUri().toString();
@@ -171,7 +171,7 @@ public class BestellungResource {
 			throw new NotFoundException(sb.toString());
 		}
 
-		Collection<Artikel> gefundeneArtikel = as.findArtikelByIds(artikelIds);
+		final Collection<Artikel> gefundeneArtikel = as.findArtikelByIds(artikelIds);
 
 		if (gefundeneArtikel.isEmpty()) {
 			throw new NotFoundException("Keine Artikel vorhanden mit den gesuchten IDs! ");

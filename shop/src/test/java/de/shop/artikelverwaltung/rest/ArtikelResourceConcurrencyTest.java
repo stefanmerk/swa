@@ -1,4 +1,4 @@
-package artikelverwaltung.rest;
+package de.shop.artikelverwaltung.rest;
 
 import static com.jayway.restassured.RestAssured.given;
 import static de.shop.util.TestConstants.ACCEPT;

@@ -192,8 +192,7 @@ public class Adresse implements Serializable {
 		return this.version;
 	}
 	
-	public void setVersion(int version)
-	{
+	public void setVersion(int version) {
 		this.version = version;	
 	}	
 
@@ -254,7 +253,7 @@ public class Adresse implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Adresse other = (Adresse) obj;
+		final Adresse other = (Adresse) obj;
 		if (aid == null) {
 			if (other.aid != null)
 				return false;
@@ -263,7 +262,4 @@ public class Adresse implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-
 }

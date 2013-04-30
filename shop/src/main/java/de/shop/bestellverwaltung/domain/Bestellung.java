@@ -160,8 +160,7 @@ public class Bestellung implements Serializable {
 		return this.version;
 	}
 	
-	public void setVersion(int version)
-	{
+	public void setVersion(int version) {
 		this.version = version;	
 	}
 	
@@ -272,7 +271,7 @@ public class Bestellung implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Bestellung other = (Bestellung) obj;
+		final Bestellung other = (Bestellung) obj;
 		if (bId == null) {
 			if (other.bId != null)
 				return false;
@@ -281,7 +280,4 @@ public class Bestellung implements Serializable {
 			return false;
 		return true;
 	}
-
-	
-
 }

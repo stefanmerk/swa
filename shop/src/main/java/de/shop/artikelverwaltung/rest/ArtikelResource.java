@@ -85,7 +85,7 @@ public class ArtikelResource {
 	@Produces
 	public void updateArtikel(Artikel artikel, @Context UriInfo uriInfo, @Context HttpHeaders headers) {
 		// Vorhandenen Artikel ermitteln
-		Artikel origArtikel = as.findArtikelbyID(artikel.getAId());
+		final Artikel origArtikel = as.findArtikelbyID(artikel.getAId());
 		if (origArtikel == null) {
 
 			final String msg = "Kein Artikel gefunden mit der ID " + artikel.getAId();

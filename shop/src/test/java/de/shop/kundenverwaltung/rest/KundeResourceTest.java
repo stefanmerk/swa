@@ -92,7 +92,7 @@ private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().loo
 		             		          .add("nachname", nachname)
 		             		          .add("vorname", vorname)
 		             		          .add("email", email)
-		             		          .add("geschlecht",geschlecht)
+		             		          .add("geschlecht", geschlecht)
 		             		          .add("password", password)
 		             		          .add("adresse", getJsonBuilderFactory().createObjectBuilder()
 		                    		                  .add("plz", plz)

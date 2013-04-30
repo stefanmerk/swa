@@ -58,7 +58,7 @@ private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().loo
 		
 	}
 	
-	public List<Bestellung>findAllBestellung() {
+	public List<Bestellung> findAllBestellung() {
 		final List<Bestellung> result = em.createNamedQuery(Bestellung.FIND_BESTELLUNG, Bestellung.class)
                 .getResultList();
 		return result;
@@ -80,7 +80,4 @@ private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().loo
 		return bestellung;
 	}
 
-
-
 }
-	
