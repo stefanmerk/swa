@@ -81,6 +81,7 @@ public class ArtikelService implements Serializable {
 		
 		em.detach(neuerArtikel);
 		em.merge(neuerArtikel);
+		em.detach(neuerArtikel); // WURDE VON MIR EINGEFÜGT FÜR KONK. Updates
 		return neuerArtikel;
 	}
 

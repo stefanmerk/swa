@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.Stateful;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;

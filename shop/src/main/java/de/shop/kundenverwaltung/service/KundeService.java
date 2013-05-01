@@ -9,6 +9,8 @@ import java.util.Locale;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.security.RolesAllowed;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,6 +28,8 @@ import de.shop.util.ValidatorProvider;
 
 @Log
 @Transactional
+
+//@RolesAllowed({"admin","mitarbeiter","kunde"})
 public class KundeService implements Serializable {
 
 	private static final long serialVersionUID = 4360325837484294309L;
@@ -64,6 +68,7 @@ public class KundeService implements Serializable {
 		return k;
 		
 	}
+	
 	public Kunde findKundebyID(Long id, FetchType fetch , Locale local) {
 		
 		final Kunde kunde = em.createNamedQuery(Kunde.FIND_KUNDE_ID, Kunde.class)
