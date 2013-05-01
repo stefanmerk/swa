@@ -8,6 +8,7 @@ import static de.shop.util.TestConstants.KUNDEN_PATH;
 import static de.shop.util.TestConstants.LOCATION;
 import static java.net.HttpURLConnection.HTTP_CREATED;
 import static java.net.HttpURLConnection.HTTP_OK;
+import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -22,6 +23,7 @@ import javax.json.JsonReader;
 
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -45,7 +47,7 @@ private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().loo
 	private static final String NEUE_STRASSE = "Testweg";
 	private static final String NEUE_HAUSNR = "1";
 	
-	
+	@Ignore
 	@Test
 	public void findKundeById() {
 		LOGGER.finer("BEGINN");
@@ -71,6 +73,7 @@ private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().loo
 		LOGGER.finer("ENDE");
 	}
 	
+	@Ignore
 	@Test
 	public void createKunde() {
 		LOGGER.finer("BEGINN");
@@ -86,6 +89,7 @@ private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().loo
 		final String username = USERNAME_ADMIN;
 		final String password = PASSWORD_ADMIN;
 		final String geschlecht = GESCHLECHT;
+		
 		
 		
 		final JsonObject jsonObject = getJsonBuilderFactory().createObjectBuilder()	             		          
@@ -117,6 +121,32 @@ private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().loo
 		final Long id = Long.valueOf(idStr);
 		assertThat(id.longValue() > 0, is(true));
 
+		LOGGER.finer("ENDE");
+	}
+	
+	@Test
+	public void createKundeFalschesPassword() {
+		LOGGER.finer("BEGINN");
+		
+		// Given
+		final String username = USERNAME;
+		final String password = PASSWORD_FALSCH;
+		final String nachname = NEUER_NACHNAME;
+		
+		final JsonObject jsonObject = getJsonBuilderFactory().createObjectBuilder()
+            		                  .add("nachname", nachname)
+            		                  .build();
+		
+		// When
+		final Response response = given().contentType(APPLICATION_JSON)
+				                         .body(jsonObject.toString())
+                                         .auth()
+                                         .basic(username, password)
+                                         .post(KUNDEN_PATH);
+		
+		// Then
+		assertThat(response.getStatusCode(), is(HTTP_UNAUTHORIZED));
+		
 		LOGGER.finer("ENDE");
 	}
 }
