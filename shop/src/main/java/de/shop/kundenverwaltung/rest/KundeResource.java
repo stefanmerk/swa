@@ -12,8 +12,6 @@ import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.annotation.security.RolesAllowed;
-import javax.ejb.Stateful;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -81,7 +79,6 @@ public class KundeResource {
 	@GET
 	@Produces(TEXT_PLAIN)
 	@Path("version")
-	
 	public String getVersion() {
 		return VERSION;
 	}
@@ -93,6 +90,7 @@ public class KundeResource {
 	 */
 	@GET
 	@Path("{id:[1-9][0-9]*}")
+
 	public Kunde findKundeById(@PathParam("id") Long id,
 			                           @Context UriInfo uriInfo,
 			                           @Context HttpHeaders headers) {
@@ -223,7 +221,6 @@ public class KundeResource {
 	@PUT
 	@Consumes(APPLICATION_JSON)
 	@Produces
-	@RolesAllowed({"Admin","Mitarbeiter"}) 
 	public void updateKunde(Kunde kunde, @Context UriInfo uriInfo, @Context HttpHeaders headers) {
 		// Vorhandenen Kunden ermitteln
 		final List<Locale> locales = headers.getAcceptableLanguages();

@@ -47,7 +47,7 @@ private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().loo
 	private static final String NEUE_STRASSE = "Testweg";
 	private static final String NEUE_HAUSNR = "1";
 	
-
+	@Ignore
 	@Test
 	public void findKundeById() {
 		LOGGER.finer("BEGINN");
@@ -73,7 +73,7 @@ private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().loo
 		LOGGER.finer("ENDE");
 	}
 	
-
+	@Ignore
 	@Test
 	public void createKunde() {
 		LOGGER.finer("BEGINN");
