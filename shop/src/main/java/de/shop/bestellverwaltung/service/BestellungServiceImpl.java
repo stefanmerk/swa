@@ -26,6 +26,7 @@ import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.kundenverwaltung.domain.Kunde;
 import de.shop.kundenverwaltung.service.KundeService;
 import de.shop.kundenverwaltung.service.KundeService.FetchType;
+import de.shop.util.ConcurrentDeletedException;
 import de.shop.util.Log;
 import de.shop.util.Transactional;
 import de.shop.util.ValidatorProvider;
@@ -125,6 +126,27 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 		return bestellung;
 	}
 	
+	@Override
+	public Bestellung updateBestellung(Bestellung bestellung)
+	{
+		if (bestellung == null) {
+			return null;
+			}
+
+			// Bestellung vom EntityManager trennen, weil anschliessend z.B. nach Id gesucht wird
+			em.detach(bestellung);
+
+			// Wurde das Objekt konkurrierend geloescht?
+			final Bestellung tmp = findBestellungById(bestellung.getBId());
+			if (tmp == null) {
+			throw new ConcurrentDeletedException(bestellung.getBId());
+			}
+			em.detach(tmp);
+			
+			bestellung = em.merge(bestellung); // OptimisticLockException
+			return bestellung;
+	}
+		
 	private void validateBestellung(Bestellung bestellung, Locale locale, Class<?>... groups) {
 		final Validator validator = validationProvider.getValidator(locale);
 		
@@ -134,6 +156,9 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 			LOGGER.warnf("BestellungService", "createBestellung", violations);
 			throw new BestellungValidationException(bestellung, violations);
 		}
-	}
+	
+	
 
+	
+	}
 }

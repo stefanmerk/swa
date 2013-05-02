@@ -109,7 +109,7 @@ public class Bestellung implements Serializable {
 	
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "kunde_fk", nullable = false, insertable = true, updatable = false)
+	@JoinColumn(name = "kunde_fk", nullable = false, insertable = true, updatable = true)
 	@NotNull(message = "{bestellverwaltung.bestellung.kunde.notNull}", groups = PreExistingGroup.class)
 	@JsonIgnore
 	private Kunde kunde;
@@ -279,5 +279,12 @@ public class Bestellung implements Serializable {
 		else if (!bId.equals(other.bId))
 			return false;
 		return true;
+	}
+	
+	public void setValues(Bestellung kopie) {
+		
+		this.bestellpositionen = kopie.bestellpositionen;
+		this.version = kopie.version;
+	
 	}
 }

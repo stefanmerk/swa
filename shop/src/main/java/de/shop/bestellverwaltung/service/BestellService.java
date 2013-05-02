@@ -72,12 +72,19 @@ private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().loo
 		
 		bestellung.setKunde(kunde);
 		
-		
-		
-		
 		em.persist(bestellung);
 
 		return bestellung;
 	}
 
+	public Bestellung updateBestellung(Bestellung best) {
+		
+		if (best == null)
+			return null;
+		
+		em.detach(best);
+		em.merge(best);
+		
+		return best;
+	}	
 }

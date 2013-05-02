@@ -20,4 +20,6 @@ public interface BestellungService {
 	/**
 	 */
 	List<Bestellung> findBestellungenByKundeId(Long kundeId);
+	
+	Bestellung updateBestellung(Bestellung best);
 }

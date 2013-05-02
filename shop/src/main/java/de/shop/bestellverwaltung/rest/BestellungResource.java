@@ -11,12 +11,14 @@ import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateful;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -38,6 +40,7 @@ import de.shop.kundenverwaltung.service.KundeService;
 import de.shop.kundenverwaltung.service.KundeService.FetchType;
 import de.shop.util.Log;
 import de.shop.util.NotFoundException;
+import de.shop.util.Transactional;
 
 
 @Path("/bestellungen")
@@ -45,7 +48,7 @@ import de.shop.util.NotFoundException;
 @Consumes
 @RequestScoped
 @Log
-//@Stateful
+@Transactional
 
 public class BestellungResource {
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
@@ -207,5 +210,33 @@ public class BestellungResource {
 		LOGGER.debugf(bestellungUri.toString());
 		
 		return response;
+	}
+	
+	@PUT
+	@Consumes(APPLICATION_JSON)
+	@Produces 
+	public void updateBestellung(Bestellung best, @Context UriInfo uriInfo, @Context HttpHeaders headers) {
+		// Vorhandenen Kunden ermitteln
+		final List<Locale> locales = headers.getAcceptableLanguages();
+		final Locale locale = locales.isEmpty() ? Locale.getDefault() : locales.get(0);
+		final Bestellung origBest = bs.findBestellungById(best.getBId());
+		if (origBest == null) {
+
+			final String msg = "Keine Bestellung gefunden mit der ID " + best.getBId();
+			throw new NotFoundException(msg);
+		}
+		LOGGER.debugf("Bestellung vorher: %s", origBest);
+		
+		
+		origBest.setValues(best);
+		
+		LOGGER.debugf("Bestellung nachher: %s", origBest);
+		
+		best = bs.updateBestellung(origBest);
+		if (best == null) {
+
+			final String msg = "Kein Kunde gefunden mit der ID " + origBest.getBId();
+			throw new NotFoundException(msg);
+		}
 	}
 }

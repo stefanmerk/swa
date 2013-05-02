@@ -9,8 +9,6 @@ import java.util.Locale;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.security.RolesAllowed;
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

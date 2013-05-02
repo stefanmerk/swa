@@ -28,6 +28,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import org.jboss.logging.Logger;
 
 import de.shop.artikelverwaltung.domain.Artikel;
+import de.shop.kundenverwaltung.domain.Kunde;
 import de.shop.util.IdGroup;
 
 
@@ -156,6 +157,14 @@ public class Bestellposition implements Serializable {
 	@Override
 	public String toString() {
 		return "Bestellposition [bpId=" + bpId + ", anzahl=" + anzahl;
+	}
+	
+	public void setValues(Bestellposition kopie) {
+		this.artikel.setValues(kopie.artikel);
+		this.anzahl = kopie.anzahl;
+		this.bestellung.setValues(kopie.bestellung);
+		this.version = kopie.version;
+		
 	}
 }
 	

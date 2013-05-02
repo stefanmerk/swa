@@ -43,6 +43,7 @@ import de.shop.util.Log;
 import de.shop.util.NotFoundException;
 import de.shop.util.RestLongWrapper;
 import de.shop.util.RestStringWrapper;
+import de.shop.util.Transactional;
 
 
 @Path("/kunden")
@@ -50,6 +51,7 @@ import de.shop.util.RestStringWrapper;
 @Consumes
 @RequestScoped
 @Log
+@Transactional
 public class KundeResource {
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
 	private static final String VERSION = "1.0";
