@@ -37,10 +37,10 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.shop</groupId>
-	<artifactId>shop2</artifactId>
+	<artifactId>shop</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
-	<name>shop2</name>
+	<name>shop</name>
 	
 	<url>http://www.iwi.hs-karlsruhe.de</url>
 	<inceptionYear>2009</inceptionYear>
@@ -68,14 +68,14 @@
 	
 	<developers>
 		<developer>
-			<id>brigitteboth</id>
-			<name>Brigitte Both</name>
-			<email>bobr1011@HS-Karlsruhe.de</email>
+			<id>Julia Thamasett</id>
+			<name>Julia Thamasett</name>
+			<email>thju1011@HS-Karlsruhe.de</email>
 			<url>http://www.iwi.hs-karlsruhe.de</url>
 			<organization>Hochschule Karlsruhe</organization>
 			<organizationUrl>http://www.iwi.hs-karlsruhe.de</organizationUrl>
 			<roles>
-				<role>Student</role>
+				<role>student</role>
 			</roles>
 			<timezone>+1</timezone>     <!-- relativ zu GMT -->
 			<properties>
@@ -642,6 +642,8 @@
 								<exclude>sql</exclude>
 								<exclude>ValidationMessages*.properties</exclude>
 								<exclude>de</exclude>
+								<exclude>users.properties</exclude>
+								<exclude>roles.properties</exclude>
 							</excludes>
 						</resource>
 					</webResources>

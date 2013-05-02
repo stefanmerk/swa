@@ -40,6 +40,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.jboss.logging.Logger;
 
 import de.shop.kundenverwaltung.domain.Kunde;
@@ -92,6 +93,7 @@ public class Bestellung implements Serializable {
 	public static final String PARAM_B_ID = "id";
 
 	@Id
+	@JsonProperty
 	@GeneratedValue
 	@Column(name = "b_id", unique = true, nullable = false, updatable = false, precision = LONG_ANZ_ZIFFERN)
 	@Min(value = MIN_ID, message = "{bestellverwaltung.bestellung.id.min}", groups = IdGroup.class)
@@ -120,6 +122,7 @@ public class Bestellung implements Serializable {
 	@OrderColumn(name = "idx", nullable = false) 
 //	@XmlElementWrapper(name = "bestellpositionen", required = true)
 //	@XmlElement(name = "bestellposition", required = true)
+	@JsonProperty
 	private List<Bestellposition> bestellpositionen;
 	
 	@Version
@@ -203,16 +206,16 @@ public class Bestellung implements Serializable {
 	}
 	//mehrere Bestellpositionen auf einmal hinzufügen
 	public void setBestellpositionen(List<Bestellposition> bestellpositionen) {
-		if (this.bestellpositionen == null) {
+		//if (this.bestellpositionen == null) {
 			this.bestellpositionen = bestellpositionen;
-			return;
-		}
+			//return;
+		//}
 		
 	
-		this.bestellpositionen.clear();
+		/*this.bestellpositionen.clear();
 		if (bestellpositionen != null) {
 			this.bestellpositionen.addAll(bestellpositionen);
-		}
+		}*/
 	}
 	
 	public void bestellposition(List<Bestellposition> bestellpositionenliste) {

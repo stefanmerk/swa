@@ -25,6 +25,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.jboss.logging.Logger;
 
 import de.shop.artikelverwaltung.domain.Artikel;
@@ -44,12 +45,14 @@ public class Bestellposition implements Serializable {
 
 
 	@Id
+	@JsonProperty
 	@GeneratedValue
 	@Column(name = "bp_id", unique = true, nullable = false, updatable = false, precision = LONG_ANZ_ZIFFERN)
 	@Min(value = MIN_ID, message = "{bestelverwaltung.bestellposition.id.min}", groups = IdGroup.class)
 	private Long bpId = KEINE_ID;
 
 	@Column(nullable = false)
+	@JsonProperty
 	private short anzahl;
  
 	@OneToOne
@@ -59,6 +62,7 @@ public class Bestellposition implements Serializable {
 	private Artikel artikel;
 	
 	@Transient
+	@JsonProperty
 	private URI artikelUri;
 	
 	@JsonIgnore 
