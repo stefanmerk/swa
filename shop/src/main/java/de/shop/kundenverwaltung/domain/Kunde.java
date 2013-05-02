@@ -100,7 +100,7 @@ import de.shop.util.IdGroup;
    	@NamedQuery(name  = Kunde.FIND_KUNDE_BY_EMAIL,
    	            query = "SELECT DISTINCT k"
    			            + " FROM   Kunde k"
-   			            + " WHERE  k.email = :" + Kunde.PARAM_KUNDE_EMAIL),	
+   			            + " WHERE  k.email = :" + Kunde.PARAM_KUNDE_EMAIL)
 })
 
 public  class  Kunde implements Serializable {

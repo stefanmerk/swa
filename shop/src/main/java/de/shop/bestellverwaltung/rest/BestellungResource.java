@@ -11,8 +11,6 @@ import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.annotation.security.RolesAllowed;
-import javax.ejb.Stateful;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -217,8 +215,6 @@ public class BestellungResource {
 	@Produces 
 	public void updateBestellung(Bestellung best, @Context UriInfo uriInfo, @Context HttpHeaders headers) {
 		// Vorhandenen Kunden ermitteln
-		final List<Locale> locales = headers.getAcceptableLanguages();
-		final Locale locale = locales.isEmpty() ? Locale.getDefault() : locales.get(0);
 		final Bestellung origBest = bs.findBestellungById(best.getBId());
 		if (origBest == null) {
 

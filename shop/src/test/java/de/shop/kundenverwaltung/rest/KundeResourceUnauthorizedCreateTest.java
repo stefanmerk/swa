@@ -23,32 +23,32 @@ import de.shop.util.AbstractResourceTest;
 @RunWith(Arquillian.class)
 public class KundeResourceUnauthorizedCreateTest extends AbstractResourceTest {
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
-	private static final String UsernameKunde = "Hans";
-	private static final String UserPassword = "hans";
-	private static final String nachname = "Klappt";
-	private static final String vorname ="Nicht";
-	private static final String email ="Schade@Web.de";
-	private static final String password ="ueberfluessig";
-	private static final String geschlecht ="m";
-	private static final String plz ="76199";
-	private static final String ort ="Karlsruhe";
-	private static final String strasse = "kernstr";
-	private static final String hausnr ="16";
+	private static final String USERKUNDE = "Hans";
+	private static final String USERPASSWORD = "hans";
+	private static final String NACHNAME = "Klappt";
+	private static final String VORNAME = "Nicht";
+	private static final String EMAIL = "Schade@Web.de";
+	private static final String PASSWORD = "ueberfluessig";
+	private static final String GESCHLECHT = "m";
+	private static final String PLZ = "76199";
+	private static final String ORT = "Karlsruhe";
+	private static final String STRASSE = "kernstr";
+	private static final String HAUSNR = "16";
 	
 	@Test
-	public void KundeOhneRechtCreate(){	
+	public void kundeOhneRechtCreate() {	
 		LOGGER.finer("BEGINN");
 	final JsonObject jsonObject = getJsonBuilderFactory().createObjectBuilder()	             		          
-	          .add("nachname", nachname)
-	          .add("vorname", vorname)
-	          .add("email", email)
-	          .add("geschlecht", geschlecht)
-	          .add("password", password)
+	          .add("nachname", NACHNAME)
+	          .add("vorname", VORNAME)
+	          .add("email", EMAIL)
+	          .add("geschlecht", GESCHLECHT)
+	          .add("password", PASSWORD)
 	          .add("adresse", getJsonBuilderFactory().createObjectBuilder()
-  		                  .add("plz", plz)
-  		                  .add("ort", ort)
-  		                  .add("strasse", strasse)
-  		                  .add("hausnr", hausnr)
+  		                  .add("plz", PLZ)
+  		                  .add("ort", ORT)
+  		                  .add("strasse", STRASSE)
+  		                  .add("hausnr", HAUSNR)
   		                  .build())
             .build();
 
@@ -56,7 +56,7 @@ public class KundeResourceUnauthorizedCreateTest extends AbstractResourceTest {
 final Response response = given().contentType(APPLICATION_JSON)
                .body(jsonObject.toString())
                .auth()
-               .basic(UsernameKunde, UserPassword)
+               .basic(USERKUNDE, USERPASSWORD)
                .post(KUNDEN_PATH);
 
 // Then

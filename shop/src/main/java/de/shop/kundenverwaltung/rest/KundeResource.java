@@ -13,7 +13,6 @@ import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.security.RolesAllowed;
-import javax.ejb.Stateful;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -202,7 +201,7 @@ public class KundeResource {
 	 * @return Response-Objekt mit URL des neuen Privatkunden
 	 */
 	@POST
-	@Consumes({APPLICATION_JSON})
+	@Consumes(APPLICATION_JSON)
 	@Produces
 	public Response createKunde(Kunde kunde, @Context UriInfo uriInfo, @Context HttpHeaders headers) {
 		final Adresse adresse = kunde.getAdresse();
@@ -225,7 +224,7 @@ public class KundeResource {
 	@PUT
 	@Consumes(APPLICATION_JSON)
 	@Produces
-	@RolesAllowed({"Admin","Mitarbeiter"}) 
+	@RolesAllowed({ "Admin", "Mitarbeiter" }) 
 	public void updateKunde(Kunde kunde, @Context UriInfo uriInfo, @Context HttpHeaders headers) {
 		// Vorhandenen Kunden ermitteln
 		final List<Locale> locales = headers.getAcceptableLanguages();
