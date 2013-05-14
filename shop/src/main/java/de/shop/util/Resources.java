@@ -33,10 +33,10 @@ public class Resources {
       return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
    }
    
-   @Produces
-   @RequestScoped
-   public FacesContext produceFacesContext() {
-      return FacesContext.getCurrentInstance();
-   }
+//   @Produces
+//   @RequestScoped
+//   public FacesContext produceFacesContext() {
+//      return FacesContext.getCurrentInstance();
+//   }
    
 }
