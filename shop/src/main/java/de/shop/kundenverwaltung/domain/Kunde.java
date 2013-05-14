@@ -7,7 +7,8 @@ import static de.shop.util.Constants.MIN_ID;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.TemporalType.TIMESTAMP;
-
+import de.shop.auth.service.AuthService.RolleType;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -78,7 +80,10 @@ import de.shop.util.IdGroup;
     				      + " FROM  Kunde k"
     				      + " WHERE CONCAT('', k.id) LIKE :" + Kunde.PARAM_KUNDE_ID_PREFIX
     				      + " ORDER BY k.id"), 	
-  
+    				      @NamedQuery(name  = Kunde.FIND_USERNAME_BY_USERNAME_PREFIX,
+    		  	            query = "SELECT   CONCAT('', k.id)"
+    		  				        + " FROM  AbstractKunde k"
+    		   	            		+ " WHERE CONCAT('', k.id) LIKE :" + Kunde.PARAM_USERNAME_PREFIX),
 	@NamedQuery(name  = Kunde.FIND_KUNDEN_BY_NACHNAME,
 	            query = "SELECT k"
 				        + " FROM   Kunde k"
@@ -118,14 +123,16 @@ public  class  Kunde implements Serializable {
 		public static final String FIND_KUNDEN_BY_NACHNAME_FETCH_BESTELLUNGEN =
 			                       PREFIX + "findKundenByNachnameFetchBestellungen";
 		public static final String FIND_NACHNAMEN_BY_PREFIX = PREFIX + "findNachnamenByPrefix";
-		
+		public static final String FIND_KUNDE_BY_USERNAME = PREFIX + "findKundeByUsername";
+		public static final String FIND_USERNAME_BY_USERNAME_PREFIX = PREFIX + "findKundeByUsernamePrefix";
 		public static final String FIND_KUNDE_BY_ID_FETCH_BESTELLUNGEN =
 			                       PREFIX + "findKundeByIdFetchBestellungen";
 		public static final String FIND_KUNDE_BY_EMAIL = PREFIX + "findKundeByEmail";
 		public static final String FIND_KUNDEN_BY_PLZ = PREFIX + "findKundenByPlz";
 		
 		
-		
+		public static final String PARAM_KUNDE_USERNAME = "username";
+		public static final String PARAM_USERNAME_PREFIX = "usernamePrefix";
 		public static final String PARAM_KUNDE_ID = "kundeId";
 		public static final String PARAM_K_ID = "id";
 		public static final String PARAM_KUNDE_ID_PREFIX = "idPrefix";
@@ -166,7 +173,7 @@ public  class  Kunde implements Serializable {
 
 	private String password;
 
-	 
+	@Column(nullable = false)
 	private String vorname;
 	
 	@OneToOne(cascade = { PERSIST, REMOVE }, mappedBy = "kunden") 
@@ -180,9 +187,14 @@ public  class  Kunde implements Serializable {
 	private List<Bestellung> bestellungen;
 	
 	@Transient
-	
 	private URI bestellungenUri;
 	
+	@ElementCollection(fetch = EAGER)
+	@CollectionTable(name = "kunde_rolle",
+	                 joinColumns = @JoinColumn(name = "kunde_fk", nullable = false),
+	                 uniqueConstraints =  @UniqueConstraint(columnNames = { "kunde_fk", "rolle_fk" }))
+	@Column(table = "kunde_rolle", name = "rolle_fk", nullable = false)
+	private Set<RolleType> rollen;
 	
 	@Version
 	@Basic(optional = false)
@@ -193,13 +205,14 @@ public  class  Kunde implements Serializable {
 		super();
 	}
 	
-	public Kunde(String vorname, String nn, String geschlecht,  String emailk , String passwd , Adresse adr) {
+	public Kunde(String vorname, String nn, String geschlecht,  String emailk ,  String passwd , Adresse adr) {
 		this.adresse = adr;
 		this.geschlecht = geschlecht;
 		this.vorname = vorname;
 		this.nachname = nn;
 		this.password = passwd;
 		this.email = emailk;
+
 		
 	}
 	public void setValues(Kunde kopie) {
@@ -296,6 +309,13 @@ public  class  Kunde implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public Set<RolleType> getRollen() {
+		return rollen;
+	}
+
+	public void setRollen(Set<RolleType> rollen) {
+		this.rollen = rollen;
 	}
 
 	public String getVorname() {
