@@ -6,9 +6,12 @@ import static de.shop.util.Constants.LONG_ANZ_ZIFFERN;
 import static de.shop.util.Constants.MIN_ID;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REMOVE;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.TemporalType.TIMESTAMP;
 import de.shop.auth.service.AuthService.RolleType;
+
 import javax.persistence.*;
+
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
@@ -80,10 +83,10 @@ import de.shop.util.IdGroup;
     				      + " FROM  Kunde k"
     				      + " WHERE CONCAT('', k.id) LIKE :" + Kunde.PARAM_KUNDE_ID_PREFIX
     				      + " ORDER BY k.id"), 	
-    				      @NamedQuery(name  = Kunde.FIND_USERNAME_BY_USERNAME_PREFIX,
-    		  	            query = "SELECT   CONCAT('', k.id)"
-    		  				        + " FROM  AbstractKunde k"
-    		   	            		+ " WHERE CONCAT('', k.id) LIKE :" + Kunde.PARAM_USERNAME_PREFIX),
+  @NamedQuery(name  = Kunde.FIND_USERNAME_BY_USERNAME_PREFIX,
+    		   query = "SELECT   CONCAT('', k.id)"
+    				   		+ " FROM  Kunde k"
+    		   	            + " WHERE CONCAT('', k.id) LIKE :" + Kunde.PARAM_USERNAME_PREFIX),
 	@NamedQuery(name  = Kunde.FIND_KUNDEN_BY_NACHNAME,
 	            query = "SELECT k"
 				        + " FROM   Kunde k"
