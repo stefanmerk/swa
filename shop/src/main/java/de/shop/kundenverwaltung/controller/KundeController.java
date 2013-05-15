@@ -39,11 +39,11 @@ public class KundeController implements Serializable {
 		return "KundeController [kundeId=" + kundeId + "]";
 	}
 
-	public void setKundeId(Long kundeId) {
+	public void setkundeId(Long kundeId) {
 		this.kundeId = kundeId;
 	}
 
-	public Long getKundeId() {
+	public Long getkundeId() {
 		return kundeId;
 	}
 
