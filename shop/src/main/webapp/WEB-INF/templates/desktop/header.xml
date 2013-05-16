@@ -22,5 +22,9 @@
 				</rich:dropDownMenu>
 			</h:form>
 		</rich:toolbarGroup>
+		<h:outputLink id="headerlogin" location="right"
+		              value="#{request.contextPath}/auth/login.jsf">
+			#{msg['header.login']}
+		</h:outputLink>
 	</rich:toolbar>
 </ui:composition>
