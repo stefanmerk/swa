@@ -83,6 +83,13 @@ public class KundeService implements Serializable {
 				                 .getResultList();
 		return ids;
 	}
+	
+	public List<Kunde> findKundenByIdPrefix(String id) {
+		final List<Kunde> kunden = em.createNamedQuery(Kunde.FIND_KUNDEN_BY_ID_PREFIX, Kunde.class)
+				                 .setParameter(Kunde.PARAM_KUNDE_ID_PREFIX, id + '%')
+				                 .getResultList();
+		return kunden;
+	}
 
 	public List<String> findNachnamenByPrefix(String nachnamePrefix) {
 		final List<String> nachnamen = em.createNamedQuery(Kunde.FIND_NACHNAMEN_BY_PREFIX,

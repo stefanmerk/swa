@@ -82,7 +82,12 @@ import de.shop.util.IdGroup;
     		query = "SELECT   k.id"
     				      + " FROM  Kunde k"
     				      + " WHERE CONCAT('', k.id) LIKE :" + Kunde.PARAM_KUNDE_ID_PREFIX
-    				      + " ORDER BY k.id"), 	
+    				      + " ORDER BY k.id"),
+    @NamedQuery(name = Kunde.FIND_KUNDEN_BY_ID_PREFIX,
+    		query = "SELECT k"
+    				+ " FROM Kunde k"
+    				+ " WHERE CONCAT('', k.kid) LIKE :" + Kunde.PARAM_KUNDE_ID_PREFIX
+    				+ " ORDER BY k.kid"),
   @NamedQuery(name  = Kunde.FIND_USERNAME_BY_USERNAME_PREFIX,
     		   query = "SELECT   CONCAT('', k.id)"
     				   		+ " FROM  Kunde k"
@@ -122,6 +127,7 @@ public  class  Kunde implements Serializable {
 		public static final String FIND_KUNDEN_ORDER_BY_ID = PREFIX + "findKundenOrderById";
 		public static final String FIND_KUNDE_ID = PREFIX + "findKundeById";
 		public static final String FIND_IDS_BY_PREFIX = PREFIX + "findIdsByPrefix";
+		public static final String FIND_KUNDEN_BY_ID_PREFIX = PREFIX + "findKundenByIdPrefix";
 		public static final String FIND_KUNDEN_BY_NACHNAME = PREFIX + "findKundenByNachname";
 		public static final String FIND_KUNDEN_BY_NACHNAME_FETCH_BESTELLUNGEN =
 			                       PREFIX + "findKundenByNachnameFetchBestellungen";
