@@ -149,7 +149,6 @@ public  class  Kunde implements Serializable {
 		@GeneratedValue
 		@Column(name = "k_id", unique = true, nullable = false, updatable = false, precision = LONG_ANZ_ZIFFERN)
 		@Min(value = MIN_ID, message = "{kundenverwaltung.kunde.id.min}", groups = IdGroup.class)
-		 
 		private Long kid = KEINE_ID;
 
 
