@@ -37,7 +37,7 @@ public final class TestConstants {
 	
 	// Testklassen fuer Service- und Domain-Tests
 	public static final Class<?>[] TEST_CLASSES = {};
-	
+
 	private TestConstants() {
 	}
 }
