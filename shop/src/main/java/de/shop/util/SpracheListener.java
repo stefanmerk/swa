@@ -44,15 +44,7 @@ public class SpracheListener implements Serializable {
 		ctx.getViewRoot().setLocale(locale);
 		ctx.renderResponse();
 	}
-	
-//    @Produces
-//    @Faces
-//    public Locale getLocale() {
-//    	final UIViewRoot viewRoot = ctx.getViewRoot();
-//        return viewRoot != null
-//        	   ? viewRoot.getLocale()
-//        	   : ctx.getApplication().getViewHandler().calculateLocale(ctx);
-//    }
+
 	
 	@Override
 	public String toString() {

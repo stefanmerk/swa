@@ -12,4 +12,28 @@
 			#{msg['nav.viewKunde']}
 		</h:outputLink>
 	</p>
+	<p id="listArtikel">
+		<h:outputLink id="menulistArtikel"
+		              value="#{request.contextPath}/artikelverwaltung/listArtikel.jsf">
+			#{msg['nav.listArtikel']}
+		</h:outputLink>
+	</p>
+	<p id="selectArtikel">
+		<h:outputLink id="menuselectArtikel"
+		              value="#{request.contextPath}/artikelverwaltung/selectArtikel.jsf">
+			#{msg['nav.selectArtikel']}
+		</h:outputLink>
+	</p>
+	<p id="viewBestellung">
+		<h:outputLink id="menuviewBestellung"
+		              value="#{request.contextPath}/bestellverwaltung/viewBestellung.jsf">
+			#{msg['nav.viewBestellung']}
+		</h:outputLink>
+	</p>
+	<p id="viewWarenkorb">
+		<h:outputLink id="menuviewWarenkorb"
+		              value="#{request.contextPath}/bestellverwaltung/viewWarenkorb.jsf">
+			#{msg['nav.viewWarenkorb']}
+		</h:outputLink>
+	</p>
 </ui:composition>

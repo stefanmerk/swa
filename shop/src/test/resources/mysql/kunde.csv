@@ -1,6 +1,0 @@
-k_id;nachname;vorname;geschlecht;email;password;erzeugt;aktualisiert
-100;Mustermann;Max;m;max@hska.de;100;2006-08-01 10:00:00.000;2006-08-01 10:00:00.000
-101;Schmidt;Anna;w;anna@hska.de;101;2006-08-02 10:00:00.000;2006-08-02 00:01:00.000
-102;Donald;Duck;m;donald@hska.de;102;2006-08-03 12:00:00.000;2006-08-03 00:10:00.000
-103;Sponge;Bob;m;sponge@hska.de;103;2006-08-04 12:00:00.000;2006-08-04 00:10:00.000
-104;Gart;Hilde;w;hilde@hska.de;104;2006-08-05 10:00:00.000;2006-08-05 10:00:00.000
