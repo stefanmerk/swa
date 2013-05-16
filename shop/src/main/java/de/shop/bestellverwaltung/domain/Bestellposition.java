@@ -82,6 +82,10 @@ public class Bestellposition implements Serializable {
 		LOGGER.debugf("Neue Bestellposition mit ID=%d", bpId);
 	}
 	
+	public Bestellposition() {
+		super();
+	}
+	
 	public Long getBpId() {
 		return this.bpId;
 	}
@@ -130,6 +134,19 @@ public class Bestellposition implements Serializable {
 	public void setBestellung(Bestellung bestellung) {
 		this.bestellung = bestellung;
 		}
+	
+	public Bestellposition (Artikel artikel) {
+	
+		this.artikel = artikel;
+				
+	}
+	public Bestellposition add(Bestellposition a) {
+		if (!bpId.equals(a.bpId)) {	
+			return null;
+		}
+		return new Bestellposition(this.artikel);
+	
+	}
 
 	@Override
 	public int hashCode() {
@@ -163,7 +180,7 @@ public class Bestellposition implements Serializable {
 	}
 	
 	public void setValues(Bestellposition kopie) {
-		this.artikel.setValues(kopie.artikel);
+		this.artikel = kopie.artikel;
 		this.anzahl = kopie.anzahl;
 		this.bestellung.setValues(kopie.bestellung);
 		this.version = kopie.version;

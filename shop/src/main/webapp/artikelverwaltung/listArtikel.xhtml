@@ -15,7 +15,6 @@
 		<ui:define name="article">
 			<h:form id="form">
 				<rich:focus id="sucheFocus"/>
-				
 				<rich:panel id="suchePanel" header="#{msgAv['listArtikel.sucheNeu']}">
 					<h:panelGrid id="sucheGrid" columns="4">
 						<h:outputLabel id="bezeichnungLabel"
@@ -62,7 +61,7 @@
 								<f:facet name="header">
 									#{msgAv['listArtikel.id']}
 								</f:facet>
-								#{art.id}
+								#{art.AId}
 							</rich:column>
 							
 							<rich:column id="bezeichnungSpalte">
