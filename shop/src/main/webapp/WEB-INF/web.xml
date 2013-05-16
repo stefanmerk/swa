@@ -130,6 +130,14 @@
     <env-entry-type>java.lang.String</env-entry-type>
     <env-entry-value>de,en</env-entry-value>
   </env-entry>
+<!--  <login-config>
+<auth-method>FORM</auth-method>
+<form-login-config>
+<form-login-page>/auth/login.jsf</form-login-page>
+<form-error-page>/auth/login.jsf?error=true</form-error-page>
+</form-login-config>
+</login-config>-->
+
  <login-config> 
   <auth-method>BASIC</auth-method>
   <realm-name>Webshop</realm-name>
