@@ -21,8 +21,18 @@
 						               value="#{msgAv['listArtikel.bezeichnung']}"
 						               for="bezeichnung"/>
 		
-						<h:inputText id="bezeichnung" value="#{ac.bezeichnung}"/>
-		
+						<!--  <h:inputText id="bezeichnung" value="#{ac.bezeichnung}"/>-->
+							<rich:autocomplete id="bezeichnung"
+						                   value="#{ac.bezeichnung}"
+						                   mode="ajax"
+						                   minChars="1"
+						                   autocompleteMethod="#{ac.findArtikelByBezPrefix}"
+						                   var="artikel"
+						                   fetchValue="#{artikel.AId}">
+						                <!--      converter="javax.faces.Number"
+						                   converterMessage="#{msgKv['viewKunde.kundenr.converterError']}">--> 
+							#{artikel.AId}: #{artikel.bezeichnung}
+						</rich:autocomplete>
 						<a4j:commandButton id="findButton"
 						                   action="#{ac.findArtikelByBezeichnung}"
 								           value="#{msgAv['listArtikel.submit']}"

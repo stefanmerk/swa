@@ -62,8 +62,15 @@ public class ArtikelService implements Serializable {
 		return result;
 	}
 	
-	
-	
+	public List<Artikel> findArtikelbyBezPrefix(String bezeichnung)
+	{
+		List<Artikel> artikel = em.createNamedQuery(Artikel.FIND_Artikel_BY_Bez_PREFIX,Artikel.class)
+										.setParameter(Artikel.PARAM_Artikel_Bez_PREFIX,"%" + bezeichnung +"%")
+										.getResultList();
+		return artikel;
+		
+		
+	}
 	public Artikel findArtikelByBezeichnung(String bezeichnung) {
 		if (Strings.isNullOrEmpty(bezeichnung)) {
 			System.err.println("artikel nicht vorhanden");
