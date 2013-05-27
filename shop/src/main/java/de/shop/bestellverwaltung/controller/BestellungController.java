@@ -62,7 +62,7 @@ public class BestellungController implements Serializable {
 	@Inject
 	private Flash flash;
 	
-
+	
 	@Transactional
 	public String bestellen() {
 		auth.preserveLogin();
@@ -108,4 +108,5 @@ public class BestellungController implements Serializable {
 		
 		return JSF_VIEW_BESTELLUNG;
 	}
+	
 }

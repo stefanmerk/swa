@@ -108,7 +108,7 @@ import de.shop.util.IdGroup;
 	@NamedQuery(name  = Kunde.FIND_KUNDE_BY_ID_FETCH_BESTELLUNGEN,
 	            query = "SELECT DISTINCT k"
 			            + " FROM   Kunde k LEFT JOIN FETCH k.bestellungen"
-			            + " WHERE  k.id = :" + Kunde.PARAM_KUNDE_ID),
+			            + " WHERE  k.id = :" + Kunde.PARAM_K_ID),///////
  
    	@NamedQuery(name  = Kunde.FIND_KUNDE_BY_EMAIL,
    	            query = "SELECT DISTINCT k"

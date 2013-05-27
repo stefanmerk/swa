@@ -33,7 +33,10 @@ public class Warenkorb implements Serializable {
 	private static final int TIMEOUT = 5;
 	
 	private final List<Bestellposition> positionen = new ArrayList<Bestellposition>();;
-	private Long artikelId;  // fuer selectArtikel.xhtml
+	private Long artikelId; 
+	private String artikelbezeichnung;
+	
+	// fuer selectArtikel.xhtml
 	
 	@Inject
 	private transient Conversation conversation;
@@ -55,6 +58,13 @@ public class Warenkorb implements Serializable {
 		return positionen;
 	}
 		
+	public void setArtikelBezeichnung(String Artikelbez) {
+		this.artikelbezeichnung = Artikelbez;
+	}
+
+	public String getArtikelbezeichnung() {
+		return artikelbezeichnung;
+	}
 	public void setArtikelId(Long artikelId) {
 		this.artikelId = artikelId;
 	}
@@ -90,7 +100,7 @@ public class Warenkorb implements Serializable {
 	/**
 	 */
 	public String add() {
-		final Artikel artikel = as.findArtikelbyID(artikelId);
+		final Artikel artikel = as.findArtikelByBezeichnung(artikelbezeichnung);
 		if (artikel == null) {
 			return null;
 		}

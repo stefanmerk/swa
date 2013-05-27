@@ -126,6 +126,13 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 		return bestellung;
 	}
 	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public Bestellung updateBestellung(Bestellung bestellung) {
 		if (bestellung == null) {

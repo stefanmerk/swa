@@ -68,15 +68,41 @@ public class KundeService implements Serializable {
 	}
 	
 	public Kunde findKundebyID(Long id, FetchType fetch , Locale local) {
+		//final Kunde kunde = em.createNamedQuery(Kunde.FIND_KUNDE_ID, Kunde.class)
+                								//.setParameter(Kunde.PARAM_K_ID, id)
+                								//.getSingleResult();
 		
-		final Kunde kunde = em.createNamedQuery(Kunde.FIND_KUNDE_ID, Kunde.class)
-                								.setParameter(Kunde.PARAM_K_ID, id)
-                								.getSingleResult();
-		
+		//return kunde;
+		Kunde kunde;
+		switch (fetch) {
+			case NUR_KUNDE:
+				kunde = em.createNamedQuery(Kunde.FIND_KUNDE_ID, Kunde.class)
+						   .setParameter(Kunde.PARAM_K_ID, id)
+						   .getSingleResult();
+				break;
+			
+			case MIT_BESTELLUNGEN:
+				kunde = em.createNamedQuery(Kunde.FIND_KUNDE_BY_ID_FETCH_BESTELLUNGEN, Kunde.class)
+						   .setParameter(Kunde.PARAM_K_ID, id)
+						   .getSingleResult();
+				break;
+
+			default:
+				kunde = em.createNamedQuery(Kunde.FIND_KUNDE_ID, Kunde.class)
+						   .setParameter(Kunde.PARAM_K_ID, id)
+						   .getSingleResult();
+				break;
+		}
+
 		return kunde;
+	}        								
+		
+		
+		
+		
 		
 
-	}
+	
 	public List<Long> findIdsByPrefix(String idPrefix) {
 		final List<Long> ids = em.createNamedQuery(Kunde.FIND_IDS_BY_PREFIX, Long.class)
 				                 .setParameter(Kunde.PARAM_KUNDE_ID_PREFIX, idPrefix + '%')

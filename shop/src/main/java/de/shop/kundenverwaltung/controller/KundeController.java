@@ -643,8 +643,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import javax.annotation.security.PermitAll;
+import javax.ejb.Stateful;
+import static javax.ejb.TransactionAttributeType.SUPPORTS;
 import javax.ejb.TransactionAttribute;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -661,8 +665,12 @@ import de.shop.util.Transactional;
  * Dialogsteuerung fuer die Kundenverwaltung
  */
 @Named("kc")
-@RequestScoped
+//@RequestScoped
 @Log
+@PermitAll
+@Stateful
+@SessionScoped//
+@TransactionAttribute(SUPPORTS)//
 public class KundeController implements Serializable {
 	private static final long serialVersionUID = -8817180909526894740L;
 	
@@ -716,7 +724,6 @@ public class KundeController implements Serializable {
 	public String findKundeById() {
 		// Bestellungen werden durch "Extended Persistence Context" nachgeladen
 		kunde = ks.findKundebyID(kundeId, FetchType.MIT_BESTELLUNGEN, locale);
-		
 		if (kunde == null) {
 			// Kein Kunde zu gegebener ID gefunden
 			return "haha";
