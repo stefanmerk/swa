@@ -34,6 +34,24 @@
 			</c:if>
 		</h:outputLink>
 	</rich:panelMenuItem>
+	<rich:panelMenuItem id="createKunde" rendered="#{rich:isUserInRole('admin')}">
+			<h:outputLink id="kundenverwaltungCreateKunde"
+					      value="#{request.contextPath}/kundenverwaltung/createKunde.jsf">
+						#{msg['nav.kundenverwaltung.createPrivatkunde']}
+					<c:if test="#{not empty javax.enterprise.context.conversation.id}">
+						<f:param id="createPrivatkundeCid" name="cid" value="#{javax.enterprise.context.conversation.id}"/>
+					</c:if>
+			</h:outputLink>
+	</rich:panelMenuItem>
+	<rich:panelMenuItem id="udateKunde" rendered="#{rich:isUserInRole('admin')}">
+			<h:outputLink id="kundenverwaltungUpdateKunde"
+					      value="#{request.contextPath}/kundenverwaltung/updateKunde.jsf">
+						#{msg['nav.kundenverwaltung.updateKunde']}
+					<c:if test="#{not empty javax.enterprise.context.conversation.id}">
+						<f:param id="updatePrivatkundeCid" name="cid" value="#{javax.enterprise.context.conversation.id}"/>
+					</c:if>
+			</h:outputLink>
+	</rich:panelMenuItem>
 	</rich:panelMenuGroup>
 	
 	<rich:panelMenuGroup id="Artikelverwaltung"

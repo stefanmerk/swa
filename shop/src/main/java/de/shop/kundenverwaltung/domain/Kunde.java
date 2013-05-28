@@ -41,10 +41,12 @@ import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.Valid;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.validator.constraints.ScriptAssert;
 import org.jboss.logging.Logger;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
@@ -119,7 +121,10 @@ import de.shop.util.IdGroup;
    			            + " FROM   Kunde k"
    			            + " WHERE  k.email = :" + Kunde.PARAM_KUNDE_EMAIL)
 })
-
+@ScriptAssert(lang = "javascript",
+script = "(_this.password == null && _this.passwordWdh == null)"
+         + "|| (_this.password != null && _this.password.equals(_this.passwordWdh))",
+message = "{kundenverwaltung.kunde.password.notEqual}")
 public  class  Kunde implements Serializable {
 	private static final long serialVersionUID = -9023615284991323369L;
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
@@ -175,8 +180,14 @@ public  class  Kunde implements Serializable {
 	@Temporal(TIMESTAMP)
 	@JsonIgnore
 	private Date erzeugt;
-
 	
+	@Transient
+	@AssertTrue(message = "{kundenverwaltung.kunde.agb}")
+	private boolean agbAkzeptiert;
+
+	 @Transient
+	 @JsonIgnore
+	 private String passwordWdh;
 
 	private String geschlecht;
 
@@ -235,6 +246,8 @@ public  class  Kunde implements Serializable {
 		this.password = kopie.password;
 		this.email = kopie.email;
 		this.version = kopie.version;
+		this.passwordWdh = kopie.password;
+		this.agbAkzeptiert = kopie.agbAkzeptiert;
 		
 	}
 
@@ -253,7 +266,13 @@ public  class  Kunde implements Serializable {
 	private void preUpdate() {
 		aktualisiert = new Date();
 	}
-		
+	
+	 @PostLoad
+	  protected void postLoad() {
+	    passwordWdh = password;
+	    agbAkzeptiert = true;
+	  }
+	
 	
 	public URI getBestellungenUri() {
 		return bestellungenUri;
@@ -390,8 +409,21 @@ public  class  Kunde implements Serializable {
 	}
 		
 	
+	public void setAgbAkzeptiert(boolean agbAkzeptiert) {
+	    this.agbAkzeptiert = agbAkzeptiert;
+	  }
 
+	  public boolean isAgbAkzeptiert() {
+	    return agbAkzeptiert;
+	  }
 		
+	  public String getPasswordWdh() {
+		    return passwordWdh;
+		  }
+
+	  public void setPasswordWdh(String passwordWdh) {
+		    this.passwordWdh = passwordWdh;
+		  }
 
 	@Override
 	public String toString() {
@@ -428,7 +460,22 @@ public  class  Kunde implements Serializable {
 		return true;
 	}
 	
-	
+	 @Override
+	  public Object clone() throws CloneNotSupportedException {
+	    final Kunde neuesObjekt = (Kunde) super.clone();
+	    neuesObjekt.kid = kid;
+	    neuesObjekt.version = version;
+	    neuesObjekt.nachname = nachname;
+	    neuesObjekt.vorname = vorname;
+	    neuesObjekt.email = email;
+	    neuesObjekt.password = password;
+	    neuesObjekt.passwordWdh = passwordWdh;
+	    neuesObjekt.agbAkzeptiert = agbAkzeptiert;
+	    neuesObjekt.adresse = adresse;
+	    neuesObjekt.erzeugt = erzeugt;
+	    neuesObjekt.aktualisiert = aktualisiert;
+	    return neuesObjekt;
+	  }
 }
 	
 

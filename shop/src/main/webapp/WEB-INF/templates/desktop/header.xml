@@ -17,7 +17,7 @@
 				<h:panelGrid id="loginGrid" columns="3">
 					<h:outputLabel id="usernameLabel"
 					               value="#{msg['login.kundeId']}"
-					               for="username"/>
+ 					               for="username"/>
 					<h:inputText id="username" value="#{auth.username}"/>
 					<f:verbatim/>
 							
