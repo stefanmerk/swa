@@ -124,6 +124,15 @@ public class KundeService implements Serializable {
 				                         .getResultList();
 		return nachnamen;
 	}
+		public Kunde findKundeByUserName(String id) {
+			Long kid = Long.valueOf(id);
+		Kunde kunde = em.createNamedQuery(Kunde.FIND_KUNDE_BY_USERNAME, Kunde.class)
+					.setParameter(Kunde.PARAM_KUNDE_USERNAME, kid)
+					.getSingleResult();
+		return kunde;
+		}
+	
+	
 	
 	public List<Kunde> findAllKunde(FetchType fetch, Locale local) {
 		final List<Kunde> result = em.createNamedQuery(Kunde.FIND_KUNDEN, Kunde.class)

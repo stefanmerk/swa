@@ -2,13 +2,13 @@ package de.shop.auth.controller;
 
 import static de.shop.util.Constants.JSF_INDEX;
 import static de.shop.util.Constants.JSF_REDIRECT_SUFFIX;
-//import static de.shop.util.Messages.MessagesType.AUTH;
+import static de.shop.util.Messages.MessagesType.AUTH;
 import static de.shop.util.Messages.MessagesType.SHOP;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
-//import java.util.Arrays;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -24,13 +24,12 @@ import javax.servlet.http.HttpSession;
 
 import org.jboss.logging.Logger;
 
-//import com.google.common.collect.Lists;
+import com.google.common.collect.Lists;
 
 import de.shop.auth.service.AuthService;
 import de.shop.auth.service.AuthService.RolleType;
 import de.shop.kundenverwaltung.domain.Kunde;
 import de.shop.kundenverwaltung.service.KundeService;
-import de.shop.kundenverwaltung.service.KundeService.FetchType;
 import de.shop.util.InternalError;
 import de.shop.util.Log;
 import de.shop.util.Messages;
@@ -51,11 +50,10 @@ public class AuthController implements Serializable {
 	
 	private static final String MSG_KEY_LOGIN_ERROR = "login.error";
 	private static final String CLIENT_ID_USERNAME = "loginFormHeader:username";
-//	private static final String MSG_KEY_UPDATE_ROLLEN_KEIN_USER = "updateRollen.keinUser";
-//	private static final String CLIENT_ID_USERNAME_INPUT = "rollenForm:usernameInput";
-//	
-	private Long id;
-	private String username = (new Long(id)).toString();
+	private static final String MSG_KEY_UPDATE_ROLLEN_KEIN_USER = "updateRollen.keinUser";
+	private static final String CLIENT_ID_USERNAME_INPUT = "rollenForm:usernameInput";
+	
+	private String username;
 	private String password;
 	
 	private String usernameUpdateRollen;
@@ -165,7 +163,7 @@ public class AuthController implements Serializable {
 			return null;   // Gleiche Seite nochmals aufrufen: mit den fehlerhaften Werten
 		}
 		
-		user = ks.findKundebyID(id, FetchType.NUR_KUNDE, null );
+		user = ks.findKundeByUserName(username);
 		if (user == null) {
 			logout();
 			throw new InternalError("Kein Kunde mit dem Loginnamen \"" + username + "\" gefunden");
@@ -188,7 +186,7 @@ public class AuthController implements Serializable {
 		// Benutzername beim Login ermitteln
 		username = request.getRemoteUser();
 
-		user = ks.findKundebyID(id,FetchType.NUR_KUNDE, null);
+		user = ks.findKundeByUserName(username);
 		if (user == null) {
 			// Darf nicht passieren, wenn unmittelbar zuvor das Login erfolgreich war
 			logout();
@@ -238,31 +236,31 @@ public class AuthController implements Serializable {
 		return usernameList;
 	}
 	
-//	@Transactional
-//	public String findRollenByUsername() { 
-//		// Gibt es den Usernamen ueberhaupt?
-//		final Kunde kunde = ks.findKundeByUserName(usernameUpdateRollen);
-//		if (kunde == null) {
-//			kundeId = null;
-//			ausgewaehlteRollenOrig = null;
-//			ausgewaehlteRollen = null;
-//			
-//			messages.error(AUTH, MSG_KEY_UPDATE_ROLLEN_KEIN_USER, CLIENT_ID_USERNAME_INPUT);
-//			return null;
-//		}
-//		
-//		ausgewaehlteRollenOrig = Lists.newArrayList(kunde.getRollen());
-//		ausgewaehlteRollen = Lists.newArrayList(kunde.getRollen());
-//		kundeId = kunde.getKId();
-//		LOGGER.tracef("Rollen von %s: %s", usernameUpdateRollen, ausgewaehlteRollen);
-//
-//		if (verfuegbareRollen == null) {
-//			verfuegbareRollen = Arrays.asList(RolleType.values());
-//		}
-//		
-//		return null;
-//	}
-//	
+	@Transactional
+	public String findRollenByUsername() {
+		// Gibt es den Usernamen ueberhaupt?
+		final Kunde kunde = ks.findKundeByUserName(usernameUpdateRollen);
+		if (kunde == null) {
+			kundeId = null;
+			ausgewaehlteRollenOrig = null;
+			ausgewaehlteRollen = null;
+			
+			messages.error(AUTH, MSG_KEY_UPDATE_ROLLEN_KEIN_USER, CLIENT_ID_USERNAME_INPUT);
+			return null;
+		}
+		
+		ausgewaehlteRollenOrig = Lists.newArrayList(kunde.getRollen());
+		ausgewaehlteRollen = Lists.newArrayList(kunde.getRollen());
+		kundeId = kunde.getKId();
+		LOGGER.tracef("Rollen von %s: %s", usernameUpdateRollen, ausgewaehlteRollen);
+
+		if (verfuegbareRollen == null) {
+			verfuegbareRollen = Arrays.asList(RolleType.values());
+		}
+		
+		return null;
+	}
+	
 	@Transactional
 	public String updateRollen() {
 		// Zusaetzliche Rollen?

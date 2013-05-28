@@ -12,7 +12,30 @@
 						 alt="#{msg['header.logo.alt']}"/>
 	</h:outputLink>
 		<rich:toolbarGroup id="headerToolbarContainer" location="right">
-			<h:form id="spracheForm">
+		
+			<h:form id="loginFormHeader" rendered="#{not auth.loggedIn}">
+				<h:panelGrid id="loginGrid" columns="3">
+					<h:outputLabel id="usernameLabel"
+					               value="#{msg['login.kundeId']}"
+					               for="username"/>
+					<h:inputText id="username" value="#{auth.username}"/>
+					<f:verbatim/>
+							
+					<h:outputLabel id="passwordLabel"
+					               value="#{msg['login.password']}"
+					               for="password"/>
+					<h:inputSecret id="password" value="#{auth.password}"/>
+					<h:commandButton id="loginButton" action="#{auth.login}" value="#{msg['login.submit']}"/>
+				</h:panelGrid>
+				<rich:message id="fehlermeldungLogin" for="username"/>
+			</h:form>
+				<h:form id="logoutForm">
+				<h:commandLink id="logout" action="#{auth.logout}" rendered="#{auth.loggedIn}">
+					#{msg['header.logout']}
+				</h:commandLink>
+			</h:form>
+			
+					<h:form id="spracheForm">
 				<rich:dropDownMenu id="headerChangeLang">
 					<f:facet name="label">
 						#{msg['header.sprache']}
@@ -21,10 +44,8 @@
 					<rich:menuItem id="headerChangeLangDe" label="#{msg['header.sprache.deutsch']}" actionListener="#{sprache.change('de')}"/>
 				</rich:dropDownMenu>
 			</h:form>
+			
 		</rich:toolbarGroup>
-		<h:outputLink id="headerlogin" location="right"
-		              value="#{request.contextPath}/auth/login.jsf">
-			#{msg['header.login']}
-		</h:outputLink>
+		
 	</rich:toolbar>
-</ui:composition>
+</ui:composition> 

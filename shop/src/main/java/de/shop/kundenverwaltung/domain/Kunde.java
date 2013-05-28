@@ -77,7 +77,11 @@ import de.shop.util.IdGroup;
     			query = "SELECT   k"
     						+ " FROM  Kunde k"
     						+ " where k.id = :" + Kunde.PARAM_K_ID),
-    						
+    
+    @NamedQuery(name  = Kunde.FIND_KUNDE_BY_USERNAME,
+    		    			query = "SELECT   k"
+    		    						+ " FROM  Kunde k"
+    		    						+ " where k.id = :" + Kunde.PARAM_KUNDE_USERNAME),
   @NamedQuery(name  = Kunde.FIND_IDS_BY_PREFIX,
     		query = "SELECT   k.id"
     				      + " FROM  Kunde k"

@@ -665,12 +665,12 @@ import de.shop.util.Transactional;
  * Dialogsteuerung fuer die Kundenverwaltung
  */
 @Named("kc")
-//@RequestScoped
+@RequestScoped
 @Log
-@PermitAll
-@Stateful
-@SessionScoped//
-@TransactionAttribute(SUPPORTS)//
+//@PermitAll
+//@Stateful
+//@SessionScoped//
+//@TransactionAttribute(SUPPORTS)//
 public class KundeController implements Serializable {
 	private static final long serialVersionUID = -8817180909526894740L;
 	
