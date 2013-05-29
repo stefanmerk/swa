@@ -28,10 +28,10 @@
 						                   minChars="1"
 						                   autocompleteMethod="#{ac.findArtikelByBezPrefix}"
 						                   var="artikel"
-						                   fetchValue="#{artikel.bezeichnung}">
+						                   fetchValue="#{art.bezeichnung}">
 						                <!--      converter="javax.faces.Number"
 						                   converterMessage="#{msgKv['viewKunde.kundenr.converterError']}">--> 
-								#{artikel.AId}: #{artikel.bezeichnung}
+								#{art.AId}: #{art.bezeichnung}
 						</rich:autocomplete>
 						<a4j:commandButton id="findButton"
 						                   action="#{ac.findArtikelByBezeichnung}"
@@ -81,6 +81,9 @@
 								#{art.bezeichnung}
 							</rich:column>
 							
+							
+			
+							
 							<rich:column id="buttonSpalte"
 							             rendered="#{not empty artikel}">
 								<h:commandButton id="warenkorbButton"
@@ -118,16 +121,6 @@
 						</a4j:outputPanel>
 					</c:if>
 				
-				<p id="buttons">
-						<h:panelGroup id="buttonsGroup" rendered="#{not empty ac.artikel}">
-							<h:commandButton id="updateButtonArtikel"
-							                 image="#{resource['images:edit.gif']}"
-							                 action="/artikelverwaltung/updateArtikel"
-							                 alt="#{msgAv['viewArtikel.update.alt']}"/>
-							                 #{' '}
-							                 
-				</h:panelGroup>
-					</p>
 			</a4j:outputPanel>
 			</h:form>
 		</ui:define>
