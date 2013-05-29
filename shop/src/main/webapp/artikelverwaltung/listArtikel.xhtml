@@ -20,6 +20,10 @@
 						<h:outputLabel id="bezeichnungLabel"
 						               value="#{msgAv['listArtikel.bezeichnung']}"
 						               for="bezeichnung"/>
+						               
+						               	<p id="buttons">
+						
+					</p>
 		
 						<!--  <h:inputText id="bezeichnung" value="#{ac.bezeichnung}"/>-->
 							<rich:autocomplete id="bezeichnung"
@@ -81,6 +85,9 @@
 								#{art.bezeichnung}
 							</rich:column>
 							
+							
+			
+							
 							<rich:column id="buttonSpalte"
 							             rendered="#{not empty artikel}">
 								<h:commandButton id="warenkorbButton"
@@ -88,7 +95,16 @@
 										         action="#{wk.add(art)}"
 										         alt="#{msgAv['listArtikel.alt.warenkorb']}"/>
 							</rich:column>
-						</rich:dataTable>
+							
+							<rich:column id="buttonsGroup" rendered="#{not empty artikel}">					    							
+							
+							<h:commandButton id="updateButtonArtikel"
+							                 image="#{resource['images:edit.gif']}"
+							                 action="/artikelverwaltung/updateArtikel"
+							                 alt="#{msgAv['viewArtikel.update.alt']}" />
+							              
+							      </rich:column>
+							</rich:dataTable>
 						
 						<p id="abstand2"/>
 						<rich:dataScroller id="dataScroller"
@@ -118,16 +134,7 @@
 						</a4j:outputPanel>
 					</c:if>
 				
-				<p id="buttons">
-						<h:panelGroup id="buttonsGroup" rendered="#{not empty ac.artikel}">
-							<h:commandButton id="updateButtonArtikel"
-							                 image="#{resource['images:edit.gif']}"
-							                 action="/artikelverwaltung/updateArtikel"
-							                 alt="#{msgAv['viewArtikel.update.alt']}"/>
-							                 #{' '}
-							                 
-				</h:panelGroup>
-					</p>
+				
 			</a4j:outputPanel>
 			</h:form>
 		</ui:define>
