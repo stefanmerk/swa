@@ -1,5 +1,6 @@
 package de.shop.artikelverwaltung.controller;
 
+import static de.shop.util.Constants.JSF_INDEX;
 import static de.shop.util.Constants.JSF_REDIRECT_SUFFIX;
 import static de.shop.util.Messages.MessagesType.KUNDENVERWALTUNG;
 import static javax.ejb.TransactionAttributeType.REQUIRED;
@@ -14,12 +15,15 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Event;
 import javax.faces.context.Flash;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.OptimisticLockException;
 import javax.servlet.http.HttpSession;
 
 import org.jboss.logging.Logger;
@@ -27,11 +31,13 @@ import org.richfaces.cdi.push.Push;
 
 import de.shop.artikelverwaltung.domain.Artikel;
 import de.shop.artikelverwaltung.service.ArtikelService;
+import de.shop.auth.controller.AuthController;
 import de.shop.kundenverwaltung.domain.Adresse;
 import de.shop.kundenverwaltung.domain.Kunde;
 import de.shop.kundenverwaltung.service.EmailExistsException;
 import de.shop.kundenverwaltung.service.InvalidKundeException;
 import de.shop.util.AbstractShopException;
+import de.shop.util.ConcurrentDeletedException;
 import de.shop.util.Log;
 import de.shop.util.Messages;
 import de.shop.util.Transactional;
@@ -62,6 +68,7 @@ public class ArtikelController implements Serializable {
 	private Artikel neuerArtikel;
 	private Long artikelId;
 	private Artikel artikel;
+	private boolean geaendertArtikel;
 	
 	//private List<Artikel> ladenhueter;
 
@@ -81,10 +88,18 @@ public class ArtikelController implements Serializable {
 	@Push(topic = "marketing")
 	private transient Event<String> neuerArtikelEvent;
 	
+	@Inject
+	@Push(topic = "updateArtikel")
+	private transient Event<String> updateArtikelEvent;
+	
 	@PostConstruct
 	private void postConstruct() {
 		LOGGER.debugf("CDI-faehiges Bean %s wurde erzeugt", this);
 	}
+	
+
+	@Inject
+	private AuthController auth;
 
 	@PreDestroy
 	private void preDestroy() {
@@ -114,6 +129,14 @@ public class ArtikelController implements Serializable {
 	
 	public Artikel getNeuerArtikel() {
 		return neuerArtikel;
+	}
+	
+	public void setArtikel(Artikel artikel) {
+		this.artikel = artikel;
+	}
+	
+	public Artikel getArtikel() {
+		return this.artikel;
 	}
 
 
@@ -158,6 +181,7 @@ public class ArtikelController implements Serializable {
 		}
 		
 		final List<Artikel> alleArtikel = as.findVerfuegbareArtikel();
+			
 		session.setAttribute(SESSION_VERFUEGBARE_ARTIKEL, alleArtikel);
 		return JSF_SELECT_ARTIKEL;
 	}
@@ -185,6 +209,48 @@ public class ArtikelController implements Serializable {
 		artikel = neuerArtikel;
 		neuerArtikel = null;  // zuruecksetzen
 		
+		
+		return JSF_LIST_ARTIKEL + JSF_REDIRECT_SUFFIX;
+	}
+	
+	
+	public void geaendert(ValueChangeEvent e) {
+		if (geaendertArtikel) {
+			return;
+		}
+		
+		if (e.getOldValue() == null) {
+			if (e.getNewValue() != null) {
+				geaendertArtikel = true;
+			}
+			return;
+		}
+
+		if (!e.getOldValue().equals(e.getNewValue())) {
+			geaendertArtikel = true;				
+		}
+	}
+	
+	@TransactionAttribute(REQUIRED)
+	public String update() {
+		auth.preserveLogin();
+		
+		if (!geaendertArtikel || artikel == null) {
+			return JSF_INDEX;
+		}
+		
+	LOGGER.tracef("Aktualisierter Kunde: %s", artikel);
+	
+			artikel = as.updateArtikel(artikel);
+	
+		// Push-Event fuer Webbrowser
+		updateArtikelEvent.fire(String.valueOf(artikel.getAId()));
+		
+		// ValueChangeListener zuruecksetzen
+		geaendertArtikel = false;
+		
+		// Aufbereitung fuer viewKunde.xhtml
+		artikelId = artikel.getAId();
 		
 		return JSF_LIST_ARTIKEL + JSF_REDIRECT_SUFFIX;
 	}

@@ -15,25 +15,20 @@
 		<ui:define name="article">
 			<h:form id="selectForm">
 				<h:panelGrid id="selectGrid" columns="2">
-				
-	
 					<rich:select id="artikelBezeichnung"
-								
 					             defaultLabel="#{msgAv['selectArtikel.auswahl']}"
 					             value="#{wk.artikelId}" >
 						<!--
 						<f:selectItems id="artikelItems" values="#{verfuegbareArtikel}"/>
+
 						-->
-										<h:commandLink id="select" action="#{ac.selectArtikel}">
-											#{msgAv['menu.artikelverwaltung.artikelAuswahl']}
-										</h:commandLink>
+						
 						<c:forEach var="artikel" items="#{verfuegbareArtikel}">
-							<f:selectItem id="artikelItem#{artikel.id}" itemLabel="#{artikel.bezeichnung}" itemValue="#{artikel.id}"/>
+							<f:selectItem id="artikelItem#{artikel.AId}" itemLabel="#{artikel.bezeichnung}" itemValue="#{artikel.AId}"/>
 						</c:forEach>
 					</rich:select>
-		
-		
-				<h:commandButton id="selectButton"
+						
+					<h:commandButton id="selectButton"
 					                 action="#{wk.add}"
 					                 value="#{msgAv['selectArtikel.select']}"/>
 				</h:panelGrid>

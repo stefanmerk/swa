@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
