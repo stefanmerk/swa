@@ -52,10 +52,7 @@
 					<h:outputLabel id="vornameLabel" for="vorname" value="#{msgKv['updateKunde.vorname']}"/>
 					<h:inputText id="vorname" value="#{kc.kunde.vorname}" valueChangeListener="#{kc.geaendert}"/>
 					<f:verbatim/>
-					
-					
-				
-					
+	
 	
 					<h:outputLabel id="emailLabel" for="email" value="#{msgKv['updateKunde.email']}"/>
 					<h:inputText id="email" value="#{kc.kunde.email}" valueChangeListener="#{kc.geaendert}">
@@ -70,10 +67,7 @@
 					#{' '}
 					<h:commandButton type="reset" value="#{msgKv['updateKunde.reset']}"/>
 				</p>
-				
-				<p id="hinweisPflichtfelder">
-					#{msgKv['updateKunde.required']}
-				</p>
+
 			</h:form>
 		</ui:define>
 	</ui:composition>
