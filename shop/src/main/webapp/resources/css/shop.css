@@ -1,9 +1,9 @@
 /* # fuer Tag-ID und . fuer CSS-Klasse */
 
 #header {
-	height: 75px;
+	height: 67px;
 	/* width: 99%; */
-	background-color: #E8BDBD;   /* japanCherry */
+	background-color: #E8E8E8  ; 
 }
 
 #nav {
@@ -11,7 +11,7 @@
 	width: 15%;
 	height: 550px;
 	padding: 5px;
-	background-color: #E8BDBD;   /* japanCherry */
+	background-color:  #E8E8E8  ;   
 }
 
 #article {
@@ -42,13 +42,13 @@ h1 {
 .tabelleMitZebrastil {
 }
 .odd-row {
-	background-color: #FFE4E1;
+	background-color:  	#F8F8F8 ; //LavenderBlush
 }
 .even-row {
-	background-color: #FAEBD7;
+	background-color: 	#F8F8F8  ; //MistyRose
 }
 .active-row {
-	background-color: #FFE4E1;
+	background-color:   	#F8F8F8 ; 
 	cursor: pointer;
 }
 
