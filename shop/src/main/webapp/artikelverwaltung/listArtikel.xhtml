@@ -85,7 +85,12 @@
 								#{art.bezeichnung}
 							</rich:column>
 							
-							
+							<rich:column id="PreisSpalte">
+								<f:facet name="header">
+									#{msgAv['listArtikel.preis']}
+								</f:facet>
+								#{art.preis}
+							</rich:column>
 			
 							
 							<rich:column id="buttonSpalte"

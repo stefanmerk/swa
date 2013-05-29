@@ -148,7 +148,7 @@ public class ArtikelController implements Serializable {
 	
 	@TransactionAttribute(REQUIRED)
 	public String findArtikelByBezeichnung() {
-		final Artikel artikel = as.findArtikelByBezeichnung(bezeichnung);
+		/*final Artikel*/ artikel = as.findArtikelByBezeichnung(bezeichnung);
 		flash.put(FLASH_ARTIKEL, artikel);
 
 		return JSF_LIST_ARTIKEL;
@@ -251,7 +251,7 @@ public class ArtikelController implements Serializable {
 		
 		// Aufbereitung fuer viewKunde.xhtml
 		artikelId = artikel.getAId();
-		
+		artikel = null;//
 		return JSF_LIST_ARTIKEL + JSF_REDIRECT_SUFFIX;
 	}
 	
