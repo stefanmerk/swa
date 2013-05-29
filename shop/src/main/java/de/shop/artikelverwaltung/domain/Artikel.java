@@ -118,13 +118,13 @@ public class Artikel implements Serializable {
 	private int version = ERSTE_VERSION;
 	
 	@Column(nullable = false)
-	private char verfuegbarkeit;
+	private String verfuegbarkeit;
 
 	public Artikel() {
 		super();
 	}
 	
-	public Artikel(String bezeichnung, double preis, char ver) {
+	public Artikel(String bezeichnung, double preis, String ver) {
 	
 		this.bezeichnung = bezeichnung;
 		this.preis = preis;
@@ -195,11 +195,11 @@ public class Artikel implements Serializable {
 		this.preis = preis;
 	}
 
-	public char getVerfuegbarkeit() {
+	public String getVerfuegbarkeit() {
 		return this.verfuegbarkeit;
 	}
 
-	public void setVerfuegbarkeit(char verfuegbarkeit) {
+	public void setVerfuegbarkeit(String verfuegbarkeit) {
 		this.verfuegbarkeit = verfuegbarkeit;
 	}
 

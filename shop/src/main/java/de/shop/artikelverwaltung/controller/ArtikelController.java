@@ -1,6 +1,9 @@
 package de.shop.artikelverwaltung.controller;
 
+import static de.shop.util.Constants.JSF_REDIRECT_SUFFIX;
+import static de.shop.util.Messages.MessagesType.KUNDENVERWALTUNG;
 import static javax.ejb.TransactionAttributeType.REQUIRED;
+import static javax.ejb.TransactionAttributeType.SUPPORTS;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
@@ -9,19 +12,28 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Event;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
 import org.jboss.logging.Logger;
+import org.richfaces.cdi.push.Push;
 
 import de.shop.artikelverwaltung.domain.Artikel;
 import de.shop.artikelverwaltung.service.ArtikelService;
+import de.shop.kundenverwaltung.domain.Adresse;
 import de.shop.kundenverwaltung.domain.Kunde;
+import de.shop.kundenverwaltung.service.EmailExistsException;
+import de.shop.kundenverwaltung.service.InvalidKundeException;
+import de.shop.util.AbstractShopException;
 import de.shop.util.Log;
+import de.shop.util.Messages;
 import de.shop.util.Transactional;
 
 
@@ -29,7 +41,9 @@ import de.shop.util.Transactional;
  * Dialogsteuerung fuer die ArtikelService
  */
 @Named("ac")
-@RequestScoped
+@SessionScoped
+@Stateful
+@TransactionAttribute(SUPPORTS)//
 @Log
 public class ArtikelController implements Serializable {
 	
@@ -45,6 +59,9 @@ public class ArtikelController implements Serializable {
 	private static final String SESSION_VERFUEGBARE_ARTIKEL = "verfuegbareArtikel";
 	private static final int MAX_AUTOCOMPLETE = 5;
 	private String bezeichnung;
+	private Artikel neuerArtikel;
+	private Long artikelId;
+	private Artikel artikel;
 	
 	//private List<Artikel> ladenhueter;
 
@@ -57,6 +74,12 @@ public class ArtikelController implements Serializable {
 	@Inject
 	private transient HttpSession session;
 
+	@Inject
+	private Messages messages;
+	
+	@Inject
+	@Push(topic = "marketing")
+	private transient Event<String> neuerArtikelEvent;
 	
 	@PostConstruct
 	private void postConstruct() {
@@ -80,6 +103,18 @@ public class ArtikelController implements Serializable {
 		return bezeichnung;
 	}
 
+	public void setartikelId(Long artikelId) {
+		
+		this.artikelId = artikelId;
+	}
+
+	public Long getartikelId() {
+		return artikelId;
+	}
+	
+	public Artikel getNeuerArtikel() {
+		return neuerArtikel;
+	}
 
 
 
@@ -126,4 +161,32 @@ public class ArtikelController implements Serializable {
 		session.setAttribute(SESSION_VERFUEGBARE_ARTIKEL, alleArtikel);
 		return JSF_SELECT_ARTIKEL;
 	}
+	
+	public void createEmptyArtikel() {
+		if (neuerArtikel != null) {
+			return;
+		}
+
+		neuerArtikel = new Artikel();
+		
+	}
+	
+	@TransactionAttribute(REQUIRED)
+	public String createArtikel() {
+		
+		neuerArtikel = as.createArtikel(neuerArtikel);
+		
+
+		// Push-Event fuer Webbrowser
+		neuerArtikelEvent.fire(String.valueOf(neuerArtikel.getAId()));
+		
+		// Aufbereitung fuer viewKunde.xhtml
+		artikelId = neuerArtikel.getAId();
+		artikel = neuerArtikel;
+		neuerArtikel = null;  // zuruecksetzen
+		
+		
+		return JSF_LIST_ARTIKEL + JSF_REDIRECT_SUFFIX;
+	}
+	
 }

@@ -72,17 +72,21 @@
 			#{msg['nav.selectArtikel']}
 		</h:outputLink>
 	</rich:panelMenuItem>
+	<rich:panelMenuItem id="ceateArtikel" rendered="#{rich:isUserInRole('admin')}">
+			<h:outputLink id="artikelverwaltungCreateArtikel"
+					      value="#{request.contextPath}/artikelverwaltung/createArtikel.jsf">
+						#{msg['nav.artikelverwaltung.createArtikel']}
+					<c:if test="#{not empty javax.enterprise.context.conversation.id}">
+						<f:param id="createArtikelCid" name="cid" value="#{javax.enterprise.context.conversation.id}"/>
+					</c:if>
+			</h:outputLink>
+	</rich:panelMenuItem>
 	</rich:panelMenuGroup>
 
 	<rich:panelMenuGroup id="Bestellverwaltung"
 	    label="#{msg['nav.bestellverwaltung']}"
 		expanded="true">
-	<rich:panelMenuItem id="viewBestellung">
-		<h:outputLink id="menuviewBestellung"
-		              value="#{request.contextPath}/bestellverwaltung/viewBestellung.jsf">
-			#{msg['nav.viewBestellung']}
-		</h:outputLink>
-	</rich:panelMenuItem>
+
 	<rich:panelMenuItem id="viewWarenkorb">
 		<h:outputLink id="menuviewWarenkorb"
 		              value="#{request.contextPath}/bestellverwaltung/viewWarenkorb.jsf">

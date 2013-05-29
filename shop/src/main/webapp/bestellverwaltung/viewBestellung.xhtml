@@ -18,10 +18,10 @@
 				<h:panelGrid id="bestellungGrid" columns="2">
 		
 					<h:outputText id="idLabel" value="#{msgBv['viewBestellung.id']}"/>
-					<h:outputText id="id" value="#{bestellung.id}"/>
+					<h:outputText id="id" value="#{bestellung.BId}"/>
 		
 					<h:outputText id="kundeIdLabel" value="#{msgBv['viewBestellung.kundeId']}"/>
-					<h:outputText id="kundeId" value="#{bestellung.kunde.id}"/>
+					<h:outputText id="kundeId" value="#{bestellung.kunde.KId}"/>
 		
 					<h:outputText id="erzeugtLabel" value="#{msgBv['viewBestellung.zeitstempel']}"/>
 					<h:outputText id="erzeugt" value="#{bestellung.erzeugt}">
@@ -40,7 +40,7 @@
 						<f:facet name="header">
 							#{msgBv['viewBestellung.artikel.id']}
 						</f:facet>
-						#{pos.artikel.id}
+						#{pos.artikel.AId}
 					</rich:column>
 		
 					<rich:column id="bezeichnungSpalte">
