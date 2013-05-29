@@ -20,7 +20,11 @@ import org.jboss.logging.Logger;
 
 import de.shop.kundenverwaltung.domain.Adresse;
 import de.shop.kundenverwaltung.domain.Kunde;
+import de.shop.util.File;
+import de.shop.util.FileHelper;
+import de.shop.util.FileHelper.MimeType;
 import de.shop.util.Log;
+import de.shop.util.NoMimeTypeException;
 import de.shop.util.Transactional;
 import de.shop.util.ValidatorProvider;
 
@@ -35,6 +39,9 @@ public class KundeService implements Serializable {
 	
 	@Inject
 	private ValidatorProvider validationService;
+	
+	@Inject
+	private FileHelper fileHelper;
 	
 	@PersistenceContext
 	private transient EntityManager em;
@@ -187,6 +194,35 @@ public class KundeService implements Serializable {
 		return kunde;
 		
 		
+	}
+
+	
+	/**
+	 * Mit MIME-Type fuer Upload bei Webseiten
+	 */
+	public void setFile(Kunde kunde, byte[] bytes, String mimeTypeStr) {
+		final MimeType mimeType = MimeType.get(mimeTypeStr);
+		setFile(kunde, bytes, mimeType);
+	}
+	
+	private void setFile(Kunde kunde, byte[] bytes, MimeType mimeType) {
+		if (mimeType == null) {
+			throw new NoMimeTypeException();
+		}
+		
+		final String filename = fileHelper.getFilename(kunde.getClass(), kunde.getKId(), mimeType);
+		
+		// Gibt es noch kein (Multimedia-) File
+		File file = kunde.getFile();
+		if (file == null) {
+			file = new File(bytes, filename, mimeType);
+			kunde.setFile(file);
+			em.persist(file);
+		}
+		else {
+			file.set(bytes, filename, mimeType);
+			em.merge(file);
+		}
 	}
 	
 	public Kunde updateKunde(Kunde kunde) {

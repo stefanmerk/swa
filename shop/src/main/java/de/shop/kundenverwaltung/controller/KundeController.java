@@ -26,6 +26,8 @@ import javax.validation.ConstraintViolation;
 
 import org.jboss.logging.Logger;
 import org.richfaces.cdi.push.Push;
+import org.richfaces.event.FileUploadEvent;
+import org.richfaces.model.UploadedFile;
 
 import de.shop.auth.controller.AuthController;
 import de.shop.kundenverwaltung.domain.Adresse;
@@ -37,6 +39,7 @@ import de.shop.kundenverwaltung.service.KundeService.FetchType;
 import de.shop.util.AbstractShopException;
 import de.shop.util.Client;
 import de.shop.util.ConcurrentDeletedException;
+import de.shop.util.FileHelper.MimeType;
 import de.shop.util.Log;
 import de.shop.util.Messages;
 
@@ -108,6 +111,9 @@ public class KundeController implements Serializable {
 	
 	@Inject
 	private Messages messages;
+	
+	private byte[] bytes;
+	private String contentType;
 	
 	@Inject
 	@Push(topic = "marketing")
@@ -251,7 +257,23 @@ public class KundeController implements Serializable {
 		return null;
 	}
 
+	public void uploadListener(FileUploadEvent event) {
+		final UploadedFile uploadedFile = event.getUploadedFile();
+		contentType = uploadedFile.getContentType();
+		bytes = uploadedFile.getData();
+	}
 	
+	public String upload() {
+		kunde = ks.findKundebyID(kundeId, FetchType.NUR_KUNDE, locale);
+		
+		ks.setFile(kunde, bytes, contentType);
+		// zuruecksetzen
+		kundeId = null;
+		kunde = null;
+		bytes = null;
+		contentType = null;
+		return JSF_VIEW_KUNDE;
+		}
 	public void geaendert(ValueChangeEvent e) {
 		if (geaendertKunde) {
 			return;

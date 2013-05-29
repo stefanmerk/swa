@@ -7,6 +7,7 @@ import static de.shop.util.Constants.MIN_ID;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.TemporalType.TIMESTAMP;
 import de.shop.auth.service.AuthService.RolleType;
 
@@ -50,6 +51,7 @@ import org.hibernate.validator.constraints.ScriptAssert;
 import org.jboss.logging.Logger;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
+import de.shop.util.File;
 import de.shop.util.IdGroup;
 
 
@@ -223,7 +225,13 @@ public  class  Kunde implements Serializable {
 	@Basic(optional = false)
 	private int version = ERSTE_VERSION;
 
+	@OneToOne(fetch = LAZY, cascade = { PERSIST, REMOVE })
+	@JoinColumn(name = "file_fk")
+	@JsonIgnore
+	private File file;
 	
+	@Transient
+	private URI fileUri;
 	public Kunde() {
 		super();
 	}
@@ -364,7 +372,15 @@ public  class  Kunde implements Serializable {
 	public void setAdresse(Adresse adresse) {
 		this.adresse = adresse;
 		}
-	
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
 	@Valid
 	public List<Bestellung> getBestellungen() {
 		if (bestellungen == null) {
