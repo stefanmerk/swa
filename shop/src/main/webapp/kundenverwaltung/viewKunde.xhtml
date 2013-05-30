@@ -224,6 +224,11 @@
 							                 action="/kundenverwaltung/updateKunde"
 							                 alt="#{msgKv['viewKunde.update.alt']}"/>
 							#{' '}
+					<h:commandButton id="uploadButton"
+							                 image="#{resource['images:upload.gif']}"
+							                 action="/kundenverwaltung/upload"
+							                 alt="#{msgKv['viewKunde.upload']}"
+							                 rendered="#{rich:isUserInRole('admin')}"/>
 <!-- 							<h:commandButton id="deleteButton"
 											 image="#{resource['images:delete.gif']}"
 									         action="#{kc.deleteAngezeigtenKunden}"
