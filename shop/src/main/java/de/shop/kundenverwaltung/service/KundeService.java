@@ -1,7 +1,7 @@
 package de.shop.kundenverwaltung.service;
 
 import static de.shop.util.Constants.KEINE_ID;
-
+import static javax.persistence.PersistenceContextType.EXTENDED;
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.validation.groups.Default;
@@ -43,7 +44,7 @@ public class KundeService implements Serializable {
 	@Inject
 	private FileHelper fileHelper;
 	
-	@PersistenceContext
+	@PersistenceContext(type = EXTENDED)
 	private transient EntityManager em;
 	
 	@PostConstruct
