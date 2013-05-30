@@ -56,6 +56,10 @@
 					</rich:column>
 					
 					<f:facet name="footer">
+						<h:panelGrid id="warenkorbGrid" columns="2">
+							<h:outputText id="preisLabel" value="#{msgBv['viewWarenkorb.gesamtpreis']}"/>
+							<h:outputText id="preis" value="#{wk.gesamtpreis}"/>
+						</h:panelGrid>
 	    				<h:panelGroup id="buttons">
 							<h:commandButton id="updateButton"
 							                 action="/artikelverwaltung/listArtikel?init=true"

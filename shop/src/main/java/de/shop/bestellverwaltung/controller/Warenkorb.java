@@ -73,6 +73,13 @@ public class Warenkorb implements Serializable {
 		return artikelId;
 	}
 
+	public double getGesamtpreis() {
+		double gesamtpreis = 0;
+		for (Bestellposition bp : positionen)
+			gesamtpreis += bp.getAnzahl()*bp.getArtikel().getPreis();
+		return gesamtpreis;
+	}
+
 	@Override
 	public String toString() {
 		return "Warenkorb " + positionen;
