@@ -189,6 +189,15 @@ public class KundeController implements Serializable {
 	}
 	
 	
+	
+	public String resetUpload()
+	{
+		kunde = null;
+		 bytes = null;
+		 contentType = null;
+		
+		return JSF_INDEX;
+	}
 	/**
 	 * F&uuml;r rich:autocomplete
 	 * @return Liste der potenziellen Kunden
@@ -215,6 +224,7 @@ public class KundeController implements Serializable {
 		return kundenPrefix;
 	}
 	
+
 	public void createEmptyKunde() {
 		if (neuerKunde != null) {
 			return;
