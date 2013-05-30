@@ -92,7 +92,40 @@
 								</h:panelGrid>
 							</rich:panel>
 						</rich:tab>
-						<rich:tab id="multimediaTab" rendered="#{not empty kunde.file}">
+						
+					
+						<rich:tab id="adresseTab" rendered="#{rich:isUserInRole('admin')}">
+							<f:facet name="header">
+								<h:panelGroup id="adresseLabel"
+											>
+									<h:graphicImage id="adresseGif"
+									                name="adresse.gif"
+									                library="images"/>
+									#{' '}
+									#{msgKv['viewKunde.kunde.adresse']}
+								</h:panelGroup>
+							</f:facet>
+						<rich:panel id="adressePanel">
+								<h:panelGrid id="adresseGrid" columns="2">
+									<h:outputText id="adresseOrtLabel" value="#{msgKv['viewKunde.adresseOrt']}"/>
+									<h:outputText id="adresseOrt" value="#{kc.kunde.adresse.ort}"/>
+							
+									<h:outputText id="adressePLZLabel" value="#{msgKv['viewKunde.adressePLZ']}"/>
+									<h:outputText id="adressePLZ" value="#{kc.kunde.adresse.plz}"/>
+						
+									<h:outputText id="adresseStrLabel" value="#{msgKv['viewKunde.adresseStr']}"/>
+									<h:outputText id="adresseStr" value="#{kc.kunde.adresse.strasse}"/>
+									
+									<h:outputText id="adresseHnrLabel" value="#{msgKv['viewKunde.adresseHnr']}"/>
+									<h:outputText id="adresseHnr" value="#{kc.kunde.adresse.hausnr}">
+									</h:outputText>
+																		
+								</h:panelGrid>
+							</rich:panel>
+						</rich:tab>
+						
+						
+			<rich:tab id="multimediaTab" rendered="#{not empty kunde.file}">
 			<f:facet name="header">
 				<h:panelGroup id="multimediaLabel">
 					<h:graphicImage id="multimediaGif"
