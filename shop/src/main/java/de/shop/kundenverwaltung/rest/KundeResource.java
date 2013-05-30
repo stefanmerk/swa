@@ -3,6 +3,7 @@ package de.shop.kundenverwaltung.rest;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.util.ArrayList;
@@ -38,6 +39,8 @@ import de.shop.kundenverwaltung.domain.Adresse;
 import de.shop.kundenverwaltung.domain.Kunde;
 import de.shop.kundenverwaltung.service.KundeService;
 import de.shop.kundenverwaltung.service.KundeService.FetchType;
+import de.shop.util.JsonFile;
+import de.shop.util.LocaleHelper;
 import de.shop.util.Log;
 import de.shop.util.NotFoundException;
 import de.shop.util.RestLongWrapper;
@@ -58,12 +61,21 @@ public class KundeResource {
 	@Inject
 	private KundeService ks;
 	
+	@Context
+	private UriInfo uriInfo;
+	
 	@Inject
 	private BestellService bs;
 	
 	@Inject
 	private UriHelperKunde uriHelperKunde;
 	
+	@Inject
+	private LocaleHelper localeHelper;
+	
+    @Context
+    private HttpHeaders headers;
+    
 	@Inject
 	private UriHelperBestellung uriHelperBestellung;
 	
@@ -147,7 +159,27 @@ public class KundeResource {
 		return kunden;
 	}
 	
+	@Path("{id:[1-9][0-9]*}/file")
+	@POST
+	@Consumes(APPLICATION_JSON)
+	public Response upload(@PathParam("id") Long kundeId, JsonFile file) {
+		final Locale locale = localeHelper.getLocale(headers);
+		ks.setFile(kundeId, file.getBytes(), locale);
+		final URI location = uriHelperKunde.getUriDownload(kundeId, uriInfo);
+		return Response.created(location).build();
+	}
 	
+	@Path("{id:[1-9][0-9]*}/file")
+	@GET
+	public JsonFile download(@PathParam("id") Long kundeId) throws IOException {
+		final Locale locale = localeHelper.getLocale(headers);
+		final Kunde kunde = ks.findKundebyID(kundeId, FetchType.NUR_KUNDE, locale);
+		if (kunde.getFile() == null) {
+			return new JsonFile(new byte[] {});
+		}
+		
+		return new JsonFile(kunde.getFile().getBytes());
+	}
 	@GET
 	@Path("/prefix/id/{id:[1-9][0-9]*}")
 	public Collection<RestLongWrapper> findIdsByPrefix(@PathParam("id") String idPrefix, @Context UriInfo uriInfo) {

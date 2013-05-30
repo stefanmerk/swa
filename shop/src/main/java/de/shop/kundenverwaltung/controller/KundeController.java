@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.OptimisticLockException;
 import javax.validation.ConstraintViolation;
+import javax.xml.bind.DatatypeConverter;
 
 import org.jboss.logging.Logger;
 import org.richfaces.cdi.push.Push;
@@ -39,10 +40,11 @@ import de.shop.kundenverwaltung.service.KundeService.FetchType;
 import de.shop.util.AbstractShopException;
 import de.shop.util.Client;
 import de.shop.util.ConcurrentDeletedException;
+import de.shop.util.File;
 import de.shop.util.FileHelper.MimeType;
 import de.shop.util.Log;
 import de.shop.util.Messages;
-
+import de.shop.util.FileHelper;
 
 /**
  * Dialogsteuerung fuer die Kundenverwaltung
@@ -120,6 +122,9 @@ public class KundeController implements Serializable {
 	private transient Event<String> neuerKundeEvent;
 	
 	@Inject
+	private FileHelper filehelper;
+	
+	@Inject
 	@Push(topic = "updateKunde")
 	private transient Event<String> updateKundeEvent;
 	
@@ -128,7 +133,8 @@ public class KundeController implements Serializable {
 	private Adresse adresse;
 	private String nachname;
 	private boolean geaendertKunde;  
-	
+
+
 	private Kunde neuerKunde;
 	
 	//private List<Kunde> kunden = Collections.emptyList();
@@ -146,7 +152,7 @@ public class KundeController implements Serializable {
 	public Long getkundeId() {
 		return kundeId;
 	}
-	
+
 	public void setKunde(Kunde kunde) {
 		this.kunde = kunde;
 	}
@@ -263,6 +269,8 @@ public class KundeController implements Serializable {
 		bytes = uploadedFile.getData();
 	}
 	
+	
+	@TransactionAttribute(REQUIRED)
 	public String upload() {
 		kunde = ks.findKundebyID(kundeId, FetchType.NUR_KUNDE, locale);
 		
@@ -290,7 +298,19 @@ public class KundeController implements Serializable {
 			geaendertKunde = true;				
 		}
 	}
+	public String getFilename(File file) {
+		if (file == null) {
+			return "";
+		}
+		
+		filehelper.store(file);
+		return file.getFilename();
+	}
 	
+	
+	public String getBase64(File file) {
+		return DatatypeConverter.printBase64Binary(file.getBytes());
+	}
 	@TransactionAttribute(REQUIRED)
 	public String update() {
 		auth.preserveLogin();

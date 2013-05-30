@@ -92,7 +92,52 @@
 								</h:panelGrid>
 							</rich:panel>
 						</rich:tab>
-						
+						<rich:tab id="multimediaTab" rendered="#{not empty kunde.file}">
+			<f:facet name="header">
+				<h:panelGroup id="multimediaLabel">
+					<h:graphicImage id="multimediaGif"
+					                name="bild.gif"
+					                library="images"/>
+					#{' '}
+					#{msgKv['viewKundePopup.kunde.bildVideoAudio']}
+				</h:panelGroup>
+			</f:facet>
+			
+			<c:set var="file" value="${kunde.file}" scope="view"/>
+			<c:set var="multimediaType" value="${file.multimediaType}" scope="view"/>
+			<c:set var="filename" value="#{kc.getFilename(file)}" scope="view"/>
+			<c:choose>
+				<c:when test="${multimediaType eq 'IMAGE'}">
+					<h:graphicImage id="bild"
+									name="#{filename}"
+									library="filesDb"
+									alt="#{msgKv['viewKunde.kunde.bild.alt']}"/>
+					<!--
+					<h:graphicImage id="bild"
+									value="data:#{file.mimeType};base64,#{kc.getBase64(file)}"
+									alt="#{msgKv['viewKunde.kunde.bild.alt']}"/>
+					-->
+				</c:when>
+					
+				<c:when test="${multimediaType eq 'VIDEO'}">
+					<!-- MediaElement von http://mediaelementjs.com -->
+					<!-- Alternativen siehe http://html5video.org/wiki/HTML5_Video_Player_Comparison -->
+					<h:outputScript id="jsVideo" library="js" name="mediaelement-and-player.min.js"/>
+					<h:outputStylesheet id="cssVideo" library="css" name="mediaelementplayer.css"/>
+					<video id="video"
+						   controls="controls"
+						   width="640"
+						   height="480">
+						<source src="#{request.contextPath}/resources/filesDb/#{filename}"
+						        type="#{file.mimeType.toString()}"/>
+					</video>
+				</c:when>
+
+				<c:when test="${multimediaType eq 'AUDIO'}">
+					TODO: AUDIO
+				</c:when>
+			</c:choose>
+		</rich:tab>
 						
 						<rich:tab id="bestellungenTab" rendered="#{not empty kc.kunde.bestellungen}">
 							<f:facet name="header">

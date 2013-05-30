@@ -111,11 +111,11 @@ import de.shop.util.IdGroup;
 	    	             + Kunde.PARAM_KUNDE_NACHNAME_PREFIX + ")"),
 	@NamedQuery(name  = Kunde.FIND_KUNDEN_BY_NACHNAME_FETCH_BESTELLUNGEN,
 	            query = "SELECT DISTINCT k"
-			            + " FROM   Kunde k LEFT JOIN FETCH k.bestellungen"
+			            + " FROM   Kunde k LEFT JOIN FETCH k.bestellungen "
 			            + " WHERE  UPPER(k.nachname) = UPPER(:" + Kunde.PARAM_KUNDE_NACHNAME + ")"),
 	@NamedQuery(name  = Kunde.FIND_KUNDE_BY_ID_FETCH_BESTELLUNGEN,
 	            query = "SELECT DISTINCT k"
-			            + " FROM   Kunde k LEFT JOIN FETCH k.bestellungen"
+			            + " FROM   Kunde k LEFT JOIN FETCH k.bestellungen "
 			            + " WHERE  k.id = :" + Kunde.PARAM_K_ID),///////
  
    	@NamedQuery(name  = Kunde.FIND_KUNDE_BY_EMAIL,
@@ -232,6 +232,7 @@ public  class  Kunde implements Serializable {
 	
 	@Transient
 	private URI fileUri;
+	
 	public Kunde() {
 		super();
 	}
@@ -380,7 +381,14 @@ public  class  Kunde implements Serializable {
 	public void setFile(File file) {
 		this.file = file;
 	}
+	
+	public URI getFileUri() {
+		return fileUri;
+	}
 
+	public void setFileUri(URI fileUri) {
+		this.fileUri = fileUri;
+	}
 	@Valid
 	public List<Bestellung> getBestellungen() {
 		if (bestellungen == null) {

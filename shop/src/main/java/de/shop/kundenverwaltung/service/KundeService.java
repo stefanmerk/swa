@@ -195,7 +195,14 @@ public class KundeService implements Serializable {
 		
 		
 	}
-
+	public void setFile(Long kundeId, byte[] bytes, Locale locale) {
+		final Kunde kunde = findKundebyID(kundeId, FetchType.NUR_KUNDE, locale);
+		if (kunde == null) {
+			return;
+		}
+		final MimeType mimeType = fileHelper.getMimeType(bytes);
+		setFile(kunde, bytes, mimeType);
+	}
 	
 	/**
 	 * Mit MIME-Type fuer Upload bei Webseiten
