@@ -8,6 +8,7 @@ import static javax.ejb.TransactionAttributeType.SUPPORTS;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,22 +26,29 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.OptimisticLockException;
 import javax.servlet.http.HttpSession;
+import javax.validation.ConstraintViolation;
 
 import org.jboss.logging.Logger;
 import org.richfaces.cdi.push.Push;
 
 import de.shop.artikelverwaltung.domain.Artikel;
 import de.shop.artikelverwaltung.service.ArtikelService;
+import de.shop.artikelverwaltung.service.BezeichnungExistsException;
 import de.shop.auth.controller.AuthController;
 import de.shop.kundenverwaltung.domain.Adresse;
 import de.shop.kundenverwaltung.domain.Kunde;
 import de.shop.kundenverwaltung.service.EmailExistsException;
-import de.shop.kundenverwaltung.service.InvalidKundeException;
+import de.shop.artikelverwaltung.service.InvalidArtikelException;
 import de.shop.util.AbstractShopException;
 import de.shop.util.ConcurrentDeletedException;
 import de.shop.util.Log;
 import de.shop.util.Messages;
 import de.shop.util.Transactional;
+import de.shop.util.OptimisticLockExceptionMapper;
+import de.shop.util.Client;
+import de.shop.util.File;
+
+
 
 
 /**
@@ -61,6 +69,10 @@ public class ArtikelController implements Serializable {
 	private static final String FLASH_ARTIKEL = "artikel";
 	//private static final int ANZAHL_LADENHUETER = 5;
 	
+	private static final String CLIENT_ID_UPDATE_BEZEICHNUNG = "updateArtikelForm:bezeichnung";
+	private static final String MSG_KEY_UPDATE_ARTIKEL_DUPLIKAT = "updateArtikel.duplikat";
+	private static final String MSG_KEY_UPDATE_ARTIKEL_CONCURRENT_UPDATE = "updateArtikel.concurrentUpdate";
+	//private static final String MSG_KEY_UPDATE_ARTIKEL_CONCURRENT_DELETE = "updateArtikel.concurrentDelete";	
 	private static final String JSF_SELECT_ARTIKEL = "/artikelverwaltung/selectArtikel";
 	private static final String SESSION_VERFUEGBARE_ARTIKEL = "verfuegbareArtikel";
 	private static final int MAX_AUTOCOMPLETE = 5;
@@ -197,8 +209,15 @@ public class ArtikelController implements Serializable {
 	
 	@TransactionAttribute(REQUIRED)
 	public String createArtikel() {
+		try {
+			neuerArtikel = as.createArtikel(neuerArtikel);
+		}
+		catch (BezeichnungExistsException | InvalidArtikelException
+			  | OptimisticLockException | ConcurrentDeletedException e) {
+			final String outcome = updateErrorMsg(e, artikel.getClass());
+			return outcome;
+		}
 		
-		neuerArtikel = as.createArtikel(neuerArtikel);
 		
 
 		// Push-Event fuer Webbrowser
@@ -241,7 +260,14 @@ public class ArtikelController implements Serializable {
 		
 	LOGGER.tracef("Aktualisierter Kunde: %s", artikel);
 	
-			artikel = as.updateArtikel(artikel);
+	try {
+		artikel = as.updateArtikel(artikel);
+	}
+	catch (BezeichnungExistsException | InvalidArtikelException
+		  | OptimisticLockException | ConcurrentDeletedException e) {
+		final String outcome = updateErrorMsg(e, artikel.getClass());
+		return outcome;
+	}
 	
 		// Push-Event fuer Webbrowser
 		updateArtikelEvent.fire(String.valueOf(artikel.getAId()));
@@ -255,4 +281,27 @@ public class ArtikelController implements Serializable {
 		return JSF_LIST_ARTIKEL + JSF_REDIRECT_SUFFIX;
 	}
 	
+	private String updateErrorMsg(RuntimeException e, Class<? extends Artikel> artikelClass) {
+		final Class<? extends RuntimeException> exceptionClass = e.getClass();
+		if (exceptionClass.equals(InvalidArtikelException.class)) {
+			// Ungueltige Bzeichnung: Attribute wurden bereits von JSF validiert
+			final InvalidArtikelException orig = (InvalidArtikelException) e;
+			final Collection<ConstraintViolation<Artikel>> violations = orig.getViolations();
+			messages.error(violations, CLIENT_ID_UPDATE_BEZEICHNUNG);
+		}
+		else if (exceptionClass.equals(BezeichnungExistsException.class)) {
+			if (artikelClass.equals(Artikel.class)) {
+				messages.error(KUNDENVERWALTUNG, MSG_KEY_UPDATE_ARTIKEL_DUPLIKAT, CLIENT_ID_UPDATE_BEZEICHNUNG);
+			}
+			
+		}
+		else if (exceptionClass.equals(OptimisticLockException.class)) {
+			if (artikelClass.equals(Artikel.class)) {
+				messages.error(KUNDENVERWALTUNG, MSG_KEY_UPDATE_ARTIKEL_CONCURRENT_UPDATE, null);
+			}
+			
+		
+		}
+		return null;
+	}
 }
