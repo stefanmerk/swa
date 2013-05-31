@@ -125,7 +125,7 @@
 						</rich:tab>
 						
 						
-			<rich:tab id="multimediaTab" rendered="#{not empty kunde.file}">
+			<rich:tab id="multimediaTab" rendered="#{not empty kc.kunde.file}">
 			<f:facet name="header">
 				<h:panelGroup id="multimediaLabel">
 					<h:graphicImage id="multimediaGif"
@@ -136,7 +136,7 @@
 				</h:panelGroup>
 			</f:facet>
 			
-			<c:set var="file" value="${kunde.file}" scope="view"/>
+			<c:set var="file" value="${kc.kunde.file}" scope="view"/>
 			<c:set var="multimediaType" value="${file.multimediaType}" scope="view"/>
 			<c:set var="filename" value="#{kc.getFilename(file)}" scope="view"/>
 			<c:choose>

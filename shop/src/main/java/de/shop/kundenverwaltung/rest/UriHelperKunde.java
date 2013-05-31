@@ -17,6 +17,8 @@ import de.shop.util.Log;
 @Log
 public class UriHelperKunde {
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
+	
+	
 	public URI getUriKunde(Kunde kunde, UriInfo uriInfo) {
 		final UriBuilder ub = uriInfo.getBaseUriBuilder()
 		                             .path(KundeResource.class)
@@ -28,14 +30,15 @@ public class UriHelperKunde {
 	
 	public void updateUriKunde(Kunde kunde, UriInfo uriInfo) {
 		// URI fuer Bestellungen setzen
-		URI uri = uriInfo.getBaseUriBuilder()
+		final UriBuilder uri = uriInfo.getBaseUriBuilder()
                          .path(KundeResource.class)
-                         .path(KundeResource.class, "findBestellungenByKundeId")
-                         .build(kunde.getKId());
-		kunde.setBestellungenUri(uri);
+                         .path(KundeResource.class, "findBestellungenByKundeId");
+		final URI kundeUri = uri.build(kunde.getKId());
+                         
+		kunde.setBestellungenUri(kundeUri);
 
-		uri = getUriDownload(kunde.getKId(), uriInfo);
-		kunde.setFileUri(uri);
+		final URI  fileUri = getUriDownload(kunde.getKId(), uriInfo);
+		kunde.setFileUri(fileUri);
 		
 		LOGGER.trace(kunde);
 	}

@@ -44,6 +44,7 @@ import javax.persistence.Version;
 import javax.validation.Valid;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -123,6 +124,7 @@ import de.shop.util.IdGroup;
    			            + " FROM   Kunde k"
    			            + " WHERE  k.email = :" + Kunde.PARAM_KUNDE_EMAIL)
 })
+@Cacheable
 @ScriptAssert(lang = "javascript",
 script = "(_this.password == null && _this.passwordWdh == null)"
          + "|| (_this.password != null && _this.password.equals(_this.passwordWdh))",
@@ -224,7 +226,7 @@ public  class  Kunde implements Serializable {
 	@Version
 	@Basic(optional = false)
 	private int version = ERSTE_VERSION;
-
+	
 	@OneToOne(fetch = LAZY, cascade = { PERSIST, REMOVE })
 	@JoinColumn(name = "file_fk")
 	@JsonIgnore
@@ -257,6 +259,7 @@ public  class  Kunde implements Serializable {
 		this.version = kopie.version;
 		this.passwordWdh = kopie.password;
 		this.agbAkzeptiert = kopie.agbAkzeptiert;
+		this.file=kopie.file;
 		
 	}
 

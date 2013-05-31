@@ -5,6 +5,7 @@ import static de.shop.util.Constants.JSF_REDIRECT_SUFFIX;
 import static de.shop.util.Messages.MessagesType.KUNDENVERWALTUNG;
 import static javax.ejb.TransactionAttributeType.REQUIRED;
 import static javax.ejb.TransactionAttributeType.SUPPORTS;
+import static javax.persistence.PersistenceContextType.EXTENDED;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
@@ -21,7 +22,9 @@ import javax.faces.context.Flash;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
 import javax.persistence.OptimisticLockException;
+import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolation;
 import javax.xml.bind.DatatypeConverter;
 
@@ -97,6 +100,8 @@ public class KundeController implements Serializable {
 	private static final String MSG_KEY_UPDATE_PRIVATKUNDE_CONCURRENT_DELETE = "updatePrivatkunde.concurrentDelete";
 	private static final String MSG_KEY_UPDATE_FIRMENKUNDE_CONCURRENT_DELETE = "updateFirmenkunde.concurrentDelete";
 
+	@PersistenceContext(type = EXTENDED)
+	private transient EntityManager em;
 	
 	@Inject
 	private KundeService ks;
@@ -183,6 +188,10 @@ public class KundeController implements Serializable {
 		if (kunde == null) {
 			// Kein Kunde zu gegebener ID gefunden
 			return "haha";
+		}
+		
+		if (kunde.getFile() != null) {
+			LOGGER.infof("Datei: %s", kunde.getFile().getFilename());
 		}
 
 		return JSF_VIEW_KUNDE;
