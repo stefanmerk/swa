@@ -119,7 +119,7 @@ public class Warenkorb implements Serializable {
 	/**
 	 */
 	public String add() {
-		final Artikel artikel = as.findArtikelByBezeichnung(artikelbezeichnung);
+		final Artikel artikel = as.findArtikelbyID(artikelId);
 		if (artikel == null) {
 			return null;
 		}

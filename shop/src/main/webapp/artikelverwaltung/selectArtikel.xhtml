@@ -13,18 +13,18 @@
 		<ui:param name="pageTitle" value="#{msgAv['selectArtikel.title']}" />
 	
 		<ui:define name="article">
-			<h:form id="selectForm">
+			<h:form id="selectForm" >
 				<h:panelGrid id="selectGrid" columns="2">
-					<rich:select id="artikelBezeichnung"
+					<rich:select id="artikelBezeichnung" 
 					             defaultLabel="#{msgAv['selectArtikel.auswahl']}"
 					             value="#{wk.artikelId}" >
-						<!--
-						<f:selectItems id="artikelItems" values="#{verfuegbareArtikel}"/>
+						
+							<!-- <f:selectItems id="artikelItems" values="#{findAllArtikel}"/>
 
 						-->
 						
-						<c:forEach var="artikel" items="#{verfuegbareArtikel}">
-							<f:selectItem id="artikelItem#{artikel.AId}" itemLabel="#{artikel.bezeichnung}" itemValue="#{artikel.AId}"/>
+					  <c:forEach var="artikel" items="#{findAllArtikel}">
+							<f:selectItem id="artikelItem#{ac.artikel.AId}" itemLabel="#{ac.artikel.bezeichnung}" itemValue="#{ac.artikel.AId}"/>
 						</c:forEach>
 					</rich:select>
 						

@@ -16,8 +16,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
-import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Event;
 import javax.faces.context.Flash;
@@ -34,19 +32,12 @@ import org.richfaces.cdi.push.Push;
 import de.shop.artikelverwaltung.domain.Artikel;
 import de.shop.artikelverwaltung.service.ArtikelService;
 import de.shop.artikelverwaltung.service.BezeichnungExistsException;
-import de.shop.auth.controller.AuthController;
-import de.shop.kundenverwaltung.domain.Adresse;
-import de.shop.kundenverwaltung.domain.Kunde;
-import de.shop.kundenverwaltung.service.EmailExistsException;
 import de.shop.artikelverwaltung.service.InvalidArtikelException;
-import de.shop.util.AbstractShopException;
+import de.shop.auth.controller.AuthController;
 import de.shop.util.ConcurrentDeletedException;
 import de.shop.util.Log;
 import de.shop.util.Messages;
 import de.shop.util.Transactional;
-import de.shop.util.OptimisticLockExceptionMapper;
-import de.shop.util.Client;
-import de.shop.util.File;
 
 
 
@@ -72,9 +63,10 @@ public class ArtikelController implements Serializable {
 	private static final String CLIENT_ID_UPDATE_BEZEICHNUNG = "updateArtikelForm:bezeichnung";
 	private static final String MSG_KEY_UPDATE_ARTIKEL_DUPLIKAT = "updateArtikel.duplikat";
 	private static final String MSG_KEY_UPDATE_ARTIKEL_CONCURRENT_UPDATE = "updateArtikel.concurrentUpdate";
-	//private static final String MSG_KEY_UPDATE_ARTIKEL_CONCURRENT_DELETE = "updateArtikel.concurrentDelete";	
+	
 	private static final String JSF_SELECT_ARTIKEL = "/artikelverwaltung/selectArtikel";
-	private static final String SESSION_VERFUEGBARE_ARTIKEL = "verfuegbareArtikel";
+	//private static final String SESSION_VERFUEGBARE_ARTIKEL = "verfuegbareArtikel";
+	private static final String SESSION_ALLE_ARTIKEL = "findAllArtikel";
 	private static final int MAX_AUTOCOMPLETE = 5;
 	private String bezeichnung;
 	private Artikel neuerArtikel;
@@ -82,7 +74,6 @@ public class ArtikelController implements Serializable {
 	private Artikel artikel;
 	private boolean geaendertArtikel;
 	
-	//private List<Artikel> ladenhueter;
 
 	@Inject
 	private ArtikelService as;
@@ -151,16 +142,10 @@ public class ArtikelController implements Serializable {
 		return this.artikel;
 	}
 
-
-
-//	public List<Artikel> getLadenhueter() {
-//		return ladenhueter;
-//	}
-	
 	
 	@TransactionAttribute(REQUIRED)
 	public String findArtikelByBezeichnung() {
-		/*final Artikel*/ artikel = as.findArtikelByBezeichnung(bezeichnung);
+		List<Artikel> artikel = as.findArtikelByBezeichnung(bezeichnung);
 		flash.put(FLASH_ARTIKEL, artikel);
 
 		return JSF_LIST_ARTIKEL;
@@ -181,20 +166,15 @@ public class ArtikelController implements Serializable {
 		}
 		return artikelPrefix;
 	}
-//	@Transactional
-//	public void loadLadenhueter() {
-//		ladenhueter = as.ladenhueter(ANZAHL_LADENHUETER);
-//	}
-//	
+
 	@Transactional
 	public String selectArtikel() {
-		if (session.getAttribute(SESSION_VERFUEGBARE_ARTIKEL) != null) {
+		if (session.getAttribute(SESSION_ALLE_ARTIKEL) != null) {
 			return JSF_SELECT_ARTIKEL;
 		}
 		
-		final List<Artikel> alleArtikel = as.findVerfuegbareArtikel();
-			
-		session.setAttribute(SESSION_VERFUEGBARE_ARTIKEL, alleArtikel);
+		final List<Artikel> alleArtikel = as.findAllArtikel();
+		session.setAttribute(SESSION_ALLE_ARTIKEL, alleArtikel);
 		return JSF_SELECT_ARTIKEL;
 	}
 	
@@ -264,7 +244,7 @@ public class ArtikelController implements Serializable {
 		artikel = as.updateArtikel(artikel);
 	}
 	catch (BezeichnungExistsException | InvalidArtikelException
-		  | OptimisticLockException | ConcurrentDeletedException e) {
+		  | OptimisticLockException e) {
 		final String outcome = updateErrorMsg(e, artikel.getClass());
 		return outcome;
 	}
@@ -284,7 +264,7 @@ public class ArtikelController implements Serializable {
 	private String updateErrorMsg(RuntimeException e, Class<? extends Artikel> artikelClass) {
 		final Class<? extends RuntimeException> exceptionClass = e.getClass();
 		if (exceptionClass.equals(InvalidArtikelException.class)) {
-			// Ungueltige Bzeichnung: Attribute wurden bereits von JSF validiert
+		
 			final InvalidArtikelException orig = (InvalidArtikelException) e;
 			final Collection<ConstraintViolation<Artikel>> violations = orig.getViolations();
 			messages.error(violations, CLIENT_ID_UPDATE_BEZEICHNUNG);
