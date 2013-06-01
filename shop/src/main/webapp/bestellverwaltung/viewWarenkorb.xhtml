@@ -15,7 +15,7 @@
 			<h1><h:outputText id="heading"
 			                  value="#{msgBv['viewWarenkorb.heading']}"
 			                  rendered="#{not empty wk.positionen}"/></h1>
-			
+					
 			<h:form id="warenkorbForm"
 			        rendered="#{not empty wk.positionen}">
 				<rich:dataTable id="warenkorbTabelle"
@@ -37,6 +37,13 @@
 						#{position.artikel.bezeichnung}
 					</rich:column>
 		
+					<rich:column id="preisSpalte">
+						<f:facet name="header">
+							#{msgBv['viewWarenkorb.artikel.preis']}
+						</f:facet>
+						#{position.artikel.preis}
+					</rich:column>		
+		
 					<rich:column id="anzahlSpalte">
 						<f:facet name="header">
 							#{msgBv['viewWarenkorb.anzahl']}
@@ -56,10 +63,12 @@
 					</rich:column>
 					
 					<f:facet name="footer">
-						<h:panelGrid id="warenkorbGrid" columns="2">
-							<h:outputText id="preisLabel" value="#{msgBv['viewWarenkorb.gesamtpreis']}"/>
-							<h:outputText id="preis" value="#{wk.gesamtpreis}"/>
-						</h:panelGrid>
+					
+						<rich:column>
+							<h:outputText id="gesamtpreisLabel" value="#{msgBv['viewWarenkorb.gesamtpreis']}"/>
+							<h:outputText id="gesamtpreis" value="#{wk.gesamtpreis}"/>
+						</rich:column>
+	    				
 	    				<h:panelGroup id="buttons">
 							<h:commandButton id="updateButton"
 							                 action="/artikelverwaltung/listArtikel?init=true"
@@ -72,6 +81,7 @@
 									         value="#{msgBv['viewWarenkorb.bestellen']}"/>
 							<rich:message id="bestellButtonFehlermeldung" for="bestellButton" rendered="#{auth.loggedIn}"/>
 						</h:panelGroup>
+						
 					</f:facet>
 					
 				</rich:dataTable>

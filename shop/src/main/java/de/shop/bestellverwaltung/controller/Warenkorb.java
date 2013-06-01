@@ -35,6 +35,8 @@ public class Warenkorb implements Serializable {
 	private final List<Bestellposition> positionen = new ArrayList<Bestellposition>();;
 	private Long artikelId; 
 	private String artikelbezeichnung;
+	private double artikelpreis;
+	private double gesamtpreis;
 	
 	// fuer selectArtikel.xhtml
 	
@@ -73,10 +75,20 @@ public class Warenkorb implements Serializable {
 		return artikelId;
 	}
 
+	public double getArtikelpreis() {
+		return artikelpreis;
+	}
+
+	public void setArtikelpreis(double artikelpreis) {
+		this.artikelpreis = artikelpreis;
+	}
+
 	public double getGesamtpreis() {
-		double gesamtpreis = 0;
-		for (Bestellposition bp : positionen)
-			gesamtpreis += bp.getAnzahl()*bp.getArtikel().getPreis();
+		gesamtpreis = 0;
+		if (!(positionen == null) || !positionen.isEmpty()) {
+			for (Bestellposition bp : positionen)
+				gesamtpreis += bp.getAnzahl()*bp.getArtikel().getPreis();
+		}
 		return gesamtpreis;
 	}
 
