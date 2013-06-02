@@ -103,7 +103,11 @@ public class Bestellung implements Serializable {
 	@Temporal(TIMESTAMP)
 	@JsonIgnore
 	private Date aktualisiert;
-
+	
+	@Column(nullable = false)
+	@JsonProperty
+	private Double gesamtpreis;
+	
 	@Column(nullable = false)
 	@Temporal(TIMESTAMP)
 	@JsonIgnore
@@ -157,6 +161,14 @@ public class Bestellung implements Serializable {
 
 	public void setBId(Long b) {
 		this.bId = b;
+	}
+	
+	public double getGesamtpreis(){
+		return this.gesamtpreis;
+	}
+	
+	public void setGesamtpreis(double g) {
+		this.gesamtpreis = g;
 	}
 
 	public int getVersion() {
@@ -255,7 +267,7 @@ public class Bestellung implements Serializable {
 	@Override
 	public String toString() {
 		return "Bestellung [bId=" + bId + ", aktualisiert=" + aktualisiert
-				+ ", erzeugt=" + erzeugt;
+				+ ", erzeugt=" + erzeugt + ",gesamtpreis=" + gesamtpreis;
 	}
 
 	@Override
@@ -288,6 +300,7 @@ public class Bestellung implements Serializable {
 		
 		this.bestellpositionen = kopie.bestellpositionen;
 		this.version = kopie.version;
+		this.gesamtpreis = kopie.gesamtpreis;
 	
 	}
 }
