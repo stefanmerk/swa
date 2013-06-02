@@ -195,15 +195,19 @@
 										<rich:column id="anzahlSpalte">
 											#{msgKv['viewKunde.artikel.anzahl']}
 										</rich:column>
+										<rich:column id="GesamtpreisSpalte">
+											#{msgKv['viewKunde.bestellung.gesamtpreis']}
+										</rich:column>		
 									</rich:columnGroup>
 								</f:facet>
 								
-								<rich:column id="togglerSpalte" colspan="3">
+								<rich:column id="togglerSpalte" colspan="4">
 									<rich:collapsibleSubTableToggler id="subTableToggler"
 									                                 for="positionenSubtable"
-									                                 collapsedLabel="#{msgKv['viewKunde.bestellung']} #{bestellung.BId} : #{bestellung.erzeugt}"
-									                                 expandedLabel="#{msgKv['viewKunde.bestellung']} #{bestellung.BId} : #{bestellung.erzeugt}"/>
+									                                 collapsedLabel="#{msgKv['viewKunde.bestellung']} #{bestellung.BId}"
+									                                 expandedLabel="#{msgKv['viewKunde.bestellung']} #{bestellung.BId}"/>
 								</rich:column>
+								
 								
 								<rich:collapsibleSubTable id="positionenSubtable"
 								                          value="#{bestellung.bestellpositionen}"
@@ -222,6 +226,9 @@
 						
 									<rich:column id="anzahlSpalteSub">
 										#{pos.anzahl}
+									</rich:column>
+									<rich:column id="GesamtpreisSpalteSub">
+										#{bestellung.gesamtpreis}<!--  -->
 									</rich:column>
 								</rich:collapsibleSubTable>		
 							

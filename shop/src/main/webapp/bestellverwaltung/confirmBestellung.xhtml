@@ -41,6 +41,13 @@
 					#{pos.anzahl}
 				</rich:column>
 				
+					<rich:column id="PreisSpalte">
+					<f:facet name="header">
+						#{msgBv['confirmBestellung.artikel.preis']}
+					</f:facet>
+					#{pos.anzahl*pos.artikel.preis}
+				</rich:column>
+				
 				<f:facet name="footer">
     				<h:panelGroup id="buttons">
     					<h:commandButton id="bestellungButton"

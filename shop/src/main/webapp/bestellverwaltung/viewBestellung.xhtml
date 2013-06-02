@@ -22,11 +22,17 @@
 		
 					<h:outputText id="kundeIdLabel" value="#{msgBv['viewBestellung.kundeId']}"/>
 					<h:outputText id="kundeId" value="#{bestellung.kunde.KId}"/>
-		
+					
+					<h:outputText id="GesamtpreisLabel" value="#{msgBv['viewBestellung.gesamtpreis']}"/>
+					<h:outputText id="gesamt" value="#{bestellung.gesamtpreis}"/>
+					
 					<h:outputText id="erzeugtLabel" value="#{msgBv['viewBestellung.zeitstempel']}"/>
 					<h:outputText id="erzeugt" value="#{bestellung.erzeugt}">
 						<f:convertDateTime type="date" style="full"/>
+						
+
 					</h:outputText>
+					
 				</h:panelGrid>
 			</rich:panel>
 			
@@ -56,6 +62,12 @@
 						</f:facet>
 						#{pos.anzahl}
 					</rich:column>
+					<rich:column id="PreisSpalte">
+						<f:facet name="header">
+							#{msgBv['viewBestellung.artikel.preis']}
+						</f:facet>
+						#{pos.anzahl*pos.artikel.preis}
+					</rich:column>					
 				</rich:dataTable>
 			</rich:panel>
 		</ui:define>

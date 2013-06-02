@@ -79,17 +79,20 @@ public class BestellungController implements Serializable {
 		// Aus dem Warenkorb nur Positionen mit Anzahl > 0
 		final List<Bestellposition> positionen = warenkorb.getPositionen();
 		final List<Bestellposition> neuePositionen = new ArrayList<>(positionen.size());
+		double gesamtpreis = 0;
 		for (Bestellposition bp : positionen) {
 			if (bp.getAnzahl() > 0) {
 				neuePositionen.add(bp);
+				gesamtpreis +=(bp.getArtikel().getPreis())*bp.getAnzahl();
 			}
 		}
-		
+		//Damit Preis auf 2 Nachkommastellen gerundet ist
+		Math.round((gesamtpreis*100)/100.0);
 		// Warenkorb zuruecksetzen
 		warenkorb.endConversation();
-		
 		// Neue Bestellung mit neuen Bestellpositionen erstellen
 		Bestellung bestellung = new Bestellung();
+		bestellung.setGesamtpreis(gesamtpreis);
 		bestellung.setBestellpositionen(neuePositionen);
 		LOGGER.tracef("Neue Bestellung: %s\nBestellpositionen: %s", bestellung, bestellung.getBestellpositionen());
 		
