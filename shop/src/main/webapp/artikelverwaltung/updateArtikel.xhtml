@@ -9,9 +9,9 @@
 	  xmlns:a4j="http://richfaces.org/a4j">
 
 	<ui:composition template="/WEB-INF/templates/desktop/main.xml">
-	 	<!--  <ui:define name="metadata">
+	 	 <ui:define name="metadata">
 			<f:event type="preRenderView" listener="#{ac.createEmptyArtikel}"/>
-		</ui:define> -->
+		</ui:define> 
 		
 		<ui:param name="pageTitle" value="#{msgAv['updateArtikel.title']}"/>
 	
@@ -32,13 +32,12 @@
 			<span id="updateMessage"></span>
 			
 			<rich:messages id="fehlermeldungGobal" globalOnly="true"/>
-			<h:outputText value="#{msg['nichtBerechtigt']}" rendered="#{not rich:isUserInRole('admin')}"/>
-			
-			  <h:form id="updateArtikelForm" rendered="#{not empty ac.artikel and rich:isUserInRole('admin') } ">
+			<h:outputText value="#{msg['nichtBerechtigt']}" rendered="#{not rich:isUserInRole('admin')}"/>			
+			  <h:form id="updateArtikelForm" rendered="#{not empty ac.artikel and rich:isUserInRole('admin')} ">
 				<rich:jQuery id="nachnameFocus" selector="#nachname" query="focus()"/>
-				
+					<!--
 				<rich:focus id="formFocus"/>
-			
+				-->
 				
 				<h:panelGrid id="updateArtikelTabelle"
 				             columns="3">

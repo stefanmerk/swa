@@ -71,15 +71,15 @@ public class ArtikelService implements Serializable {
 		
 		
 	}
-	public  List<Artikel> findArtikelByBezeichnung(String bezeichnung) {
+	public  Artikel findArtikelByBezeichnung(String bezeichnung) {
 		if (Strings.isNullOrEmpty(bezeichnung)) {
-			 final List<Artikel> artikel = findAllArtikel();
-		      return artikel;
+			System.err.println("artikel nicht vorhanden");
+		    
 		//	System.err.println("artikel nicht vorhanden");
 		}
-		final List<Artikel> artikel = em.createNamedQuery(Artikel.FIND_ARTIKEL_BY_BEZ, Artikel.class)
+		final Artikel artikel = em.createNamedQuery(Artikel.FIND_ARTIKEL_BY_BEZ, Artikel.class)
 				                        .setParameter(Artikel.PARAM_BEZEICHNUNG, "%" + bezeichnung + "%")
-				                        .getResultList();
+				                        .getSingleResult();
 		return artikel;
 	}
 	
