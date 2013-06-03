@@ -12,7 +12,8 @@
 		<ui:param name="pageTitle" value="#{msgAuth['updateRollen.title']}"/>
 	
 		<ui:define name="article">
-			<h:form id="rollenForm">
+		<h:outputText value="#{msg['nichtBerechtigt']}" rendered="#{not rich:isUserInRole('admin')}"/>
+			<h:form id="rollenForm" rendered="#{rich:isUserInRole('admin')}">
 				<rich:focus id="rollenFormFocus"/>
 				
 				<rich:panel id="suchePanel" header="#{msgAuth['updateRollen.headingUsername']}">

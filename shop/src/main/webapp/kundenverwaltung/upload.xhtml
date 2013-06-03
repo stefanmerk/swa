@@ -13,7 +13,9 @@
 		<ui:define name="article">
 			<h1>#{msgKv['upload.heading']}</h1>
 			
-			<h:form id="uploadForm">
+			<h:outputText value="#{msg['nichtBerechtigt']}" rendered="#{not rich:isUserInRole('admin')}"/>
+			
+			<h:form id="uploadForm" rendered="rich:isUserInRole('admin')">
 				<rich:focus id="uploadFormFocus"/>
 				
 				<h:panelGrid id="uploadFormGrid" columns="2">

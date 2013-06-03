@@ -18,8 +18,10 @@
 			<h1>
 				#{msgKv['createPrivatkunde.heading']}
 			</h1>
+			
+			<h:outputText value="#{msg['nichtBerechtigt']}" rendered="#{not rich:isUserInRole('admin')}"/>
 	
-			<h:form id="createKundeForm">
+			<h:form id="createKundeForm" rendered="#{rich:isUserInRole('admin')}">
 				<rich:jQuery id="nachnameFocus" selector="#nachname" query="focus()"/>
 				<!-- fokussiert auf id="kategorie" statt auf id="nachname" WARUM?
 				<rich:focus id="createKundeFormFocus"/>
