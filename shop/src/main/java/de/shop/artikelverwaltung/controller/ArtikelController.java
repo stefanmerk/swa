@@ -65,7 +65,7 @@ public class ArtikelController implements Serializable {
 	private static final String MSG_KEY_UPDATE_ARTIKEL_CONCURRENT_UPDATE = "updateArtikel.concurrentUpdate";
 	
 	private static final String JSF_SELECT_ARTIKEL = "/artikelverwaltung/selectArtikel";
-	//private static final String SESSION_VERFUEGBARE_ARTIKEL = "verfuegbareArtikel";
+	private static final String SESSION_VERFUEGBARE_ARTIKEL = "verfuegbareArtikel";
 	private static final String SESSION_ALLE_ARTIKEL = "findAllArtikel";
 	private static final int MAX_AUTOCOMPLETE = 5;
 	private String bezeichnung;
@@ -73,6 +73,7 @@ public class ArtikelController implements Serializable {
 	private Long artikelId;
 	private Artikel artikel;
 	private boolean geaendertArtikel;
+	private double preis;
 	
 
 	@Inject
@@ -119,6 +120,13 @@ public class ArtikelController implements Serializable {
 	}
 	public String getBezeichnung() {
 		return bezeichnung;
+	}
+	
+	public void setPreis(double preis) {
+		this.preis = preis;
+	}
+	public double getPreis() {
+		return preis;
 	}
 
 	public void setartikelId(Long artikelId) {
@@ -169,12 +177,12 @@ public class ArtikelController implements Serializable {
 
 	@Transactional
 	public String selectArtikel() {
-		if (session.getAttribute(SESSION_ALLE_ARTIKEL) != null) {
+		if (session.getAttribute(SESSION_VERFUEGBARE_ARTIKEL) != null) {
 			return JSF_SELECT_ARTIKEL;
 		}
 		
-		final List<Artikel> alleArtikel = as.findAllArtikel();
-		session.setAttribute(SESSION_ALLE_ARTIKEL, alleArtikel);
+		final List<Artikel> alleArtikel = as.findVerfuegbareArtikel();
+		session.setAttribute(SESSION_VERFUEGBARE_ARTIKEL, alleArtikel);
 		return JSF_SELECT_ARTIKEL;
 	}
 	

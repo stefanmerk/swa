@@ -58,7 +58,7 @@ import de.shop.util.IdGroup;
 	@NamedQuery(name  = Artikel.FIND_VERFUEGBARE_ARTIKEL,
             	query = "SELECT      a"
             	        + " FROM     Artikel a"
-						+ " WHERE    a.verfuegbarkeit = ja"
+						+ " WHERE    a.verfuegbarkeit = 'ja'"
                         + " ORDER BY a.id ASC"),
 	@NamedQuery(name  = Artikel.FIND_ARTIKEL_BY_BEZ,
             	query = "SELECT      a"
