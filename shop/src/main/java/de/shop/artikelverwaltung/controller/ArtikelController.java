@@ -8,6 +8,7 @@ import static javax.ejb.TransactionAttributeType.SUPPORTS;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -153,7 +154,13 @@ public class ArtikelController implements Serializable {
 	
 	@TransactionAttribute(REQUIRED)
 	public String findArtikelByBezeichnung() {
-		List<Artikel> artikel = as.findArtikelByBezeichnung(bezeichnung);
+		
+		 List<Artikel> alleArtikel = as.findArtikelByBezeichnung(bezeichnung);
+		if(alleArtikel.size()!= 1)
+			LOGGER.info("MEHRERE OBJEKTE GESPEICHERT! bei findArtikelByBezeichnung");
+		artikel = alleArtikel.get(0);
+		alleArtikel.clear();
+		LOGGER.info("Der Artikel wird bearbeitet :" +artikel.toString());
 		flash.put(FLASH_ARTIKEL, artikel);
 
 		return JSF_LIST_ARTIKEL;
@@ -246,7 +253,7 @@ public class ArtikelController implements Serializable {
 			return JSF_INDEX;
 		}
 		
-	LOGGER.tracef("Aktualisierter Kunde: %s", artikel);
+	LOGGER.tracef("Aktualisierter artikel: %s", artikel);
 	
 	try {
 		artikel = as.updateArtikel(artikel);
