@@ -12,7 +12,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.validation.groups.Default;
@@ -133,8 +132,8 @@ public class KundeService implements Serializable {
 		return nachnamen;
 	}
 		public Kunde findKundeByUserName(String id) {
-			Long kid = Long.valueOf(id);
-		Kunde kunde = em.createNamedQuery(Kunde.FIND_KUNDE_BY_USERNAME, Kunde.class)
+			final Long kid = Long.valueOf(id);
+		final Kunde kunde = em.createNamedQuery(Kunde.FIND_KUNDE_BY_USERNAME, Kunde.class)
 					.setParameter(Kunde.PARAM_KUNDE_USERNAME, kid)
 					.getSingleResult();
 		return kunde;

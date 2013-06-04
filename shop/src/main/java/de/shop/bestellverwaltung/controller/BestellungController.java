@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -83,11 +82,13 @@ public class BestellungController implements Serializable {
 		for (Bestellposition bp : positionen) {
 			if (bp.getAnzahl() > 0) {
 				neuePositionen.add(bp);
-				gesamtpreis +=(bp.getArtikel().getPreis())*bp.getAnzahl();
+				gesamtpreis += (bp.getArtikel().getPreis()) * bp.getAnzahl();
 			}
 		}
 		//Damit Preis auf 2 Nachkommastellen gerundet ist
-		Math.round((gesamtpreis*100)/100.0);
+		final double zahl2 = 100.0;
+		final int zahl = 100;
+		Math.round((gesamtpreis * zahl) / zahl2);
 		// Warenkorb zuruecksetzen
 		warenkorb.endConversation();
 		// Neue Bestellung mit neuen Bestellpositionen erstellen

@@ -60,8 +60,8 @@ public class Warenkorb implements Serializable {
 		return positionen;
 	}
 		
-	public void setArtikelBezeichnung(String Artikelbez) {
-		this.artikelbezeichnung = Artikelbez;
+	public void setArtikelBezeichnung(String artikelbez) {
+		this.artikelbezeichnung = artikelbez;
 	}
 
 	public String getArtikelbezeichnung() {
@@ -84,12 +84,15 @@ public class Warenkorb implements Serializable {
 	}
 
 	public double getGesamtpreis() {
-		gesamtpreis = 0;
-		if (!(positionen == null) || !positionen.isEmpty()) {
-			for (Bestellposition bp : positionen)
-				gesamtpreis += bp.getAnzahl()*bp.getArtikel().getPreis();
+		gesamtpreis = 0.0;
+		if ((positionen != null) || !positionen.isEmpty()) {
+			for (Bestellposition bp : positionen) {	
+				gesamtpreis += bp.getAnzahl() * bp.getArtikel().getPreis(); 
+				}
 		}
-		Math.round((gesamtpreis*100)/100.0);
+		final double zahl2 = 100.0;
+		final int zahl = 100;
+		Math.round((gesamtpreis * zahl) / zahl2);
 		return gesamtpreis;
 	}
 

@@ -44,7 +44,6 @@ import de.shop.util.AbstractShopException;
 import de.shop.util.Client;
 import de.shop.util.ConcurrentDeletedException;
 import de.shop.util.File;
-import de.shop.util.FileHelper.MimeType;
 import de.shop.util.Log;
 import de.shop.util.Messages;
 import de.shop.util.FileHelper;
@@ -199,8 +198,7 @@ public class KundeController implements Serializable {
 	
 	
 	
-	public String resetUpload()
-	{
+	public String resetUpload() {
 		kunde = null;
 		 bytes = null;
 		 contentType = null;
@@ -214,9 +212,9 @@ public class KundeController implements Serializable {
 	@TransactionAttribute(REQUIRED)
 	public List<Kunde> findKundenByIdPrefix(String idPrefix) {
 		List<Kunde> kundenPrefix = null;
-		Long id = null; 
+		 
 		try {
-			id = Long.valueOf(idPrefix);
+		Long id = Long.valueOf(idPrefix);
 		}
 		catch (NumberFormatException e) {
 			return Collections.emptyList();
@@ -230,6 +228,7 @@ public class KundeController implements Serializable {
 		if (kundenPrefix.size() > MAX_AUTOCOMPLETE) {
 			return kundenPrefix.subList(0, MAX_AUTOCOMPLETE);
 		}
+		
 		return kundenPrefix;
 	}
 	

@@ -163,7 +163,7 @@ public class Bestellung implements Serializable {
 		this.bId = b;
 	}
 	
-	public double getGesamtpreis(){
+	public double getGesamtpreis() {
 		return this.gesamtpreis;
 	}
 	

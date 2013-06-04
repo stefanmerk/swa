@@ -14,7 +14,6 @@ import javax.persistence.PersistenceContext;
 
 import org.jboss.logging.Logger;
 
-import de.shop.bestellverwaltung.domain.Bestellposition;
 import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.kundenverwaltung.domain.Kunde;
 import de.shop.util.Log;

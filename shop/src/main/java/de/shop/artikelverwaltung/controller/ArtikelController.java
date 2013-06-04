@@ -8,7 +8,6 @@ import static javax.ejb.TransactionAttributeType.SUPPORTS;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -67,7 +66,7 @@ public class ArtikelController implements Serializable {
 	
 	private static final String JSF_SELECT_ARTIKEL = "/artikelverwaltung/selectArtikel";
 	private static final String SESSION_VERFUEGBARE_ARTIKEL = "verfuegbareArtikel";
-	private static final String SESSION_ALLE_ARTIKEL = "findAllArtikel";
+
 	private static final int MAX_AUTOCOMPLETE = 5;
 	private String bezeichnung;
 	private Artikel neuerArtikel;
@@ -167,11 +166,11 @@ public class ArtikelController implements Serializable {
 	}
 	
 	@TransactionAttribute(REQUIRED)
-	public List<Artikel> findArtikelByBezPrefix(String BezPrefix) {
+	public List<Artikel> findArtikelByBezPrefix(String bezPrefix) {
 		List<Artikel> artikelPrefix = null;
 		
 		
-		artikelPrefix = as.findArtikelbyBezPrefix(BezPrefix);
+		artikelPrefix = as.findArtikelbyBezPrefix(bezPrefix);
 		if (artikelPrefix == null || artikelPrefix.isEmpty()) {
 			return Collections.emptyList();
 		}
@@ -272,7 +271,7 @@ public class ArtikelController implements Serializable {
 		
 		// Aufbereitung fuer viewKunde.xhtml
 		artikelId = artikel.getAId();
-		artikel = null;//
+		artikel = null;
 		return JSF_LIST_ARTIKEL + JSF_REDIRECT_SUFFIX;
 	}
 	

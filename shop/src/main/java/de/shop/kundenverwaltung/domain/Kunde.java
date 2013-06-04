@@ -22,29 +22,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.OrderColumn;
-import javax.persistence.PostPersist;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.Transient;
-import javax.persistence.Version;
 import javax.validation.Valid;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -117,7 +97,7 @@ import de.shop.util.IdGroup;
 	@NamedQuery(name  = Kunde.FIND_KUNDE_BY_ID_FETCH_BESTELLUNGEN,
 	            query = "SELECT DISTINCT k"
 			            + " FROM   Kunde k LEFT JOIN FETCH k.bestellungen "
-			            + " WHERE  k.id = :" + Kunde.PARAM_K_ID),///////
+			            + " WHERE  k.id = :" + Kunde.PARAM_K_ID),
  
    	@NamedQuery(name  = Kunde.FIND_KUNDE_BY_EMAIL,
    	            query = "SELECT DISTINCT k"
@@ -129,7 +109,7 @@ import de.shop.util.IdGroup;
 script = "(_this.password == null && _this.passwordWdh == null)"
          + "|| (_this.password != null && _this.password.equals(_this.passwordWdh))",
 message = "{kundenverwaltung.kunde.password.notEqual}")
-public  class  Kunde implements Serializable {
+public  class  Kunde implements Serializable, Cloneable {
 	private static final long serialVersionUID = -9023615284991323369L;
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
 	
@@ -259,7 +239,7 @@ public  class  Kunde implements Serializable {
 		this.version = kopie.version;
 		this.passwordWdh = kopie.password;
 		this.agbAkzeptiert = kopie.agbAkzeptiert;
-		this.file=kopie.file;
+		this.file = kopie.file;
 		
 	}
 

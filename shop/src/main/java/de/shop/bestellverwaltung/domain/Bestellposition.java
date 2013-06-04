@@ -135,7 +135,7 @@ public class Bestellposition implements Serializable {
 		this.bestellung = bestellung;
 		}
 	
-	public Bestellposition (Artikel artikel) {
+	public Bestellposition(Artikel artikel) {
 	
 		this.artikel = artikel;
 				

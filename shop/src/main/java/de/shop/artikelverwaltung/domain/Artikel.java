@@ -29,7 +29,6 @@ import javax.validation.constraints.Min;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.jboss.logging.Logger;
 
-import de.shop.kundenverwaltung.domain.Kunde;
 import de.shop.util.IdGroup;
 
  
@@ -40,15 +39,15 @@ import de.shop.util.IdGroup;
 	@NamedQuery(name  = Artikel.FIND_ARTIKEL,
         		query = "SELECT      a"
         	        + " FROM     Artikel a"),
-     @NamedQuery(name  = Artikel.FIND_Artikel_BY_ID_PREFIX,
+     @NamedQuery(name  = Artikel.FIND_ARTIKEL_BY_ID_PREFIX,
             		query = "SELECT   a.id"
             				      + " FROM  Artikel a"
-            				      + " WHERE CONCAT('', a.id) LIKE :" + Artikel.PARAM_Artikel_ID_PREFIX 
+            				      + " WHERE CONCAT('', a.id) LIKE :" + Artikel.PARAM_ARTIKEL_ID_PREFIX 
             				      + " ORDER BY a.id"),
-    @NamedQuery(name = Artikel.FIND_Artikel_BY_Bez_PREFIX,
+    @NamedQuery(name = Artikel.FIND_ARTIKEL_BY_BEZ_PREFIX,
     		query = "SELECT      a"
     				+ " FROM  Artikel a"
-    				+ " WHERE CONCAT('', a.bezeichnung) LIKE :" + Artikel.PARAM_Artikel_ID_PREFIX 
+    				+ " WHERE CONCAT('', a.bezeichnung) LIKE :" + Artikel.PARAM_ARTIKEL_ID_PREFIX 
 				      + " ORDER BY a.id"),
 	
     @NamedQuery(name  = Artikel.FIND_ARTIKEL_ID,
@@ -84,13 +83,13 @@ public class Artikel implements Serializable {
 	public static final String FIND_ARTIKEL_BY_BEZ = PREFIX + "findArtikelByBez";
 	public static final String FIND_ARTIKEL_MIN_PREIS = PREFIX + "findArtikelByMinPreis";
 	public static final String FIND_ARTIKEL = PREFIX + "findAllArtikel";
-	public static final String PARAM_Artikel_ID_PREFIX = "idPrefix";
-	public static final String PARAM_Artikel_Bez_PREFIX = "idPrefix";
+	public static final String PARAM_ARTIKEL_ID_PREFIX = "idPrefix";
+	public static final String PARAM_ARTIKEL_BEZ_PREFIX = "idPrefix";
 	public static final String PARAM_BEZEICHNUNG = "bezeichnung";
 	public static final String PARAM_PREIS = "preis";
 	public static final String PARAM_A_ID = "id";
-	public static final String FIND_Artikel_BY_ID_PREFIX = PREFIX + "findArtikelByIdPrefix";
-	public static final String FIND_Artikel_BY_Bez_PREFIX = PREFIX + "findArtikelByBezPrefix";
+	public static final String FIND_ARTIKEL_BY_ID_PREFIX = PREFIX + "findArtikelByIdPrefix";
+	public static final String FIND_ARTIKEL_BY_BEZ_PREFIX = PREFIX + "findArtikelByBezPrefix";
 	@Id
 	@GeneratedValue
 	@Column(name = "a_id", unique = true, nullable = false, updatable = false, precision = LONG_ANZ_ZIFFERN)
