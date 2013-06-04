@@ -1,5 +1,10 @@
 /* # fuer Tag-ID und . fuer CSS-Klasse */
 
+body {
+	font-family: Arial;
+	font-size: 12px;
+}
+
 #header {
 	height: 67px;
 	/* width: 99%; */
