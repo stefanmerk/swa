@@ -66,7 +66,7 @@ assertThat(response.getStatusCode(), is(HTTP_UNAUTHORIZED));
 final Response response2 = given().contentType(APPLICATION_JSON)
 .body(jsonObject.toString())
 .auth()
-.basic("mitarbeiter", "mitarbeiter")
+.basic("101", "klausii")
 .post(KUNDEN_PATH);
 assertThat(response2.getStatusCode(), is(HTTP_CREATED));
 }
