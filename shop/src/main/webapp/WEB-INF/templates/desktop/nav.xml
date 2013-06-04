@@ -43,7 +43,7 @@
 					</c:if>
 			</h:outputLink>
 	</rich:panelMenuItem>
-	<rich:panelMenuItem id="udateKunde" rendered="#{rich:isUserInRole('admin')}">
+<!--	<rich:panelMenuItem id="udateKunde" rendered="#{rich:isUserInRole('admin')}">
 			<h:outputLink id="kundenverwaltungUpdateKunde"
 					      value="#{request.contextPath}/kundenverwaltung/updateKunde.jsf">
 						#{msg['nav.kundenverwaltung.updateKunde']}
@@ -51,7 +51,7 @@
 						<f:param id="updatePrivatkundeCid" name="cid" value="#{javax.enterprise.context.conversation.id}"/>
 					</c:if>
 			</h:outputLink>
-	</rich:panelMenuItem>
+	</rich:panelMenuItem>-->
 	<rich:panelMenuItem id="updateRollen" rendered="#{rich:isUserInRole('admin')}">
 			<h:outputLink id="authUpdateRollen"
 					      value="#{request.contextPath}/auth/updateRollen.jsf">
@@ -98,7 +98,7 @@
 					</c:if>
 			</h:outputLink>
 	</rich:panelMenuItem>
-	<rich:panelMenuItem id="updateArtikel" rendered="#{rich:isUserInRole('admin')}">
+<!--	<rich:panelMenuItem id="updateArtikel" rendered="#{rich:isUserInRole('admin')}">
 			<h:outputLink id="artikelverwaltungupdateArtikel"
 					      value="#{request.contextPath}/artikelverwaltung/updateArtikel.jsf">
 						#{msg['nav.artikelverwaltung.updateArtikel']}
@@ -106,7 +106,7 @@
 						<f:param id="updateArtikelCid" name="cid" value="#{javax.enterprise.context.conversation.id}"/>
 					</c:if>
 			</h:outputLink>
-	</rich:panelMenuItem>
+	</rich:panelMenuItem>-->
 	</rich:panelMenuGroup>
 
 	<rich:panelMenuGroup id="Bestellverwaltung"

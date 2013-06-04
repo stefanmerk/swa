@@ -33,7 +33,7 @@
 			
 			<rich:messages id="fehlermeldungGobal" globalOnly="true"/>
 			<h:outputText value="#{msg['nichtBerechtigt']}" rendered="#{not rich:isUserInRole('admin')}"/>			
-			  <h:form id="updateArtikelForm" rendered="#{not empty ac.artikel and rich:isUserInRole('admin')}">
+			  <h:form id="updateArtikelForm" rendered="#{not empty ac.artikel and rich:isUserInRole('admin')} ">
 				<rich:jQuery id="nachnameFocus" selector="#nachname" query="focus()"/>
 					<!--
 				<rich:focus id="formFocus"/>
