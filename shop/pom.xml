@@ -68,14 +68,14 @@
 	
 	<developers>
 		<developer>
-			<id>Julia Thamasett</id>
-			<name>Julia Thamasett</name>
-			<email>thju1011@HS-Karlsruhe.de</email>
+			<id>Juergen.Zimmermann</id>
+			<name>J&#252;rgen Zimmermann</name>
+			<email>Juergen.Zimmermann@HS-Karlsruhe.de</email>
 			<url>http://www.iwi.hs-karlsruhe.de</url>
 			<organization>Hochschule Karlsruhe</organization>
 			<organizationUrl>http://www.iwi.hs-karlsruhe.de</organizationUrl>
 			<roles>
-				<role>student</role>
+				<role>Dozent</role>
 			</roles>
 			<timezone>+1</timezone>     <!-- relativ zu GMT -->
 			<properties>
@@ -641,9 +641,9 @@
 								<exclude>META-INF</exclude>
 								<exclude>sql</exclude>
 								<exclude>ValidationMessages*.properties</exclude>
+								<!--  <exclude>users.properties</exclude>-->
+								<!--  <exclude>roles.properties</exclude>-->
 								<exclude>de</exclude>
-								<exclude>users.properties</exclude>
-								<exclude>roles.properties</exclude>
 							</excludes>
 						</resource>
 					</webResources>
