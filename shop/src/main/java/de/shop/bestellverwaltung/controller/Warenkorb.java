@@ -85,10 +85,12 @@ public class Warenkorb implements Serializable {
 
 	public double getGesamtpreis() {
 		gesamtpreis = 0.0;
-		if ((positionen != null) || !positionen.isEmpty()) {
-			for (Bestellposition bp : positionen) {	
-				gesamtpreis += bp.getAnzahl() * bp.getArtikel().getPreis(); 
-				}
+		if (positionen == null || positionen.isEmpty())
+			return 0.0;
+		
+		
+		for (Bestellposition bp : positionen) {	
+			gesamtpreis += bp.getAnzahl() * bp.getArtikel().getPreis(); 
 		}
 		final double zahl2 = 100.0;
 		final int zahl = 100;

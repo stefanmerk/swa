@@ -216,7 +216,7 @@ public class KundeController implements Serializable {
 		List<Kunde> kundenPrefix = null;
 		 
 		try {
-		Long id = Long.valueOf(idPrefix);
+			Long.valueOf(idPrefix);
 		}
 		catch (NumberFormatException e) {
 			return Collections.emptyList();
