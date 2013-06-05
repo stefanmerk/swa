@@ -9,8 +9,10 @@ import static javax.persistence.PersistenceContextType.EXTENDED;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
+import java.text.DateFormat;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -285,6 +287,11 @@ public class KundeController implements Serializable {
 		final UploadedFile uploadedFile = event.getUploadedFile();
 		contentType = uploadedFile.getContentType();
 		bytes = uploadedFile.getData();
+	}
+	
+	public Date getAktuellesDatum() {		
+		final Date datum = new Date();
+		return datum;
 	}
 	
 	
