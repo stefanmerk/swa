@@ -71,6 +71,17 @@ public class ArtikelService implements Serializable {
 		
 		
 	}
+	
+	public List<Long> findIdsByPrefix(String idPrefix) {
+		if (Strings.isNullOrEmpty(idPrefix)) {
+			return Collections.emptyList();
+		}
+		final List<Long> ids = em.createNamedQuery(Artikel.FIND_IDS_BY_PREFIX, Long.class)
+				                 .setParameter(Artikel.PARAM_ARTIKEL_ID_PREFIX, idPrefix + '%')
+				                 .getResultList();
+		return ids;
+	}
+	
 	public  Artikel findArtikelByBezeichnung(String bezeichnung) {
 		if (Strings.isNullOrEmpty(bezeichnung)) {
 			System.err.println("artikel nicht vorhanden");

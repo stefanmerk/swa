@@ -29,6 +29,7 @@ import javax.validation.constraints.Min;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.jboss.logging.Logger;
 
+import de.shop.kundenverwaltung.domain.Kunde;
 import de.shop.util.IdGroup;
 
  
@@ -69,7 +70,12 @@ import de.shop.util.IdGroup;
             	query = "SELECT      a"
                         + " FROM     Artikel a"
 						+ " WHERE    a.preis < :" + Artikel.PARAM_PREIS
-			 	        + " ORDER BY a.id DESC")
+			 	        + " ORDER BY a.id DESC"),
+	@NamedQuery(name  = Artikel.FIND_IDS_BY_PREFIX,
+			    query = "SELECT   a.id"
+			    		+ " FROM  Artikel a"
+			    		+ " WHERE CONCAT('', a.id) LIKE :" + Artikel.PARAM_ARTIKEL_ID_PREFIX
+			    		+ " ORDER BY a.id")
 })
 
 
@@ -90,6 +96,8 @@ public class Artikel implements Serializable {
 	public static final String PARAM_A_ID = "id";
 	public static final String FIND_ARTIKEL_BY_ID_PREFIX = PREFIX + "findArtikelByIdPrefix";
 	public static final String FIND_ARTIKEL_BY_BEZ_PREFIX = PREFIX + "findArtikelByBezPrefix";
+	public static final String FIND_IDS_BY_PREFIX = PREFIX + "findIdsByIdPrefix";
+	
 	@Id
 	@GeneratedValue
 	@Column(name = "a_id", unique = true, nullable = false, updatable = false, precision = LONG_ANZ_ZIFFERN)

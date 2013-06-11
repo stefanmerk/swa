@@ -249,6 +249,7 @@ public class KundeResource {
 	}
 	
 	
+	
 	/**
 	 * Mit der URL /kunden einen Kunden per PUT aktualisieren
 	 * @param kunde zu aktualisierende Daten des Kunden

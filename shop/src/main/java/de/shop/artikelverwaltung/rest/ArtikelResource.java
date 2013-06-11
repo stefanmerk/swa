@@ -4,6 +4,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
+import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -78,6 +79,13 @@ public class ArtikelResource {
 	
 		final URI artikelUri = uriHelperArtikel.getUriArtikel(artikel, uriInfo);
 		return Response.created(artikelUri).build();
+	}
+	
+	@GET
+	@Path("/prefix/id/{id:[1-9][0-9]*}")
+	public Collection<Long> findIdsByPrefix(@PathParam("id") String idPrefix) {
+		final Collection<Long> ids = as.findIdsByPrefix(idPrefix);
+		return ids;
 	}
 	
 	@PUT
