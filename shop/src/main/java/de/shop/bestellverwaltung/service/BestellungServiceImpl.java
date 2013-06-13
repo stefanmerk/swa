@@ -94,6 +94,13 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 		return bestellungen;
 	}
 
+	@Override
+	public List<Long> findBestellungenIdsByKundeId(Long kundeId) {
+		final List<Long> bestellungIds = em.createNamedQuery(Bestellung.FIND_BESTELLUNGENIDS_BY_KUNDE, Long.class)
+                                                .setParameter(Bestellung.PARAM_KUNDEID, kundeId)
+				                                .getResultList();
+		return bestellungIds;
+	}
 
 	/**
 	 */

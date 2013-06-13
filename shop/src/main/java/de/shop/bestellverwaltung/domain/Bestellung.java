@@ -68,6 +68,10 @@ import de.shop.util.PreExistingGroup;
                 query = "SELECT b"
 			            + " FROM   Bestellung b"
 						+ " WHERE  b.kunde.id = :" + Bestellung.PARAM_KUNDEID),
+	@NamedQuery(name  = Bestellung.FIND_BESTELLUNGENIDS_BY_KUNDE,
+		        query = "SELECT b.id"
+					    + " FROM   Bestellung b"
+					    + " WHERE  b.kunde.id = :" + Bestellung.PARAM_KUNDEID),
 	@NamedQuery(name  = Bestellung.FIND_KUNDE_BY_ID,
  			    query = "SELECT b.kunde"
                         + " FROM   Bestellung b"
@@ -84,6 +88,7 @@ public class Bestellung implements Serializable {
 	public static final String FIND_BESTELLUNG_ID = PREFIX + "findBestellungById";
 	public static final String FIND_BESTELLUNG = PREFIX + "findBestellung";
 	public static final String FIND_BESTELLUNGEN_BY_KUNDE = PREFIX + "findBestellungenByKunde";
+	public static final String FIND_BESTELLUNGENIDS_BY_KUNDE = PREFIX + "findBestellungenIdsByKunde";
 	public static final String FIND_BESTELLUNGEN_BY_NACHNAME = PREFIX + "findBestellungenByNachname";
 	public static final String FIND_KUNDE_BY_ID = PREFIX + "findBestellungKundeById";
 	

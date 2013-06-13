@@ -8,6 +8,7 @@ import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -226,6 +227,21 @@ public class KundeResource {
 		return bestellungen;
 	}
 
+	/**
+	 * Mit der URL /kunden/{id}/bestellungen die Bestellungen zu eine Kunden ermitteln
+	 * @param kundeId ID des Kunden
+	 * @return Objekt mit Bestellungsdaten, falls die ID vorhanden ist
+	 */
+	@GET
+	@Path("{id:[1-9][0-9]*}/bestellungenIds")
+	public Collection<Long> findBestellungenIdsByKundeId(@PathParam("id") Long kundeId,  @Context UriInfo uriInfo) {
+		final Collection<Long> bestellungen = bs.findBestellungenIdsByKundeId(kundeId);
+		if (bestellungen.isEmpty()) {
+			return Collections.emptyList();
+		}
+		
+		return bestellungen;
+	}
 
 	/**
 	 * Mit der URL /kunden einen Privatkunden per POST anlegen.
