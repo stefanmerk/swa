@@ -29,7 +29,6 @@ import javax.validation.constraints.Min;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.jboss.logging.Logger;
 
-import de.shop.kundenverwaltung.domain.Kunde;
 import de.shop.util.IdGroup;
 
  

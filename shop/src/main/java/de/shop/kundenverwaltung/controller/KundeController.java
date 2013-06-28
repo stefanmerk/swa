@@ -9,7 +9,6 @@ import static javax.persistence.PersistenceContextType.EXTENDED;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
-import java.text.DateFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -46,9 +45,9 @@ import de.shop.util.AbstractShopException;
 import de.shop.util.Client;
 import de.shop.util.ConcurrentDeletedException;
 import de.shop.util.File;
+import de.shop.util.FileHelper;
 import de.shop.util.Log;
 import de.shop.util.Messages;
-import de.shop.util.FileHelper;
 
 /**
  * Dialogsteuerung fuer die Kundenverwaltung
